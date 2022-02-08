@@ -161,8 +161,13 @@
   }
 
   &-footer {
+    display: flex;
+    justify-content: space-between;
     width: 700px;
     height: 40px;
     background-color: grey;
+    &.hidden {
+      opacity: 0;
+    }
   }
 }
