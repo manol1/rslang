@@ -2,7 +2,7 @@ export enum ELinks {
   link = 'https://bukman-rs-lang.herokuapp.com',
   words = 'https://bukman-rs-lang.herokuapp.com/words',
   users = 'https://bukman-rs-lang.herokuapp.com/users',
-  signin = 'https://bukman-rs-lang.herokuapp.com/signin',
+  signIn = 'https://bukman-rs-lang.herokuapp.com/signin',
 }
 
 export type TGetWords = {
@@ -82,4 +82,31 @@ export type TUserSetting = {
 export type TBodyUserSetting = {
   wordsPerDay: number,
   optional: object,
+};
+
+export type TAggregatedWord = {
+  _id: string,
+  group: number,
+  page: number,
+  word: string,
+  image: string,
+  audio: string,
+  audioMeaning: string,
+  audioExample: string,
+  textMeaning: string,
+  textExample: string,
+  transcription: string,
+  wordTranslate: string,
+  textMeaningTranslate: string,
+  textExampleTranslate: string,
+  userWord?: object,
+};
+
+type TCount = {
+  count: number,
+};
+
+export type TAggregatedWords = {
+  paginatedResults: TAggregatedWord[],
+  totalCount: TCount[],
 };

@@ -1,5 +1,18 @@
-import { ELinks, TGetWords, IBodyCreateUser, IUser, TEmailPass, TSignIn, TToken, TBodyUserWorld, TUserWorld } from './types';
-import { TUserStatistic, TBodyUserStatistic, TUserSetting, TBodyUserSetting } from './types';
+import { ELinks,
+  TGetWords,
+  IBodyCreateUser,
+  IUser,
+  TEmailPass,
+  TSignIn,
+  TToken,
+  TBodyUserWorld,
+  TUserWorld,
+  TUserStatistic,
+  TBodyUserStatistic,
+  TUserSetting,
+  TBodyUserSetting,
+  TAggregatedWord,
+ } from './type/types';
 
 export async function getWords(group = '0', page = '0'): Promise<TGetWords[]> {
   const response = await fetch(`${ELinks.words}?group=${group}&page=${page}`, {
@@ -28,7 +41,7 @@ export async function createUser(body: IBodyCreateUser): Promise<IUser> {
 }
 
 export async function signIn(body: TEmailPass): Promise<TSignIn> {
-  const response = await fetch(ELinks.signin, {
+  const response = await fetch(ELinks.signIn, {
     method: 'POST',
     headers: {
       'Accept': 'application/json',
@@ -185,3 +198,35 @@ export async function getUserSettings(id: string, token: string): Promise<TUserS
   });
   return response.json();
 }
+
+export async function getAggregatedWordById(id: string, wordId: string, token: string): Promise<TAggregatedWord[]> {
+  const response = await fetch(`${ELinks.users}/${id}/aggregatedWords/${wordId}`, {
+    headers: {
+      'Accept': 'application/json',
+      'Authorization': `Bearer ${token}`,
+    },
+  });
+  return response.json();
+}
+
+// function isEmptyFilter(obj: object) {
+//   for (let key in obj) {
+//     return false;
+//   }
+//   return true;
+// }
+
+// export async function getAggregatedWords(id: string, token: string, page = 0, wordsPerPage = 10, filter = {}, group?: number): Promise<TAggregatedWords[]> {
+//   let link: string;
+//   if (group && isEmptyFilter(filter) === true) {
+//     link = `${ELinks.users}/${id}/aggregatedWords?page=${page}`
+//   }
+//   const response = await fetch(link, {
+//     headers: {
+//       'Accept': 'application/json',
+//       'Authorization': `Bearer ${token}`,
+//     },
+//   });
+//   return response.json();
+// }
+
