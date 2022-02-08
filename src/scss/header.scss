@@ -1,0 +1,98 @@
+.main-page {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background-image: url('assets/images/main-bg-img.png');
+  background-position: center right;
+  background-size: 700px 400px;
+  background-repeat: no-repeat;
+  &:before {
+    position: absolute;
+    content: '';
+    top: -90%;
+    right: -50%;
+    width: 1500px;
+    height: 1500px;
+    background:  linear-gradient(to right, $primary-color, $auxiliary-color);
+    border-radius: 5%;
+    transform: rotate(-65deg);
+    z-index: -1;
+  }
+
+}
+.header {
+  padding: 10px 0;
+  &__logo {
+    position: relative;
+    left: 35px;
+    font-size: 25px;
+    font-family: 'Roboto';
+    font-weight: 400;
+    line-height: 40px;
+    cursor: pointer;
+    &_link {
+      color: #6A6A6A;
+      transition: .4s all;
+      &:before {
+        position: absolute;
+        top: 0;
+        left: -30px;
+        content: '';
+        width: 30px;
+        height: 30px;
+        background-image: url('assets/images/L-icon.png');
+        background-size: contain;
+        background-repeat: no-repeat;
+      }
+      &:hover {
+        color: $auxiliary-color;
+      }
+    }
+  }
+  &__row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: nowrap;
+  }
+  &__nav {
+    min-width: 600px;
+    &_list {
+      display: flex;
+      justify-content: space-between;
+      &-item {
+        padding: 2px 4px;
+        color: #ffffff;
+        font-size: 1.5rem;
+        line-height: 1.75rem;
+        border: 1px solid transparent;
+        border-radius: 10px;
+        transition: 0.4 all;
+        &:hover {
+          cursor: pointer;
+          border-color: #ffffff;
+        }
+        &:last-child {
+          display: block;
+          width: 30px;
+          height: 30px;
+          background-image: url('assets/svg/log-in.svg');
+          background-size: contain;
+          background-repeat: no-repeat;
+          background-position: center;
+          border-radius: 0;
+          border: none;
+        }
+      }
+    }
+  }
+}
+.header__row {
+}
+.header__logo {
+}
+.header__logo_img {
+}
+.header__nav {
+}
