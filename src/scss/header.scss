@@ -25,6 +25,9 @@
       &:hover {
         color: $auxiliary-color;
       }
+      &.dictionary-page {
+        color: #ffffff;
+      }
     }
   }
   &__row {
@@ -63,6 +66,10 @@
           &:hover {
             transform: scale(1.1);
           }
+
+        }
+        &.current-page {
+          background-color: $primary-color;
         }
       }
     }

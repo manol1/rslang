@@ -19,4 +19,9 @@
     transform: rotate(-65deg);
     z-index: -1;
   }
+  &.dictionary-page{
+    background-color: $auxiliary-color;
+    background-image: url('assets/images/dictionary-bg.png');
+    background-size: cover;
+  }
 }
