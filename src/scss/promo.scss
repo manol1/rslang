@@ -1,0 +1,21 @@
+.promo {
+  padding-top: 120px;
+  &-title {
+    font-size: 5rem;
+    line-height: 6.25rem;
+    font-family: 'Righteous';
+    color: #424242;
+  }
+  &-descr {
+    margin-top: 20px;
+    p{
+      margin-top: 10px;
+    }
+    span {
+      color: $primary-color;
+    }
+  }
+  &-btn {
+    margin-top: 60px;
+  }
+}
