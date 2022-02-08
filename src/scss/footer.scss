@@ -1,0 +1,55 @@
+.footer {
+  display: flex;
+  justify-content: space-between;
+  &-item {
+    cursor: pointer;
+  }
+  &__row {
+    margin: 0 right;
+    width: 350px;
+    display: flex;
+    justify-content: space-between;
+    align-items: top;
+  }
+  &__github {
+    &-project {
+      display: block;
+      width: 40px;
+      height: 40px;
+      background-image: url('assets/svg/github.svg');
+      background-repeat: no-repeat;
+      background-position: center;
+      transition: .4s all;
+      &:hover {
+        transform: scale(1.1);
+      }
+    }
+    &-developers {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      a{
+        color: #ffffff;
+        font-size: 1rem;
+        transition: .4s all;
+        &:hover {
+        transform: scale(1.1);
+        }
+      }
+    }
+  }
+  &__school {
+    display: block;
+    width: 120px;
+    height: 40px;
+    background-image: url('assets/svg/rss-logo.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    transition: .4s all;
+      &:hover {
+        transform: scale(1.1);
+      }
+    }
+}

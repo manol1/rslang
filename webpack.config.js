@@ -5,11 +5,12 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
 
+const srcPath = path.resolve(__dirname, 'src');
+
 const devServer = (isDev) => !isDev ? {} : {
   devServer: {
-    static: {
-      directory: path.resolve(__dirname, 'dist'),
-    },
+    static: srcPath,
+    watch: true,
   },
 };
 
@@ -43,11 +44,11 @@ module.exports = ({ development }) => ({
       },
       {
         test: /\.css$/i,
-        use: [MiniCssExtractPlugin.loader, 'css-loader'],
+        use: [{loader: MiniCssExtractPlugin.loader, options: { publicPath: '../' }}, 'css-loader'],
       },
       {
         test: /\.s[ac]ss$/i,
-        use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader']
+        use: [{loader: MiniCssExtractPlugin.loader, options: { publicPath: '../' }}, 'css-loader', 'sass-loader']
       }
     ],
   },
