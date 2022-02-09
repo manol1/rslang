@@ -110,3 +110,8 @@ export type TAggregatedWords = {
   paginatedResults: TAggregatedWord[],
   totalCount: TCount[],
 };
+
+export enum WordDifficulty {
+  hard = 'hard',
+  easy = 'easy',
+}

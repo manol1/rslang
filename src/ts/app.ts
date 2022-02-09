@@ -17,10 +17,7 @@ export default async function App() {
 
   navigation();
 
-
-
   //render dictionary
-
   const renderDictionary = async () => {
     const dictEl = document.querySelector('.dictionary__row') as HTMLDivElement;
     const dict =  new Dictionary(dictEl, store.currentLevel, store.currentPage);
@@ -35,18 +32,30 @@ export default async function App() {
 
     levelBtns.forEach(el => el.classList.remove('active'));
     (event.target as HTMLButtonElement).classList.add('active');
+
     renderDictionary();
   }));
 
   nextPageBtn.addEventListener('click', ()=> {
-    store.currentPage = String(+store.currentPage + 1);
+
+    if (+store.currentPage < 29) {
+      store.currentPage = String(+store.currentPage + 1);
+    } else {
+      store.currentPage = '29';
+    }
     currentPageInfo.textContent = String(+store.currentPage + 1);
     renderDictionary();
   });
 
   prevPageBtn.addEventListener('click', ()=> {
-    store.currentPage = String(+store.currentPage - 1);
-    currentPageInfo.innerHTML = String(+store.currentLevel + 1);
+
+    if (+store.currentPage > 0) {
+      store.currentPage = String(+store.currentPage - 1);
+    } else {
+      store.currentPage = '0';
+    }
+
+    currentPageInfo.innerHTML = String(+store.currentPage + 1);
     renderDictionary();
   });
 

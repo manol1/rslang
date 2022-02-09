@@ -1,6 +1,8 @@
 import { TGetWords } from './type/types';
+import { store } from './store/store';
 import Word from './Word';
 import { getWords } from './requests';
+
 export default class Dictionary {
   words: TGetWords[];
 
@@ -28,8 +30,9 @@ export default class Dictionary {
     this.container.innerHTML = '';
 
     this.words.map(word => {
-      const newWord = new Word(word);
+      const newWord = new Word(word, store.isAuthorized);
       newWord.render(this.container);
+      newWord.bindListener();
     });
   }
 }
