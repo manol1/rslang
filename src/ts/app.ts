@@ -1,4 +1,6 @@
 import navigation from './navigation';
+import authentification from './authentification';
+
 import { getWords } from './requests';
 
 import { TGetWords } from './type/types';
@@ -16,6 +18,7 @@ export default async function App() {
 
 
   navigation();
+  authentification();
 
   //render dictionary
   const renderDictionary = async () => {
@@ -61,13 +64,4 @@ export default async function App() {
     currentPageInfo.innerHTML = String(+store.currentPage + 1);
     renderDictionary();
   });
-
-
-
-
-
-
-
-
-
 }

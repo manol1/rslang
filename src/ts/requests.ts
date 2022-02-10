@@ -12,7 +12,7 @@ import { ELinks,
   TUserSetting,
   TBodyUserSetting,
   TAggregatedWord,
- } from './type/types';
+} from './type/types';
 
 export async function getWords(group = '0', page = '0'): Promise<TGetWords[]> {
   const response = await fetch(`${ELinks.words}?group=${group}&page=${page}`, {
@@ -37,6 +37,9 @@ export async function createUser(body: IBodyCreateUser): Promise<IUser> {
     },
     body: JSON.stringify(body),
   });
+  if (response.status === 417) {
+    alert('user with this e-mail exists');
+  }
   return response.json();
 }
 
@@ -49,6 +52,11 @@ export async function signIn(body: TEmailPass): Promise<TSignIn> {
     },
     body: JSON.stringify(body),
   });
+  if (response.status === 403) {
+    alert('Incorrect e-mail or password');
+  } else if (response.status === 404) {
+    alert(`Couldn't find a(an) user with: ${body.email}`);
+  }
   return response.json();
 }
 
