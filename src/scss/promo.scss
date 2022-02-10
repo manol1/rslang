@@ -1,5 +1,6 @@
 .promo {
   padding: 120px 0 60px 0;
+  min-height: calc(100vh - 120px);
   &-title {
     font-size: 5rem;
     line-height: 6.25rem;

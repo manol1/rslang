@@ -22,7 +22,7 @@
     justify-content: flex-start;
     gap: 20px;
   }
-  .words-lavel {
+  .words-level {
     width: 55px;
     height: 55px;
     border-radius: 50%;
@@ -30,6 +30,9 @@
     font-size: 1.25rem;
     line-height: 1.5rem;
     color: #ffffff;
+    &.active {
+      border: 2px solid #ffffff;
+    }
     &:hover {
       transform: scale(1.1);
     }
@@ -74,8 +77,20 @@
     padding: 10px;
     background-color: rgba(236, 143, 245, .8);
     border-radius: 30px;
+    border: 3px solid transparent;
     transition: .4s all;
-
+    &.active-hard {
+      border-color:#DD2F2F;
+      svg path[data-difficalty=hard] {
+        fill: #DD2F2F;
+      }
+    }
+    &.active-easy {
+      border-color: #20AA3E;
+      svg path[data-difficalty=easy] {
+        fill: #20AA3E;
+      }
+    }
     &:hover {
       box-shadow: 5px 5px 5px #f09cd4;
     }
@@ -116,25 +131,30 @@
           display: flex;
           justify-content: space-between;
           width: 40%;
+          &.hidden {
+            display: none;
+          }
           &-item {
             width: 30px;
             height: 30px;
+            background-color: transparent;
             cursor: pointer;
             svg path{
               transition: .4s all;
             }
+            &:hover {
+              svg path {
+                fill: #631F6C;
+              }
+            }
             &:first-child {
-              &:hover {
-                svg path {
-                  fill: #DD2F2F;
-                }
+              &.choosed-hard {
+                fill: #DD2F2F;
               }
             }
             &:last-child {
-              &:hover {
-                svg path {
-                  fill: #20AA3E;
-                }
+              &.choosed-easy {
+                fill: #20AA3E;
               }
             }
           }
@@ -145,7 +165,7 @@
         &-sound {
           position: absolute;
           top: -5px;
-          right: 65%;
+          right: 55%;
           cursor: pointer;
           svg path{
             transition: .4s all;
@@ -162,12 +182,43 @@
 
   &-footer {
     display: flex;
-    justify-content: space-between;
-    width: 700px;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 60%;
     height: 40px;
-    background-color: grey;
+    color: #ffffff;
+    background-color: rgb(160, 157, 157, .6);
+    border-radius: 20px 20px 0 0 ;
     &.hidden {
       opacity: 0;
     }
+    .game {
+      display: block;
+      padding: 4px 8px;
+      cursor: pointer;
+      border: 1px solid transparent;
+      border-radius: 10px;
+      transition: .4s all;
+      &:hover {
+        border-color: #ffffff;
+      }
+    }
+    .current-page {
+      line-height: 40px;
+    }
+    .btn-prev,
+      .btn-next {
+        background-color: transparent;
+        font-size: 2rem;
+        color: #ffffff;
+      }
+  }
+
+  &-controls {
+    display: flex;
+    justify-content: space-between;
+    width: 100px;
   }
 }
+
+
