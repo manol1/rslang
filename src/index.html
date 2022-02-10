@@ -8,8 +8,12 @@
     <title>RS Lang</title>
   </head>
   <body>
-    <div class="main-page ">
-      <img src="./assets/images/divider.png" alt="Background-divider" class="divider">
+    <div class="main-page">
+      <img
+        src="./assets/images/divider.png"
+        alt="Background-divider"
+        class="divider"
+      />
       <div class="container">
         <header class="header" id="header">
           <div class="header__row">
@@ -24,37 +28,97 @@
                 <li class="header__nav_list-item">Мини-игры</li>
                 <li class="header__nav_list-item">Статистика</li>
                 <li class="header__nav_list-item">О нас</li>
-                <li class="header__nav_list-item"></li>
+                <li class="header__nav_list-item" id="log-in"></li>
               </ul>
             </nav>
           </div>
         </header>
 
         <section class="promo">
-          <h1 class="promo-title">English <br> is easy! </h1>
+          <h1 class="promo-title">
+            English <br />
+            is easy!
+          </h1>
           <div class="promo-descr">
             <p>Привет, друг! Английски для тебя мучения?</p>
             <p>Английский это скучно?</p>
             <p>Довай попробуем еще раз, с нами интересно,</p>
-            <p>и <span><strong>обязательно</strong></span> все получится!  </p>
+            <p>
+              и <span><strong>обязательно</strong></span> все получится!
+            </p>
           </div>
           <button class="btn promo-btn">Начать</button>
         </section>
 
         <section class="dictionary hidden">
-            <div class="dictionary-header">
-              <h2 class="subtitle">Уровни сложности</h2>
-              <div class="dictionary-lavels">
-                <button class="btn words-level a1 active" data-level="0">A1</button>
-                <button class="btn words-level a2" data-level="1">A2</button>
-                <button class="btn words-level b1" data-level="2">B1</button>
-                <button class="btn words-level b2" data-level="3">B2</button>
-                <button class="btn words-level c1" data-level="4">C1</button>
-                <button class="btn words-level c2" data-level="5">C2</button>
-                <button class="btn words-level complicated" data-level="complicated">Сложные слова</button>
-              </div>
+          <div class="dictionary-header">
+            <h2 class="subtitle">Уровни сложности</h2>
+            <div class="dictionary-lavels">
+              <button class="btn words-level a1 active" data-level="0">
+                A1
+              </button>
+              <button class="btn words-level a2" data-level="1">A2</button>
+              <button class="btn words-level b1" data-level="2">B1</button>
+              <button class="btn words-level b2" data-level="3">B2</button>
+              <button class="btn words-level c1" data-level="4">C1</button>
+              <button class="btn words-level c2" data-level="5">C2</button>
+              <button
+                class="btn words-lavel c2 hidden"
+                data-lavel="complicated"
+              >
+                Сложные слова
+              </button>
             </div>
-          <div class="dictionary__row"> </div>
+          </div>
+          <div class="dictionary__row"></div>
+        </section>
+
+        <section class="registration hidden" id="signIn-section">
+          <div class="form-container">
+            <h2>Вход в аккаунт</h2>
+            <span>X</span>
+            <form class="form form-signIn" action="#">
+              <input
+                placeholder="Введите Email"
+                type="email"
+                id="signIn-email"
+                required
+              />
+              <input
+                placeholder="Введите пароль"
+                type="password"
+                id="signIn-password"
+                required
+                minlength="8"
+              />
+              <input type="submit" value="Войти" id="signIn-btn" />
+            </form>
+            <p id="registration-link">Регистрация</p>
+          </div>
+        </section>
+
+        <section class="registration hidden" id="registration-section">
+          <div class="form-container">
+            <h2>Регистрация</h2>
+            <span>X</span>
+            <form class="form form-reg" action="#">
+              <input placeholder="Введите Ваше Имя" id="reg-name" required />
+              <input
+                placeholder="Введите Email"
+                type="email"
+                id="reg-email"
+                required
+              />
+              <input
+                placeholder="Введите пароль"
+                type="password"
+                id="reg-password"
+                required
+                minlength="8"
+              />
+              <input type="submit" value="Отправить" id="reg-btn" />
+            </form>
+          </div>
         </section>
 
         <footer class="footer">
@@ -63,7 +127,9 @@
             <div class="game game-audio">Аудиовызов</div>
             <div class="dictionary-controls">
               <button class="btn-prev prev" id="prev-page">&lt;</button>
-              <div class="current-page"><span id="current-page">1</span> / 30 </div>
+              <div class="current-page">
+                <span id="current-page">1</span> / 30
+              </div>
               <button class="btn-next next" id="next-page">&gt;</button>
             </div>
           </div>
@@ -71,8 +137,10 @@
             <div class="footer-item footer__github-project">
               <a href="#"></a>
             </div>
-            <div class="footer-item  footer__github-developers">
-              <a href="https://github.com/VolhaBukhal" target="_blank">volhabukhal</a>
+            <div class="footer-item footer__github-developers">
+              <a href="https://github.com/VolhaBukhal" target="_blank"
+                >volhabukhal</a
+              >
               <a href="https://github.com/manol1" target="_blank">manol1</a>
             </div>
             <div class="footer-item footer__school">
@@ -81,10 +149,6 @@
           </div>
         </footer>
       </div>
-
     </div>
-
-
-
   </body>
 </html>
