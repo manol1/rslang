@@ -10,7 +10,7 @@ const srcPath = path.resolve(__dirname, 'src');
 const devServer = (isDev) => !isDev ? {} : {
   devServer: {
     static: srcPath,
-    watch: true,
+    // watch: true,
   },
 };
 
