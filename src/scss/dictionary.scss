@@ -81,9 +81,15 @@
     transition: .4s all;
     &.active-hard {
       border-color:#DD2F2F;
+      svg path[data-difficalty=hard] {
+        fill: #DD2F2F;
+      }
     }
     &.active-easy {
       border-color: #20AA3E;
+      svg path[data-difficalty=easy] {
+        fill: #20AA3E;
+      }
     }
     &:hover {
       box-shadow: 5px 5px 5px #f09cd4;
@@ -178,12 +184,34 @@
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    width: 700px;
+    width: 60%;
     height: 40px;
-    background-color: grey;
+    color: #ffffff;
+    background-color: rgb(160, 157, 157, .6);
+    border-radius: 20px 20px 0 0 ;
     &.hidden {
       opacity: 0;
     }
+    .game {
+      display: block;
+      padding: 4px 8px;
+      cursor: pointer;
+      border: 1px solid transparent;
+      border-radius: 10px;
+      transition: .4s all;
+      &:hover {
+        border-color: #ffffff;
+      }
+    }
+    .current-page {
+      line-height: 40px;
+    }
+    .btn-prev,
+      .btn-next {
+        background-color: transparent;
+        font-size: 2rem;
+        color: #ffffff;
+      }
   }
 
   &-controls {
@@ -192,3 +220,5 @@
     width: 100px;
   }
 }
+
+

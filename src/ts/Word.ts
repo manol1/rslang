@@ -38,12 +38,6 @@ class Word {
         this.element.classList.remove('active-easy');
       }
       this.element.classList.toggle('active-hard');
-
-      if (!isAlreadyHard) {
-        console.log('isAlreadyHard - send to backend');
-      } else {
-        console.log('isAlreadyHard - remove to backend');
-      }
     }
 
     if (btnDifficalty === WordDifficulty.easy) {

@@ -2,26 +2,25 @@
   position: relative;
   width: 100vw;
   height: 100%;
-  // overflow: hidden;
   background-image: url('assets/images/main-bg-img.png');
-  background-position: center right;
-  background-size: 700px 400px;
+  background-position: 85% 50%;
+  background-size: 45rem 25rem;
   background-repeat: no-repeat;
-  &:before {
+  .divider {
     position: absolute;
-    content: '';
-    top: -90%;
-    right: -50%;
-    width: 1500px;
-    height: 1500px;
-    background:  linear-gradient(to right, $primary-color, $auxiliary-color);
-    border-radius: 5%;
-    transform: rotate(-65deg);
+    bottom: 0;
+    right: 0;
+    width: 70%;
+    height: 100%;
     z-index: -1;
   }
+
   &.dictionary-page{
-    background-color: $auxiliary-color;
-    background-image: url('assets/images/dictionary-bg.png');
-    background-size: cover;
+    height: auto;
+    background:  linear-gradient(to right, $primary-color, $auxiliary-color);
+    // background-color: $auxiliary-color;
+    // background-image: url('assets/images/dictionary-bg.png');
+    // background-size: cover;
+    // background-repeat: repeat;
   }
 }
