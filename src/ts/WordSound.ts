@@ -1,7 +1,7 @@
 export default class WordSound {
-
   constructor(
     public srcs: Array<string>,
+
   ) {}
 
   async play() {
@@ -10,8 +10,13 @@ export default class WordSound {
       audio.play();
       try {
         await new Promise((reject, resolve): void => {
-          audio.onended = resolve;
-          audio.onerror = reject;
+          audio.addEventListener('ended', () => {
+            console.log('is ended', audio.src);
+            resolve();
+          });
+          audio.addEventListener('error', (err) => {
+            reject(err);
+          });
         });
       } catch (error) {
         console.log( error);
@@ -19,4 +24,6 @@ export default class WordSound {
     }
   }
 }
+
+
 
