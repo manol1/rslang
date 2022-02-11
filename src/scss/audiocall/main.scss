@@ -1,0 +1,6 @@
+.audiocall {
+  background-color: red;
+  &.hidden {
+    display: none;
+  }
+}

@@ -9,21 +9,46 @@ class Word {
 
   element = document.createElement('div') as HTMLDivElement;
 
+  audioArr: Array<HTMLAudioElement> = [];
+
   constructor(word:TGetWords, isAutorized: boolean ) {
     this.word = word;
     this.isAuthorized = isAutorized;
   }
 
-  public playSound = () => {
-
+  public  playSound = async () => {
     const soundUrls = [
       `https://bukman-rs-lang.herokuapp.com/${this.word.audio}`,
       `https://bukman-rs-lang.herokuapp.com/${this.word.audioMeaning}`,
       `https://bukman-rs-lang.herokuapp.com/${this.word.audioExample}`,
     ];
 
-    const audio = new WordSound(soundUrls);
-    audio.play();
+    if (this.audioArr.length === 0 || this.audioArr[0].src !== soundUrls[0]) {
+      this.audioArr = soundUrls.map(src =>new Audio(src));
+    } else {
+      this.audioArr.forEach( audio => {
+        audio.currentTime = 0;
+        audio.pause();
+      });
+    }
+
+    for (const audio of this.audioArr) {
+      audio.play();
+      try {
+        await new Promise((reject, resolve): void => {
+          audio.addEventListener('ended', () => {
+            resolve();
+          });
+          audio.addEventListener('error', (err) => {
+            reject(err);
+          });
+        });
+      } catch (error) {
+        console.log( error);
+      }
+    }
+    // const audio = new WordSound(this.audioArr);
+    // audio.play();
   };
 
   setCardDifficalty = (event: Event) => {
