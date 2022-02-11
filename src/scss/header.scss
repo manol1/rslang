@@ -21,9 +21,13 @@
         background-image: url('assets/images/L-icon.png');
         background-size: contain;
         background-repeat: no-repeat;
+        transition: .4s all;
       }
       &:hover {
         color: $auxiliary-color;
+        &:before {
+          transform: scale(1.1);
+        }
       }
       &.dictionary-page {
         color: #ffffff;

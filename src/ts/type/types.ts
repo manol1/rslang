@@ -116,6 +116,11 @@ export enum WordDifficulty {
   easy = 'easy',
 }
 
+export enum GameNames {
+  sprint = 'sprint',
+  audiocall = 'audiocall',
+}
+
 export enum MenuLinks {
   dictionary = 'dictionary',
   sprint = 'sprint',
