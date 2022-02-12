@@ -1,6 +1,4 @@
 import { TGetWords, WordDifficulty }  from './type/types';
-import WordSound from './WordSound';
-
 
 class Word {
   word:TGetWords;
