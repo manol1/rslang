@@ -1,17 +1,29 @@
-import { TGetWords, WordDifficulty }  from './type/types';
+import { TGetWords, WordDifficulty, TAggregatedWord }  from './type/types';
 import WordSound from './WordSound';
-
+import {
+  createUserWord,
+  updateUserWord,
+  getAggregatedWordById,
+  deleteUserWord,
+} from './requests';
+import { renderDictionary } from './renderDictionary';
+import isExploredPage from './exploredPage';
 
 class Word {
-  word:TGetWords;
+  word: TGetWords | TAggregatedWord;
 
   isAuthorized: boolean;
 
+  isComplicated: boolean;
+
   element = document.createElement('div') as HTMLDivElement;
 
-  constructor(word:TGetWords, isAutorized: boolean ) {
+  hardWordsBtn = <HTMLButtonElement>document.querySelector('.dictionary-lavels button:last-child');
+
+  constructor(word: TGetWords | TAggregatedWord, isAutorized: boolean, isComplicated: boolean ) {
     this.word = word;
     this.isAuthorized = isAutorized;
+    this.isComplicated = isComplicated;
   }
 
   public playSound = () => {
@@ -26,7 +38,7 @@ class Word {
     audio.play();
   };
 
-  setCardDifficalty = (event: Event) => {
+  setCardDifficalty = async (event: Event) => {
     const currentBtn = event.target as HTMLOrSVGImageElement;
     const btnDifficalty = currentBtn.dataset.difficalty;
 
@@ -34,17 +46,45 @@ class Word {
     const isAlreadyEasy =  this.element.classList.contains('active-easy');
 
     if ( btnDifficalty === WordDifficulty.hard) {
-      if (isAlreadyEasy) {
-        this.element.classList.remove('active-easy');
-      }
       this.element.classList.toggle('active-hard');
+
+      if (this.isComplicated) {
+        await deleteUserWord(localStorage.getItem('userId') || '', this.word.id || this.word._id, localStorage.getItem('token') || '');
+        renderDictionary(this.isComplicated);
+      } else {
+        if (isAlreadyEasy) {
+          this.element.classList.remove('active-easy');
+        }
+        if (!isAlreadyHard) {
+
+          if ((await getAggregatedWordById(localStorage.getItem('userId') || '', this.word.id || this.word._id, localStorage.getItem('token') || ''))[0].userWord) {
+            await updateUserWord(localStorage.getItem('userId') || '', this.word.id || this.word._id, { difficulty: 'hard', optional: {} }, localStorage.getItem('token') || '');
+          } else {
+            await createUserWord(localStorage.getItem('userId') || '', this.word.id || this.word._id, { difficulty: 'hard', optional: {} }, localStorage.getItem('token') || '');
+          }
+        } else {
+          await deleteUserWord(localStorage.getItem('userId') || '', this.word.id || this.word._id, localStorage.getItem('token') || '');
+        }
+        await isExploredPage();
+      }
     }
 
     if (btnDifficalty === WordDifficulty.easy) {
+      this.element.classList.toggle('active-easy');
       if (isAlreadyHard) {
         this.element.classList.remove('active-hard');
       }
-      this.element.classList.toggle('active-easy');
+
+      if (isAlreadyEasy) {
+        await deleteUserWord(localStorage.getItem('userId') || '', this.word.id || this.word._id, localStorage.getItem('token') || '');
+      } else {
+        if ((await getAggregatedWordById(localStorage.getItem('userId') || '', this.word.id || this.word._id, localStorage.getItem('token') || ''))[0].userWord) {
+          await updateUserWord(localStorage.getItem('userId') || '', this.word.id || this.word._id, { difficulty: 'easy', optional: {} }, localStorage.getItem('token') || '');
+        } else {
+          await createUserWord(localStorage.getItem('userId') || '', this.word.id || this.word._id, { difficulty: 'easy', optional: {} }, localStorage.getItem('token') || '');
+        }
+      }
+      await isExploredPage();
     }
   };
 
@@ -59,6 +99,18 @@ class Word {
   render(perent: HTMLDivElement) {
     const card = document.createElement('div');
     card.classList.add('dictionary-card');
+
+    let difficulty: string | undefined;
+    const isDifficulty = async () => {
+      difficulty = (await getAggregatedWordById(localStorage.getItem('userId') || '', this.word.id || this.word._id, localStorage.getItem('token') || ''))[0].userWord?.difficulty;
+      if (difficulty) {
+        card.classList.add(`active-${difficulty}`);
+      }
+    };
+    if (!this.hardWordsBtn.classList.contains('hidden')) {
+      isDifficulty();
+    }
+
     card.innerHTML = `
     <div class="dictionary-card_left">
       <img src="https://bukman-rs-lang.herokuapp.com/${this.word.image}" alt="word image">
@@ -78,7 +130,7 @@ class Word {
                     4.67 20.67 4 21.5 4C22.33 4 23 4.67 23 5.5Z" fill="white"/>
                 </svg>
               </button>
-              <button class="word-contrals-item easy" data-difficalty="easy">
+              <button class="word-contrals-item easy ${ this.isComplicated ? 'hidden' : ''}" data-difficalty="easy">
                 <svg width="30" height="30" viewBox="0 0 30 30" fill="none" data-difficalty="easy"
                  xmlns="http://www.w3.org/2000/svg">
                   <path data-difficalty="easy"
@@ -110,4 +162,3 @@ class Word {
 }
 
 export default Word;
-

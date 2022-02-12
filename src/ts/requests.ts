@@ -12,6 +12,7 @@ import { ELinks,
   TUserSetting,
   TBodyUserSetting,
   TAggregatedWord,
+  TAggregatedWords,
 } from './type/types';
 
 export async function getWords(group = '0', page = '0'): Promise<TGetWords[]> {
@@ -84,14 +85,13 @@ export async function updateUser(id: string, body: TEmailPass, token: string): P
 }
 
 export async function deleteUser(id: string, token: string): Promise<void> {
-  const response = await fetch(`${ELinks.users}/${id}`, {
+  await fetch(`${ELinks.users}/${id}`, {
     method: 'DELETE',
     headers: {
       'Accept': '*/*',
       'Authorization': `Bearer ${token}`,
     },
   });
-  return response.json();
 }
 
 export async function getTokens(id: string, refreshToken: string): Promise<TToken> {
@@ -151,14 +151,13 @@ export async function updateUserWord(id: string, wordId: string, body: TBodyUser
 }
 
 export async function deleteUserWord(id: string, wordId: string, token: string): Promise<void> {
-  const response = await fetch(`${ELinks.users}/${id}/words/${wordId}`, {
+  await fetch(`${ELinks.users}/${id}/words/${wordId}`, {
     method: 'DELETE',
     headers: {
       'Accept': '*/*',
       'Authorization': `Bearer ${token}`,
     },
   });
-  return response.json();
 }
 
 export async function putUserStatistics(id: string, body: TBodyUserStatistic, token: string): Promise<TUserStatistic> {
@@ -217,24 +216,13 @@ export async function getAggregatedWordById(id: string, wordId: string, token: s
   return response.json();
 }
 
-// function isEmptyFilter(obj: object) {
-//   for (let key in obj) {
-//     return false;
-//   }
-//   return true;
-// }
-
-// export async function getAggregatedWords(id: string, token: string, page = 0, wordsPerPage = 10, filter = {}, group?: number): Promise<TAggregatedWords[]> {
-//   let link: string;
-//   if (group && isEmptyFilter(filter) === true) {
-//     link = `${ELinks.users}/${id}/aggregatedWords?page=${page}`
-//   }
-//   const response = await fetch(link, {
-//     headers: {
-//       'Accept': 'application/json',
-//       'Authorization': `Bearer ${token}`,
-//     },
-//   });
-//   return response.json();
-// }
+export async function getAggregatedWords(id: string, token: string, link: string): Promise<TAggregatedWords[]> {
+  const response = await fetch(link, {
+    headers: {
+      'Accept': 'application/json',
+      'Authorization': `Bearer ${token}`,
+    },
+  });
+  return response.json();
+}
 
