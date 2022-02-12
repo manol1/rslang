@@ -20,6 +20,7 @@ export type TGetWords = {
   wordTranslate: string,
   textMeaningTranslate: string,
   textExampleTranslate: string,
+  _id: string,
 };
 
 export interface INameEmail {
@@ -99,7 +100,8 @@ export type TAggregatedWord = {
   wordTranslate: string,
   textMeaningTranslate: string,
   textExampleTranslate: string,
-  userWord?: object,
+  userWord?: TBodyUserWorld,
+  id?: string,
 };
 
 type TCount = {

@@ -1,5 +1,6 @@
 import { createUser, signIn } from './requests';
 import { store } from './store/store';
+import { renderDictionary } from './renderDictionary';
 
 function authentification() {
   const logIn = <HTMLLIElement>document.getElementById('log-in');
@@ -20,6 +21,7 @@ function authentification() {
     logIn.classList.remove('signIn-logo');
     hardWordsBtn.classList.add('hidden');
     store.isAuthorized = false;
+    renderDictionary();
     localStorage.clear();
     logIn.removeEventListener('click', goLogOut);
     logIn.addEventListener('click', goLogIn);
@@ -63,6 +65,7 @@ function authentification() {
       const newUser = await createUser({ name: regNameInput.value, email: regEmailInput.value, password: password });
       const newSignIn = await signIn({ email: newUser.email, password: password });
       afterSubmitForm();
+      renderDictionary();
       localStorage.setItem('userId', newSignIn.userId);
       localStorage.setItem('token', newSignIn.token);
       localStorage.setItem('refreshToken', newSignIn.refreshToken);
@@ -79,6 +82,7 @@ function authentification() {
     try {
       const newSignIn = await signIn({ email: signInEmailInput.value, password: signInPasswordInput.value });
       afterSubmitForm();
+      renderDictionary();
       localStorage.setItem('userId', newSignIn.userId);
       localStorage.setItem('token', newSignIn.token);
       localStorage.setItem('refreshToken', newSignIn.refreshToken);
