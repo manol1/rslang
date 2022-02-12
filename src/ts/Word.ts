@@ -1,5 +1,4 @@
 import { TGetWords, WordDifficulty, TAggregatedWord }  from './type/types';
-import WordSound from './WordSound';
 import {
   createUserWord,
   updateUserWord,
@@ -20,22 +19,45 @@ class Word {
 
   hardWordsBtn = <HTMLButtonElement>document.querySelector('.dictionary-lavels button:last-child');
 
+  audioArr: Array<HTMLAudioElement> = [];
+
   constructor(word: TGetWords | TAggregatedWord, isAutorized: boolean, isComplicated: boolean ) {
     this.word = word;
     this.isAuthorized = isAutorized;
     this.isComplicated = isComplicated;
   }
 
-  public playSound = () => {
-
+  public  playSound = async () => {
     const soundUrls = [
       `https://bukman-rs-lang.herokuapp.com/${this.word.audio}`,
       `https://bukman-rs-lang.herokuapp.com/${this.word.audioMeaning}`,
       `https://bukman-rs-lang.herokuapp.com/${this.word.audioExample}`,
     ];
 
-    const audio = new WordSound(soundUrls);
-    audio.play();
+    if (this.audioArr.length === 0 || this.audioArr[0].src !== soundUrls[0]) {
+      this.audioArr = soundUrls.map(src =>new Audio(src));
+    } else {
+      this.audioArr.forEach( audio => {
+        audio.currentTime = 0;
+        audio.pause();
+      });
+    }
+
+    for (const audio of this.audioArr) {
+      audio.play();
+      try {
+        await new Promise((reject, resolve): void => {
+          audio.addEventListener('ended', () => {
+            resolve();
+          });
+          audio.addEventListener('error', (err) => {
+            reject(err);
+          });
+        });
+      } catch (error) {
+        console.log( error);
+      }
+    }
   };
 
   setCardDifficalty = async (event: Event) => {
