@@ -1,6 +1,9 @@
 .footer {
   display: flex;
   justify-content: space-between;
+  &.hidden {
+    display: none;
+  }
   &-item {
     cursor: pointer;
   }

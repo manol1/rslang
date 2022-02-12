@@ -1,0 +1,7 @@
+.sprint {
+  background-color: lightgreen;
+  font-size: 3rem;
+  &.hidden {
+    display: none;
+  }
+}
