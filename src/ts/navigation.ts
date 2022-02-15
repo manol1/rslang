@@ -69,10 +69,23 @@ function navigation() {
   };
 
   const displayAudiocall = () => {
+    const audiocallWelcome = document.querySelector('.audiocall-welcome');
+    const audiocallQuestion = document.querySelector('.audiocall-question');
+
     hideAllSections();
     highlightOfCurrentPage(MenuLinks.games);
 
     audiocallLink?.classList.remove('hidden');
+
+    if (store.isAuthorized) {
+      audiocallWelcome?.classList.add('hidden');
+      if (audiocallQuestion?.classList.contains('hidden')) {
+        audiocallQuestion?.classList.remove('hidden');
+      }
+    } else {
+      audiocallQuestion?.classList.add('hidden');
+      audiocallWelcome?.classList.remove('hidden');
+    }
   };
 
   const displaySprint = () => {

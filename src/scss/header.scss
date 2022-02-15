@@ -99,6 +99,7 @@
             position: absolute;
             top: 105%;
             left: -2%;
+            z-index: 2;
             transform-origin: 0 0;
             transform: scaleY(0);
             transition: .4s all;
@@ -106,6 +107,7 @@
               padding: 2px 4px;
               border-radius: 10px;
               border: 1px solid transparent;
+              background-color: #AC28BE;
               &:hover {
                 cursor: pointer;
                 border-color: #ffffff;
@@ -123,12 +125,4 @@
 
     }
   }
-}
-.header__row {
-}
-.header__logo {
-}
-.header__logo_img {
-}
-.header__nav {
 }

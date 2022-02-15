@@ -58,11 +58,15 @@
       width: 100px;
       border-radius: 20px;
       background-color: #36113b;
+      &.hidden {
+        display: none;
+      }
     }
   }
 
   &__row {
     margin: 10px 0;
+    min-height: calc(100vh - 155px);
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;

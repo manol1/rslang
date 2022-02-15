@@ -25,6 +25,7 @@ class Word {
     this.word = word;
     this.isAuthorized = isAutorized;
     this.isComplicated = isComplicated;
+    this.audioArr = [];
   }
 
   public  playSound = async () => {
