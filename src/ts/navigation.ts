@@ -82,6 +82,7 @@ function navigation() {
       if (audiocallQuestion?.classList.contains('hidden')) {
         audiocallQuestion?.classList.remove('hidden');
       }
+      audiocallQuestion?.classList.remove('hidden');
     } else {
       audiocallQuestion?.classList.add('hidden');
       audiocallWelcome?.classList.remove('hidden');
