@@ -4,6 +4,11 @@ import { playSound, shuffle } from './utils';
 import Question from './Question';
 import Result from './Result';
 
+// enum quizButtonName {
+//   next = 'Дальше',
+//   unknown = 'Не знаю',
+// }
+
 class Quiz {
 
   currentAnswer: string | null;
@@ -89,18 +94,30 @@ class Quiz {
     this.questions[this.answeredAmount].render(this.quizChangableEl);
     this.questions[this.answeredAmount].bindListener();
     this.bindListener();
+
+    // this.nextBtn.textContent = quizButtonName.unknown;
+
+    // if (!this.currentAnswer) {
+    //   console.log('currentAnswer is empty', this.currentAnswer);
+    //   this.currentAnswer = this.questions[this.answeredAmount].correctAnswer;
+    //   this.styleAnswer();
+    //   this.nextBtn.textContent = quizButtonName.next;
+    // }
   };
 
   nextQuestion() {
+
+    //if the word is unknown the btn name - "не знаю"
     const answerInfo = document.querySelector('.audiocall-question__info');
     answerInfo?.classList.add('hidden');
 
     if (this.answeredAmount < this.totalAmount) {
+      this.currentAnswer = ''; //reset currentAnswer
       this.renderQuestion();
+      console.log('curentAnswer in next new question ', this.currentAnswer);
     } else {
       this.endQuiz();
     }
-    // (this.answeredAmount < this.totalAmount) ? this.renderQuestion() : this.endQuiz();
   }
 
   showResult = () => {

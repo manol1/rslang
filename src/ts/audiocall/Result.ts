@@ -1,6 +1,7 @@
 import { TGetWords } from '../type/types';
 import Question from '../audiocall/Question';
 import { renderDictionary } from '../renderDictionary';
+import startAudioCallGame from './startAudioCallGame';
 
 export default class Result {
 
@@ -28,9 +29,33 @@ export default class Result {
     return html;
   }
 
+  navigateToAudiocallStart() {
+    const audiocallResult = document.querySelector('.audiocall-result') as HTMLElement;
+    const audiocallWelcome = document.querySelector('.audiocall-welcome');
+    audiocallResult.classList.add('hidden');
+    audiocallWelcome?.classList.remove('hidden');
+  }
+
+  navigateBackToDictionary() {
+    const dictionarySection = document.querySelector('.dictionary');
+    const footerSection = document.querySelector('.footer');
+    const dictionaryGameFooter = document.querySelector('.dictionary-footer');
+
+    dictionarySection?.classList.remove('hidden');
+    footerSection?.classList.remove('hidden');
+    dictionaryGameFooter?.classList.remove('footer-hidden');
+    renderDictionary();
+  }
+
+  closeResult() {
+    this.element.classList.add('hidden');
+  }
+
   bindListener() {
     const playSoundBtn = this.element.querySelectorAll('.audiocall-result__sound-btn');
     const closeBtn = this.element.querySelector('.close-result');
+    const playAgainBtn = this.element.querySelector('.audiocall-result_play-again');
+    const backToDictionaryBtn = this.element.querySelector('.audiocall-result_back-dictionary');
 
     playSoundBtn.forEach( btn => btn.addEventListener('click', (event: Event) => {
       const currentWord = event?.target as HTMLElement;
@@ -38,8 +63,11 @@ export default class Result {
       audio?.play();
     }));
 
-    closeBtn?.addEventListener('click', () => this.element.classList.add('hidden'));
-    renderDictionary();
+    closeBtn?.addEventListener('click', this.closeResult);
+    closeBtn?.addEventListener('click', this.navigateBackToDictionary);
+
+    playAgainBtn?.addEventListener('click', this.navigateToAudiocallStart);
+    backToDictionaryBtn?.addEventListener('click', this.navigateBackToDictionary);
   }
 
   generate() {
@@ -60,6 +88,10 @@ export default class Result {
           <div class="answer-amount correct-amount">${this.correctAnswers.length}</div>
         </div>
         ${this.generateWordArr(this.correctAnswers)}
+      </div>
+      <div class="audiocall-result__navigation">
+          <button class="btn audiocall-result_play-again btn-result-nav">Сыграть еще раз</button>
+          <button class="btn audiocall-result_back-dictionary btn-result-nav">Вернуться в учебник</button>
       </div>
     `;
   }

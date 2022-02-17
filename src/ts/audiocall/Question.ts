@@ -56,6 +56,7 @@ class Question {
   bindListener = () => {
     const playBtn = this.element.querySelector('.audiocall-question__sound-btn');
     const audioEl = playBtn?.querySelector('audio');
+    // audioEl?.play();
     playBtn?.addEventListener('click', async () => {
       audioEl?.play();
     });

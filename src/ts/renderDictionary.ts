@@ -13,10 +13,6 @@ export const renderDictionary = async (isComplicated = false) => {
   const hardWordsBtn = <HTMLButtonElement>document.querySelector('.dictionary-lavels button:last-child');
   const promo = <HTMLButtonElement>document.querySelector('.promo');
 
-  // const wordCards = document.querySelectorAll('.dictionary-card');
-  // console.log(wordCards);
-
-
   if (promo.classList.contains('hidden') && !hardWordsBtn.classList.contains('hidden')) {
     dictionaryFooter.classList.remove('hidden');
   }
