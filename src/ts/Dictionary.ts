@@ -43,7 +43,7 @@ export default class Dictionary {
     const wordCards = document.querySelectorAll('.word-transcription-sound');
     // console.log(wordCards);
     wordCards.forEach(wordCard => wordCard.addEventListener('click', () => {
-      this.words.forEach(word => console.log(word.audio));
+      // this.words.forEach(word => console.log(word.audio));
     } ));
   }
 

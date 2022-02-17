@@ -21,6 +21,8 @@ class Question {
 
   word: TGetWords;
 
+  wordTranslate: string;
+
   audio: HTMLAudioElement;
 
   quizElement: HTMLDivElement;
@@ -31,6 +33,7 @@ class Question {
     this.word = question;
     this.correctAnswer = question.wordTranslate;
     this.sound = question.audio;
+    this.wordTranslate = question.wordTranslate;
     this.isCorrect = false;
     this.words = words;
     this.answersArr = this.getAnswersArr();

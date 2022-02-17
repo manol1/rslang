@@ -2,6 +2,7 @@
 import { TGetWords } from '../type/types';
 import { playSound, shuffle } from './utils';
 import Question from './Question';
+import Result from './Result';
 
 class Quiz {
 
@@ -15,9 +16,9 @@ class Quiz {
 
   totalAmount: number;
 
-  totalWrongWords: string[];
+  totalWrongWords: Question[];
 
-  totalCorrectWords: string[];
+  totalCorrectWords: Question[];
 
   quizElement = document.querySelector('.audiocall-question') as HTMLDListElement;
 
@@ -106,12 +107,12 @@ class Quiz {
     if (this.currentAnswer) {
       const isCorrectAnswer =  this.questions[this.answeredAmount].answer(this.currentAnswer);
       if (isCorrectAnswer) {
-        this.totalCorrectWords.push(this.questions[this.answeredAmount].correctAnswer);
+        this.totalCorrectWords.push(this.questions[this.answeredAmount]);
         this.styleAnswer();
         playSound(true);
 
       } else {
-        this.totalWrongWords.push(this.questions[this.answeredAmount].correctAnswer);
+        this.totalWrongWords.push(this.questions[this.answeredAmount]);
         this.styleAnswer();
         playSound(false);
       }
@@ -119,18 +120,18 @@ class Quiz {
   };
 
   endQuiz() {
-    const audiocallResult = document.querySelector('.audiocall-result');
-    const closeResult = document.querySelector('.close-result');
+    const audiocallResult = document.querySelector('.audiocall-result') as HTMLElement;
     // this.finalElement.style.visibility = 'visible';
     // const correctAnswersTotal = this.calculateCorrectAnswers();
     // this.final = new Final(correctAnswersTotal, this.totalAmount);
+    const resultTable = new Result(this.totalWrongWords, this.totalCorrectWords);
+    resultTable.mount(audiocallResult);
+    resultTable.bindListener();
+
     console.log('Quiz is ended', this.totalAmount, this.totalWrongWords.length  );
     this.quizElement.classList.add('hidden');
     audiocallResult?.classList.remove('hidden');
-    closeResult?.addEventListener('click', () => {
-      console.log(closeResult);
-      audiocallResult?.classList.add('hidden');
-    });
+
   }
 
   calculateCorrectAnswers() {
