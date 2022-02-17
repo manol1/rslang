@@ -44,7 +44,6 @@ export default class Result {
     dictionarySection?.classList.remove('hidden');
     footerSection?.classList.remove('hidden');
     dictionaryGameFooter?.classList.remove('footer-hidden');
-    renderDictionary();
   }
 
   closeResult() {

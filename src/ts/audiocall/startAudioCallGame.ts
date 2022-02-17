@@ -29,8 +29,23 @@ export default function startAudioCallGame() {
     let words: TGetWords[];
     if (!store.isAuthorized) {
       words = await getWords(store.audiocallCurrentLevel, store.currentPage);
+      // words = await getWords(store.currentLevel, store.currentPage);// из словоря, то брать
     } else {
       console.log(store.currentLevel, store.currentPage);
+      words = await getWords(store.currentLevel, store.currentPage);
+    }
+    const quiz = new Quiz(words);
+    quiz.bindListener();
+    console.log('start with level: ', store.audiocallCurrentLevel);
+  };
+
+
+  const startQuizfromDictionary = async () => {
+    let words: TGetWords[];
+    if (!store.isAuthorized) {
+      words = await getWords(store.currentLevel, store.currentPage);
+    } else {
+      // console.log(store.currentLevel, store.currentPage);
       words = await getWords(store.currentLevel, store.currentPage);
     }
     const quiz = new Quiz(words);
@@ -44,7 +59,7 @@ export default function startAudioCallGame() {
   startAudiocallBtn?.addEventListener('click', startQuiz);
   startAudiocallFromNav?.addEventListener('click', startQuiz);
   startAudiocallFromDictionary?.addEventListener('click', openAudioCallGame);
-  startAudiocallFromDictionary?.addEventListener('click', startQuiz);
+  startAudiocallFromDictionary?.addEventListener('click', startQuizfromDictionary);
 
   closeResult?.addEventListener('click', () => {
     audiocallResult?.classList.add('hidden');

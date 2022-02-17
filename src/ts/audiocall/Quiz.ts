@@ -116,6 +116,7 @@ class Quiz {
       this.renderQuestion();
       console.log('curentAnswer in next new question ', this.currentAnswer);
     } else {
+      this.answeredAmount = 0;
       this.endQuiz();
     }
   }
