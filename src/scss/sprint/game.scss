@@ -1,0 +1,43 @@
+.sprint-game {
+  font-size: 32px;
+  letter-spacing: 1px;
+  &.hidden {
+    display: none;
+  }
+}
+
+.sprint-word {
+  margin-bottom: 40px;
+}
+
+.sprint-word-wrapper {
+  margin-bottom: 40px;
+}
+
+.sprint-word-result {
+  height: 60px;
+  width: 60px;
+  margin-bottom: 40px;
+  background-size: contain;
+  transition: all 0.5s;
+  &.visibility {
+    opacity: 0;
+  }
+  &.wrong-answer {
+    background-image: url('assets/images/icon-ban.png');
+  }
+  &.right-answer {
+    background-image: url('assets/images/icon-check-mark.png');
+  }
+}
+
+.sprint-word-translation {
+  color: black;
+}
+
+.sprint-timer {
+  margin-bottom: 40px;
+  height: 30px;
+  font-size: 48px;
+  color: green;
+}

@@ -1,0 +1,47 @@
+
+
+.sprint-result-content {
+  min-width: 50%;
+  margin-bottom: 40px;
+  span {
+    padding-top: 3px;
+    display: block;
+    width: 50px;
+    height: 30px;
+    margin-left: 20px;
+    color: white;
+    border-radius: 15px;
+    &#count-sprint-result-mistakes {
+      background-color: red;
+    }
+    &#count-sprint-result-correct {
+      background-color: green;
+    }
+  }
+  hr {
+    height: 3px;
+    margin: 20px 0;
+    background-color: white;
+  }
+}
+
+.sprint-result-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.result-word {
+  display: flex;
+  align-items: center;
+  column-gap: 20px;
+  div {
+    &:first-child {
+      width: 40px;
+      height: 40px;
+      background-image: url('assets/svg/volume.svg');
+      background-size: contain;
+    }
+
+  }
+}

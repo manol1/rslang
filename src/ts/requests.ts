@@ -216,7 +216,7 @@ export async function getAggregatedWordById(id: string, wordId: string, token: s
   return response.json();
 }
 
-export async function getAggregatedWords(id: string, token: string, link: string): Promise<TAggregatedWords[]> {
+export async function getAggregatedWords(token: string, link: string): Promise<TAggregatedWords[]> {
   const response = await fetch(link, {
     headers: {
       'Accept': 'application/json',

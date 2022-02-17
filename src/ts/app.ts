@@ -3,6 +3,7 @@ import authentification from './authentification';
 import getComplicatedWords from './complicated-words';
 import { store } from './store/store';
 import { renderDictionary } from './renderDictionary';
+import sprint from './sprint/sprint';
 
 export default async function App() {
   const levelBtns = document.querySelectorAll('.words-level');
@@ -51,4 +52,5 @@ export default async function App() {
   });
 
   getComplicatedWords();
+  sprint();
 }

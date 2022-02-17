@@ -24,15 +24,24 @@
             </div>
             <nav class="header__nav">
               <ul class="header__nav_list">
-                <li class="header__nav_list-item" data-link="dictionary">Учебник</li>
-                <li class="header__nav_list-item game-nav" data-link="games" >Мини-игры
+                <li class="header__nav_list-item" data-link="dictionary">
+                  Учебник
+                </li>
+                <li class="header__nav_list-item game-nav" data-link="games">
+                  Мини-игры
                   <ul class="game-menu">
                     <li class="game-menu_sprint" data-link="sprint">Спринт</li>
-                    <li class="game-menu_audiocall" data-link="audiocall">Аудиовызов</li>
+                    <li class="game-menu_audiocall" data-link="audiocall">
+                      Аудиовызов
+                    </li>
                   </ul>
                 </li>
-                <li class="header__nav_list-item" data-link="statistics">Статистика</li>
-                <li class="header__nav_list-item" data-link="developers">О нас</li>
+                <li class="header__nav_list-item" data-link="statistics">
+                  Статистика
+                </li>
+                <li class="header__nav_list-item" data-link="developers">
+                  О нас
+                </li>
                 <li class="header__nav_list-item" id="log-in"></li>
               </ul>
             </nav>
@@ -131,7 +140,56 @@
         </section>
 
         <section class="sprint hidden">
-          <h2>Sprint game</h2>
+          <div class="sprint-start">
+            <div class="sprint-start__description">
+              <h2>Sprint</h2>
+              <p>Sprint - это игра-тренировка на время.</p>
+              <p>Используйте мышь либо стрелки клавиатуры для ответов.</p>
+            </div>
+            <div class="sprint-start__level">
+              <p>Выберите уровнь сложности:</p>
+              <div class="sprint-levels">
+                <button class="sprint-level active">A1</button>
+                <button class="sprint-level">A2</button>
+                <button class="sprint-level">B1</button>
+                <button class="sprint-level">B2</button>
+                <button class="sprint-level">C1</button>
+                <button class="sprint-level">C2</button>
+              </div>
+            </div>
+            <button class="sprint-start-btn">Приступить</button>
+          </div>
+          <div class="sprint-start sprint-game hidden">
+            <div class="sprint-timer"></div>
+            <div class="sprint-word-wrapper">
+              <p class="sprint-word"></p>
+              <p class="sprint-word-translation"></p>
+            </div>
+            <div class="sprint-word-result visibility"></div>
+            <div class="sprint-word-btns">
+              <button class="sprint-word-wrong">Неверно</button>
+              <button class="sprint-word-right">Верно</button>
+            </div>
+          </div>
+          <div class="sprint-start sprint-result hidden">
+            <div class="sprint-result-content">
+              <div class="sprint-result-header">
+                <p>Ошибок</p>
+                <span id="count-sprint-result-mistakes"></span>
+              </div>
+              <div id="sprint-result-mistakes"></div>
+              <hr />
+              <div class="sprint-result-header">
+                <p>Знаю</p>
+                <span id="count-sprint-result-correct"></span>
+              </div>
+              <div id="sprint-result-correct"></div>
+            </div>
+            <div class="result-btns">
+              <button id="new-sprint">Новая игра</button>
+              <button id="close-sprint">Закрыть</button>
+            </div>
+          </div>
         </section>
 
         <section class="statistics hidden">
@@ -141,7 +199,6 @@
         <section class="developers hidden">
           <h2>About us page</h2>
         </section>
-
 
         <footer class="footer">
           <div class="dictionary-footer footer-hidden">
