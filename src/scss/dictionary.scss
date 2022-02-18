@@ -17,9 +17,10 @@
     gap: 20px;
   }
 
-  &-lavels {
+  &-levels {
     display: flex;
     justify-content: flex-start;
+    flex-wrap: wrap;
     gap: 20px;
   }
   .words-level {
@@ -58,11 +59,15 @@
       width: 100px;
       border-radius: 20px;
       background-color: #36113b;
+      &.hidden {
+        display: none;
+      }
     }
   }
 
   &__row {
     margin: 10px 0;
+    min-height: calc(100vh - 155px);
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
@@ -139,6 +144,9 @@
             width: 30px;
             height: 30px;
             background-color: transparent;
+            &.hidden {
+              display: none;
+            }
             cursor: pointer;
             svg path{
               transition: .4s all;

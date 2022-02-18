@@ -131,3 +131,9 @@ export enum MenuLinks {
   developers = 'developers',
   games = 'games',
 }
+
+export enum ResultGrade {
+  excellent = 100,
+  good = 70,
+  bad = 30,
+}

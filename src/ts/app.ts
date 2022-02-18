@@ -4,6 +4,7 @@ import getComplicatedWords from './complicated-words';
 import { store } from './store/store';
 import { renderDictionary } from './renderDictionary';
 import sprint from './sprint/sprint';
+import startAudioCallGame from '../ts/audiocall/startAudioCallGame';
 
 export default async function App() {
   const levelBtns = document.querySelectorAll('.words-level');
@@ -12,7 +13,10 @@ export default async function App() {
   const currentPageInfo = document.querySelector('#current-page') as HTMLElement;
 
   navigation();
+
   authentification();
+
+  startAudioCallGame();
 
   //render dictionary
   renderDictionary();
