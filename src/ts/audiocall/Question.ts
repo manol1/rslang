@@ -1,4 +1,4 @@
-import { TGetWords } from '../type/types';
+import { TGetWords, TAggregatedWord } from '../type/types';
 import { getWords } from '../requests';
 import { store } from '../store/store';
 import { shuffle } from './utils';
@@ -17,9 +17,9 @@ class Question {
 
   answersArr: string[];
 
-  words: TGetWords[];
+  words: TGetWords[] | TAggregatedWord[];
 
-  word: TGetWords;
+  word: TGetWords | TAggregatedWord;
 
   wordTranslate: string;
 
@@ -29,7 +29,7 @@ class Question {
 
   element = document.createElement('div');
 
-  constructor(question: TGetWords, words: TGetWords[] ) {
+  constructor(question: TGetWords | TAggregatedWord, words: TGetWords[] | TAggregatedWord[] ) {
     this.word = question;
     this.correctAnswer = question.wordTranslate;
     this.sound = question.audio;
@@ -56,14 +56,13 @@ class Question {
   bindListener = () => {
     const playBtn = this.element.querySelector('.audiocall-question__sound-btn');
     const audioEl = playBtn?.querySelector('audio');
-    // audioEl?.play();
+    audioEl?.play();
     playBtn?.addEventListener('click', async () => {
       audioEl?.play();
     });
   };
 
   answer(choosedAnswer: string) {
-    console.log('choosedAnswer', choosedAnswer);
     return this.isCorrect = (choosedAnswer === this.correctAnswer) || false;
   }
 
@@ -79,7 +78,7 @@ class Question {
     const quastionBlock = document.createElement('div');
     quastionBlock.classList.add('audiocall-question__info');
     quastionBlock.classList.add('hidden');
-    quastionBlock.setAttribute('data-sound', this.word.id);
+    // quastionBlock.setAttribute('data-sound', this.word.id);
     const htmlquastionBlock = `
       <img src="https://bukman-rs-lang.herokuapp.com/${this.word.image}" alt="answer image" class="audiocall-question__img info-item">
       <div class="info-item center">
@@ -108,16 +107,3 @@ class Question {
 
 export default Question;
 
-
-// render() {
-//   this.questionWordEl.innerHTML = this.correctAnswer;
-//   this.quizElement.setAttribute('data-sound', this.word.id);
-//   this.questionImg.src = `https://bukman-rs-lang.herokuapp.com/${this.word.image}`;
-//   this.audio.src = `https://bukman-rs-lang.herokuapp.com/${this.word.audio}`;
-
-//   console.log('answerElements: ', this.answerElements, this.correctAnswer);
-//   console.log('this.word.id: ', this.word.id);
-//   this.answerElements.forEach( (el, index) => {
-//     el.textContent = this.answersArr[index];
-//   });
-// }

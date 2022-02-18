@@ -1,5 +1,5 @@
 // import Final from './final.js';
-import { TGetWords } from '../type/types';
+import { TGetWords, TAggregatedWord } from '../type/types';
 import { playSound, shuffle } from './utils';
 import Question from './Question';
 import Result from './Result';
@@ -31,7 +31,7 @@ class Quiz {
 
   nextBtn = document.querySelector('.audiocall-question__next-btn') as HTMLButtonElement;
 
-  constructor( questions:TGetWords[]) {
+  constructor( questions:TGetWords[] | TAggregatedWord[] ) {
     // this.finalElement = document.querySelector('.final');
     this.totalAmount = questions.length;
     this.answeredAmount = 0;
@@ -82,10 +82,11 @@ class Quiz {
   bindListener() {
     this.audiocallAnswerBtns = document.querySelectorAll('.answer-item');
     this.audiocallAnswerBtns.forEach(answerBtn =>
-      answerBtn.addEventListener('click', this.getAnswerWord));
+      answerBtn.addEventListener('click', this.getAnswerWord),
+    );
   }
 
-  setQuestions = (questions: TGetWords[]) => {
+  setQuestions = (questions: TGetWords[] | TAggregatedWord[]) => {
     return questions.map(question => new Question(question, questions));
   };
 
@@ -94,20 +95,10 @@ class Quiz {
     this.questions[this.answeredAmount].render(this.quizChangableEl);
     this.questions[this.answeredAmount].bindListener();
     this.bindListener();
-
-    // this.nextBtn.textContent = quizButtonName.unknown;
-
-    // if (!this.currentAnswer) {
-    //   console.log('currentAnswer is empty', this.currentAnswer);
-    //   this.currentAnswer = this.questions[this.answeredAmount].correctAnswer;
-    //   this.styleAnswer();
-    //   this.nextBtn.textContent = quizButtonName.next;
-    // }
   };
 
   nextQuestion() {
 
-    //if the word is unknown the btn name - "не знаю"
     const answerInfo = document.querySelector('.audiocall-question__info');
     answerInfo?.classList.add('hidden');
 
@@ -116,7 +107,9 @@ class Quiz {
       this.renderQuestion();
       console.log('curentAnswer in next new question ', this.currentAnswer);
     } else {
-      this.answeredAmount = 0;
+      const audio = new Audio();
+      audio.src = './assets/sounds/roundEnd.mp3';
+      audio.play();
       this.endQuiz();
     }
   }
@@ -146,6 +139,7 @@ class Quiz {
     resultTable.mount(audiocallResult);
     resultTable.bindListener();
 
+    this.answeredAmount = 0;
     console.log('Quiz is ended', this.totalAmount, this.totalWrongWords.length  );
     this.quizElement.classList.add('hidden');
     audiocallResult?.classList.remove('hidden');

@@ -40,14 +40,19 @@ export default class Result {
     const dictionarySection = document.querySelector('.dictionary');
     const footerSection = document.querySelector('.footer');
     const dictionaryGameFooter = document.querySelector('.dictionary-footer');
+    const audiocallSection = document.querySelector('.audiocall');
+    const audiocallResult = document.querySelector('.audiocall-result') as HTMLElement;
 
     dictionarySection?.classList.remove('hidden');
     footerSection?.classList.remove('hidden');
     dictionaryGameFooter?.classList.remove('footer-hidden');
+    audiocallSection?.classList.add('hidden');
+    audiocallResult.classList.add('hidden');
   }
 
   closeResult() {
-    this.element.classList.add('hidden');
+    const audiocallResult = document.querySelector('.audiocall-result') as HTMLElement;
+    audiocallResult.classList.add('hidden');
   }
 
   bindListener() {

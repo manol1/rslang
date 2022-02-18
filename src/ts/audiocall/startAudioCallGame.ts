@@ -1,6 +1,6 @@
 import { store } from '../store/store';
-import { getWords } from '../requests';
-import { TGetWords } from '../type/types';
+import { getWords, getAggregatedWords } from '../requests';
+import { TGetWords, TAggregatedWord, ELinks } from '../type/types';
 import Quiz from '../audiocall/Quiz';
 
 export default function startAudioCallGame() {
@@ -28,10 +28,8 @@ export default function startAudioCallGame() {
   const startQuiz = async () => {
     let words: TGetWords[];
     if (!store.isAuthorized) {
-      words = await getWords(store.audiocallCurrentLevel, store.currentPage);
-      // words = await getWords(store.currentLevel, store.currentPage);// из словоря, то брать
+      words = await getWords(store.audiocallCurrentLevel, String(Math.floor(Math.random() * 30)));
     } else {
-      console.log(store.currentLevel, store.currentPage);
       words = await getWords(store.currentLevel, store.currentPage);
     }
     const quiz = new Quiz(words);
@@ -41,23 +39,37 @@ export default function startAudioCallGame() {
 
 
   const startQuizfromDictionary = async () => {
-    let words: TGetWords[];
+    let words: TGetWords[] | TAggregatedWord[];
     if (!store.isAuthorized) {
       words = await getWords(store.currentLevel, store.currentPage);
     } else {
-      // console.log(store.currentLevel, store.currentPage);
-      words = await getWords(store.currentLevel, store.currentPage);
+      if (store.isComplicatedWordPage) {
+        const filterStr = 'aggregatedWords?filter=%7B%22userWord.difficulty%22%3A%22hard%22%7D';
+        words = (await getAggregatedWords(localStorage.getItem('userId') || '',
+          localStorage.getItem('token') || '',
+          `${ELinks.users}/${localStorage.getItem('userId')}/${filterStr}`))[0].paginatedResults;
+        console.log('hard words', words);
+      } else {
+        const filterStr = `aggregatedWords?group=${store.currentLevel}
+        &filter=%7B%22%24and%22%3A%5B%7B%22%24or%22%3A%5B%7B%22userWord.
+        difficulty%22%3A%22hard%22%7D%2C%7B%22userWord
+        %22%3Anull%7D%5D%7D%2C%20%20%7B%22page%22%3A
+        ${store.currentPage}%7D%20%5D%7D`;
+        words = (await getAggregatedWords(localStorage.getItem('userId') || '',
+          localStorage.getItem('token') || '',
+          `${ELinks.users}/${localStorage.getItem('userId')}/${filterStr}`))[0].paginatedResults;
+        console.log(words);
+        console.log('total count: ', words.length);
+      }
     }
     const quiz = new Quiz(words);
     quiz.bindListener();
-
-    console.log('start with level: ', store.audiocallCurrentLevel);
   };
 
   audiocallLevelBtns.forEach(level => level.addEventListener('click', setCurrentLevel));
   startAudiocallBtn?.addEventListener('click', openAudioCallGame);
   startAudiocallBtn?.addEventListener('click', startQuiz);
-  startAudiocallFromNav?.addEventListener('click', startQuiz);
+  startAudiocallFromNav?.addEventListener('click', openAudioCallGame);
   startAudiocallFromDictionary?.addEventListener('click', openAudioCallGame);
   startAudiocallFromDictionary?.addEventListener('click', startQuizfromDictionary);
 

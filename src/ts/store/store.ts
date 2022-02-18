@@ -3,4 +3,5 @@ export const store = {
   currentLevel: '0',
   isAuthorized: false,
   audiocallCurrentLevel: '0',
+  isComplicatedWordPage: false,
 };
