@@ -1,4 +1,4 @@
-import { TGetWords } from '../type/types';
+import { TGetWords, ResultGrade } from '../type/types';
 import Question from '../audiocall/Question';
 import { renderDictionary } from '../renderDictionary';
 import startAudioCallGame from './startAudioCallGame';
@@ -50,6 +50,24 @@ export default class Result {
     audiocallResult.classList.add('hidden');
   }
 
+  generateCongratulation(correctAnswersAmount: number) {
+    const totalQuestions = this.wrongAnswers.length + this.correctAnswers.length;
+    const percentOfComplete = Math.round((correctAnswersAmount / totalQuestions) * 100 );
+    const isExcellent = percentOfComplete === ResultGrade.excellent;
+    const isVeryGood = percentOfComplete < ResultGrade.excellent && percentOfComplete > ResultGrade.good;
+    const isBad = percentOfComplete < ResultGrade.good && percentOfComplete > ResultGrade.bad;
+
+    if (isExcellent) {
+      return 'Превосходный результат, поздравляем!';
+    } else if (isVeryGood) {
+      return 'Хороший результат, поздравляем!';
+    } else if (isBad) {
+      return 'Неплохо, однако возможно лучше :)!';
+    } else {
+      return 'Не отчайвайтесь, все обязательно получиться!';
+    }
+  }
+
   closeResult() {
     const audiocallResult = document.querySelector('.audiocall-result') as HTMLElement;
     audiocallResult.classList.add('hidden');
@@ -77,8 +95,7 @@ export default class Result {
   generate() {
     return `
     <div class="close-result">X</div>
-      <h2 class="audiocall-result__title">Отличный результат,
-        поздравляем!</h2>
+      <h2 class="audiocall-result__title">${this.generateCongratulation(this.correctAnswers.length)}</h2>
       <div class="audiocall-result__wrong">
         <div class="audiocall-result__subheader">
           <h3 class="audiocall-result__subtitle">Не заню</h3>
