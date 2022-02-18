@@ -58,8 +58,6 @@ export default function startAudioCallGame() {
         words = (await getAggregatedWords(localStorage.getItem('userId') || '',
           localStorage.getItem('token') || '',
           `${ELinks.users}/${localStorage.getItem('userId')}/${filterStr}`))[0].paginatedResults;
-        console.log(words);
-        console.log('total count: ', words.length);
       }
     }
     const quiz = new Quiz(words);
@@ -76,7 +74,6 @@ export default function startAudioCallGame() {
   closeResult?.addEventListener('click', () => {
     audiocallResult?.classList.add('hidden');
   });
-
 
 }
 

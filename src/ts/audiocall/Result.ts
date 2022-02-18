@@ -98,7 +98,7 @@ export default class Result {
       <h2 class="audiocall-result__title">${this.generateCongratulation(this.correctAnswers.length)}</h2>
       <div class="audiocall-result__wrong">
         <div class="audiocall-result__subheader">
-          <h3 class="audiocall-result__subtitle">Не заню</h3>
+          <h3 class="audiocall-result__subtitle">Не знаю</h3>
           <div class="answer-amount wrong-amount">${this.wrongAnswers.length}</div>
         </div>
         ${this.generateWordArr(this.wrongAnswers)}

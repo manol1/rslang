@@ -84,7 +84,7 @@ class Question {
         <div class="audiocall-question__sound-btn">
         <audio src="https://bukman-rs-lang.herokuapp.com/${this.word.audio}" ></audio>
         </div>
-        <div class="audiocall-question__word" id="question-word">${this.correctAnswer}</div>
+        <div class="audiocall-question__word" id="question-word">${this.word.word}</div>
       </div>
       <div class="info-item"></div>
     `;

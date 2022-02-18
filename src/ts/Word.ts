@@ -17,7 +17,7 @@ class Word {
 
   element = document.createElement('div') as HTMLDivElement;
 
-  hardWordsBtn = <HTMLButtonElement>document.querySelector('.dictionary-lavels button:last-child');
+  hardWordsBtn = <HTMLButtonElement>document.querySelector('.dictionary-levels button:last-child');
 
   audioArr: Array<HTMLAudioElement> = [];
 

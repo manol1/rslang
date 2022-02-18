@@ -1,5 +1,6 @@
 .audiocall {
   &-question {
+    position: relative;
     width: 80%;
     font-size: 3rem;
     &.hidden {
@@ -126,7 +127,7 @@
     &__pagination {
       padding: 0 1px;
       display: flex;
-      justify-content: start;
+      justify-content: center;
       align-items: center;
       gap: 2px;
       margin-bottom: 30px;
@@ -139,6 +140,39 @@
         transition: .4s all;
         &.active {
           background-color: $auxiliary-color;
+        }
+      }
+    }
+
+    &__settings {
+      position: absolute;
+      top: -10%;
+      right: -10%;
+      gap: 30px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      &_exit {
+        font-size: 2rem;
+        color:#c5a8ce;
+        transition: .4s all;
+        cursor: pointer;
+        &:hover {
+          color: #e7d2ee;
+        }
+      }
+      &_volume {
+        width: 30px;
+        height: 30px;
+        background-image: url('./assets/svg/volume.svg');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 30px 30px;
+        filter: opacity(60%);
+        cursor: pointer;
+        transition: .4s all;
+        &:hover {
+          filter: opacity(90%);
         }
       }
     }

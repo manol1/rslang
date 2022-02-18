@@ -1,13 +1,7 @@
-// import Final from './final.js';
 import { TGetWords, TAggregatedWord } from '../type/types';
 import { playSound, pagination } from './utils';
 import Question from './Question';
 import Result from './Result';
-
-// enum quizButtonName {
-//   next = 'Дальше',
-//   unknown = 'Не знаю',
-// }
 
 class Quiz {
 
@@ -25,14 +19,15 @@ class Quiz {
 
   totalCorrectWords: Question[];
 
-  quizElement = document.querySelector('.audiocall-question') as HTMLDListElement;
+  quizElement = document.querySelector('.audiocall-question') as HTMLElement;
 
-  quizChangableEl = document.querySelector('.audiocall-question__changable') as HTMLDListElement;
+  quizChangableEl = document.querySelector('.audiocall-question__changable') as HTMLElement;
 
   nextBtn = document.querySelector('.audiocall-question__next-btn') as HTMLButtonElement;
 
+  exitGame = document.querySelector('.audiocall-question__settings_exit') as HTMLElement;
+
   constructor( questions:TGetWords[] | TAggregatedWord[] ) {
-    // this.finalElement = document.querySelector('.final');
     this.totalAmount = questions.length;
     this.answeredAmount = 0;
     this.questions = this.setQuestions(questions);
@@ -45,12 +40,33 @@ class Quiz {
 
     this.renderQuestion();
     pagination(this.totalAmount);
+
+    this.exitGame.addEventListener('click', this.closeQuiz.bind(this));
+  }
+
+  closeQuiz() {
+    this.answeredAmount = 0;
+    this.currentAnswer = '';
+    this.questions = [];
+    this.quizChangableEl.innerHTML = '';
+    this.quizElement.classList.add('hidden');
+    this.navigateBackToDictionary();
+  }
+
+  navigateBackToDictionary() {
+    const dictionarySection = document.querySelector('.dictionary');
+    const footerSection = document.querySelector('.footer');
+    const dictionaryGameFooter = document.querySelector('.dictionary-footer');
+    const audiocallSection = document.querySelector('.audiocall');
+
+    dictionarySection?.classList.remove('hidden');
+    footerSection?.classList.remove('hidden');
+    dictionaryGameFooter?.classList.remove('footer-hidden');
+    audiocallSection?.classList.add('hidden');
   }
 
   getAnswerWord = (e: Event) => {
     this.currentAnswer = (e.target as HTMLButtonElement).textContent;
-    console.log('this.currentAnswer from getAnswerWord: ', this.currentAnswer);
-
     if (this.currentAnswer) {
       this.showResult();
       this.answeredAmount++;
@@ -64,7 +80,6 @@ class Quiz {
     const answerInfo = document.querySelector('.audiocall-question__info');
     const paginationDots = document.querySelectorAll('.dot');
 
-    // (paginationDots[this.answeredAmount] as HTMLElement).style.backgroundColor = '#9F16B2';
     (paginationDots[this.answeredAmount] as HTMLElement).classList.add('active');
 
     allAnswers.forEach(item => {
@@ -108,7 +123,7 @@ class Quiz {
     answerInfo?.classList.add('hidden');
 
     if (this.answeredAmount < this.totalAmount) {
-      this.currentAnswer = ''; //reset currentAnswer
+      this.currentAnswer = '';
       this.renderQuestion();
     } else {
       const audio = new Audio();
@@ -136,28 +151,13 @@ class Quiz {
 
   endQuiz() {
     const audiocallResult = document.querySelector('.audiocall-result') as HTMLElement;
-    // this.finalElement.style.visibility = 'visible';
-    // const correctAnswersTotal = this.calculateCorrectAnswers();
-    // this.final = new Final(correctAnswersTotal, this.totalAmount);
     const resultTable = new Result(this.totalWrongWords, this.totalCorrectWords);
     resultTable.mount(audiocallResult);
     resultTable.bindListener();
 
     this.answeredAmount = 0;
-    console.log('Quiz is ended', this.totalAmount, this.totalWrongWords.length  );
     this.quizElement.classList.add('hidden');
     audiocallResult?.classList.remove('hidden');
-
-  }
-
-  calculateCorrectAnswers() {
-    let count = 0;
-    this.questions.forEach( el => {
-      if (el.isCorrect) {
-        count++;
-      }
-    });
-    return count;
   }
 
 }
