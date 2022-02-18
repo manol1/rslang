@@ -103,7 +103,6 @@ function authentification() {
       renderDictionary();
     }
   });
-
 }
 
 export default authentification;

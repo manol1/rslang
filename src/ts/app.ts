@@ -5,6 +5,7 @@ import { store } from './store/store';
 import { renderDictionary } from './renderDictionary';
 import sprint from './sprint/sprint';
 import startAudioCallGame from '../ts/audiocall/startAudioCallGame';
+import navigateWordStatistics from './statistics/word-statistics';
 
 export default async function App() {
   const levelBtns = document.querySelectorAll('.words-level');
@@ -57,4 +58,5 @@ export default async function App() {
 
   getComplicatedWords();
   sprint();
+  navigateWordStatistics();
 }

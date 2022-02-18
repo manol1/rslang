@@ -19,6 +19,11 @@ class Word {
 
   hardWordsBtn = <HTMLButtonElement>document.querySelector('.dictionary-levels button:last-child');
 
+  wordStatisticsInGames = <HTMLDivElement>document.querySelector('.word-statistics-in-games');
+
+  wordStatisticsHeaderWord = <HTMLParagraphElement>document.querySelector('.word-statistics-header p');
+
+
   audioArr: Array<HTMLAudioElement> = [];
 
   constructor(word: TGetWords | TAggregatedWord, isAutorized: boolean, isComplicated: boolean ) {
@@ -109,6 +114,13 @@ class Word {
       }
       await isExploredPage();
     }
+
+    if (btnDifficalty === WordDifficulty.statistics) {
+      console.log('statistic click')
+      this.wordStatisticsInGames.classList.remove('hidden');
+      this.wordStatisticsHeaderWord.innerHTML = this.word.word;
+    }
+
   };
 
   bindListener() {
@@ -153,7 +165,7 @@ class Word {
                     4.67 20.67 4 21.5 4C22.33 4 23 4.67 23 5.5Z" fill="white"/>
                 </svg>
               </button>
-              <button class="word-contrals-item easy ${ this.isComplicated ? 'hidden' : ''}" data-difficalty="easy">
+              <button class="word-contrals-item easy ${ !this.isAuthorized ? 'hidden' : ''}" data-difficalty="easy">
                 <svg width="30" height="30" viewBox="0 0 30 30" fill="none" data-difficalty="easy"
                  xmlns="http://www.w3.org/2000/svg">
                   <path data-difficalty="easy"
@@ -163,6 +175,11 @@ class Word {
                     25 15 25Z" fill="white"/>
                 </svg>
               </button>
+              <button class="word-contrals-item ${ this.isComplicated ? 'hidden' : ''}" data-difficalty="statistics">
+              <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" data-difficalty="statistics">
+              <path data-difficalty="statistics" d="M6 16H10V0H6V16ZM0 16H4V8H0V16ZM12 5V16H16V5H12Z" fill="white"/>
+              </svg>
+            </button>
             </div>
       </div>
       <div class="word-translation">${this.word.wordTranslate}</div>

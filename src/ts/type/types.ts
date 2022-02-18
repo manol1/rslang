@@ -116,6 +116,7 @@ export type TAggregatedWords = {
 export enum WordDifficulty {
   hard = 'hard',
   easy = 'easy',
+  statistics = 'statistics',
 }
 
 export enum GameNames {
