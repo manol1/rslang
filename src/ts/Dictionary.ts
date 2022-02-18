@@ -30,8 +30,7 @@ export default class Dictionary {
   async getData() {
     if (this.isComplicated === true) {
       const filterStr = 'aggregatedWords?wordsPerPage=3600&filter=%7B%22userWord.difficulty%22%3A%22hard%22%7D';
-      this.words = (await getAggregatedWords(localStorage.getItem('userId') || '',
-        localStorage.getItem('token') || '',
+      this.words = (await getAggregatedWords(localStorage.getItem('token') || '',
         `${ELinks.users}/${localStorage.getItem('userId')}/${filterStr}`))[0].paginatedResults;
     } else {
       this.words = await getWords(this.grade, this.page);

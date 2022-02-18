@@ -1,0 +1,70 @@
+@import '../variables.scss';
+
+.sprint-game {
+  font-size: 32px;
+  letter-spacing: 1px;
+  &.hidden {
+    display: none;
+  }
+}
+
+.sprint-word {
+  margin-bottom: 40px;
+}
+
+.sprint-word-wrapper {
+  margin-bottom: 40px;
+  p {
+    &:nth-child(2) {
+      margin-bottom: 40px;
+      letter-spacing: 5px;
+    }
+  }
+}
+
+.sprint-word-result {
+  height: 60px;
+  width: 60px;
+  margin-bottom: 40px;
+  background-size: contain;
+  transition: all 0.5s;
+  &.visibility {
+    opacity: 0;
+  }
+  &.wrong-answer {
+    background-image: url('assets/images/icon-ban.png');
+  }
+  &.right-answer {
+    background-image: url('assets/images/icon-check-mark.png');
+  }
+}
+
+.sprint-word-translation {
+  color: white;
+}
+
+.sprint-timer {
+  margin-bottom: 40px;
+  height: 60px;
+  font-size: 48px;
+  color:white;
+}
+
+.sprint-keyboard-imgs {
+  display: flex;
+  column-gap: 130px;
+  margin-top: 40px;
+  div {
+    width: 50px;
+    height: 50px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    border-radius: 8px;
+    &:first-child {
+      background-image: url('assets/images/ArrowLeft.png');
+    }
+    &:last-child {
+      background-image: url('assets/images/ArrowRight.png');
+    }
+  }
+}

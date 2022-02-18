@@ -59,7 +59,7 @@ function authentification() {
   const regEmailInput = <HTMLInputElement>document.getElementById('reg-email');
   const regPasswordInput = <HTMLInputElement>document.getElementById('reg-password');
 
-  registrationForm.addEventListener('submit', async () => {
+  async function registrationFn() {
     try {
       const password = regPasswordInput.value;
       const newUser = await createUser({ name: regNameInput.value, email: regEmailInput.value, password: password });
@@ -73,12 +73,15 @@ function authentification() {
     } catch (err) {
       console.log(err);
     }
-  });
+  }
+
+  registrationForm.addEventListener('submit', registrationFn);
 
   const signInEmailInput = <HTMLInputElement>document.getElementById('signIn-email');
   const signInPasswordInput = <HTMLInputElement>document.getElementById('signIn-password');
 
-  signInForm.addEventListener('submit', async () => {
+  async function signInFn() {
+    console.log('вход');
     try {
       const newSignIn = await signIn({ email: signInEmailInput.value, password: signInPasswordInput.value });
       afterSubmitForm();
@@ -90,7 +93,17 @@ function authentification() {
     } catch (err) {
       console.log(err);
     }
+  }
+
+  signInForm.addEventListener('submit', signInFn);
+
+  window.addEventListener('load', () => {
+    if (localStorage.getItem('token')) {
+      afterSubmitForm();
+      renderDictionary();
+    }
   });
+
 }
 
 export default authentification;

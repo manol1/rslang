@@ -3,6 +3,7 @@ import authentification from './authentification';
 import getComplicatedWords from './complicated-words';
 import { store } from './store/store';
 import { renderDictionary } from './renderDictionary';
+import sprint from './sprint/sprint';
 import startAudioCallGame from '../ts/audiocall/startAudioCallGame';
 
 export default async function App() {
@@ -55,4 +56,5 @@ export default async function App() {
   });
 
   getComplicatedWords();
+  sprint();
 }

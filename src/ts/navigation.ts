@@ -1,5 +1,6 @@
 import { store } from './store/store';
 import { MenuLinks, GameNames } from './type/types';
+import { renderDictionary } from './renderDictionary';
 
 function navigation() {
   const startBtn = document.querySelector('.promo-btn') as HTMLButtonElement;
@@ -16,6 +17,8 @@ function navigation() {
 
   const audiocallLink = document.querySelector('.audiocall');
   const sprintLink = document.querySelector('.sprint');
+
+
 
   function highlightOfCurrentPage(page: string) {
     if ( page === '') {
@@ -55,7 +58,7 @@ function navigation() {
     dictionarySection?.classList.remove('hidden');
     footerSection?.classList.remove('hidden');
     dictionaryGameFooter?.classList.remove('footer-hidden');
-    // renderDictionary();
+    renderDictionary();
   };
 
   const displayMainPage = () => {
@@ -151,6 +154,9 @@ function navigation() {
   logoName?.addEventListener('click', displayMainPage);
   menuNavLinks.forEach(navLink => navLink.addEventListener('click', handleMenuNavigation));
   dictionaryGameBtns.forEach(gameLink => gameLink.addEventListener('click', handleGameNavInDictionary));
+
+  // удалить потом :
+  // displaySprint();
 }
 
 export default navigation;

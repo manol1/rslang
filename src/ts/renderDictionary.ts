@@ -4,6 +4,7 @@ import isExploredPage from './exploredPage';
 
 export const renderDictionary = async (isComplicated = false) => {
   const dictEl = document.querySelector('.dictionary__row') as HTMLDivElement;
+  dictEl.style.backgroundColor = 'transparent';
   const dict =  new Dictionary(dictEl, isComplicated, store.currentLevel, store.currentPage);
   await dict.getData();
   dict.render();
