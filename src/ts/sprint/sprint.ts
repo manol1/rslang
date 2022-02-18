@@ -1,6 +1,6 @@
 import { sprintStart } from './start';
 
-function sprint () {
+function sprint() {
   sprintStart();
 }
 

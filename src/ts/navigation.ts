@@ -18,6 +18,8 @@ function navigation() {
   const audiocallLink = document.querySelector('.audiocall');
   const sprintLink = document.querySelector('.sprint');
 
+
+
   function highlightOfCurrentPage(page: string) {
     if ( page === '') {
       menuNavLinks.forEach(link => link?.classList.remove('current-page'));
@@ -139,8 +141,8 @@ function navigation() {
   menuNavLinks.forEach(navLink => navLink.addEventListener('click', handleMenuNavigation));
   dictionaryGameBtns.forEach(gameLink => gameLink.addEventListener('click', handleGameNavInDictionary));
 
-    // удалить потом :
-    displaySprint();
+  // удалить потом :
+  // displaySprint();
 }
 
 export default navigation;

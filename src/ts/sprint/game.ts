@@ -2,6 +2,7 @@ import { getAggregatedWords, getWords } from '../requests';
 import { ELinks, TAggregatedWord } from '../type/types';
 import { store } from '../store/store';
 
+const sprint = <HTMLDivElement>document.querySelector('.sprint');
 const sprintWord = <HTMLParagraphElement>document.querySelector('.sprint-word');
 const sprintWordTranslation = <HTMLParagraphElement>document.querySelector('.sprint-word-translation');
 const sprintWrongBtn = <HTMLButtonElement>document.querySelector('.sprint-word-wrong');
@@ -15,39 +16,37 @@ const countSprintResultMistakes = <HTMLSpanElement>document.getElementById('coun
 const countSprintResultCorrect = <HTMLSpanElement>document.getElementById('count-sprint-result-correct');
 const sprintResultMistakes = <HTMLDivElement>document.getElementById('sprint-result-mistakes');
 const sprintResultCorrect = <HTMLDivElement>document.getElementById('sprint-result-correct');
-
 const closeSprint = <HTMLButtonElement>document.getElementById('close-sprint');
 const newSprint = <HTMLButtonElement>document.getElementById('new-sprint');
-
+const dictionarySection = <HTMLDivElement>document.querySelector('.dictionary');
+const footerSection = <HTMLElement>document.querySelector('.footer');
+const dictionaryGameFooter = <HTMLDivElement>document.querySelector('.dictionary-footer');
 
 let currentRightAnswer = '';
 let currentWord: TAggregatedWord;
 let sprintWordNumber: number;
-let currentSprintLevel: string;
 let wordsForGame: TAggregatedWord[];
 let wrongAnswers: TAggregatedWord[];
 let rightAnswers: TAggregatedWord[];
+let setIntervalID: NodeJS.Timer;
 
-sprintWrongBtn.addEventListener('click', () => {
-  resultAnswer('wrong');
-  console.log('sprintWordWrong click')
-});
-sprintRightBtn.addEventListener('click', () => {
-  resultAnswer('right');
-  console.log('sprintWordRight click')
-});
-
-closeSprint.addEventListener('click', () => {
+export function closeResults() {
   sprintStart.classList.remove('hidden');
   sprintGame.classList.add('hidden');
   sprintResult.classList.add('hidden');
-})
+}
+
+closeSprint.addEventListener('click', () => {
+  sprint.classList.add('hidden');
+  dictionarySection.classList.remove('hidden');
+  footerSection.classList.remove('hidden');
+  dictionaryGameFooter.classList.remove('footer-hidden');
+  closeResults();
+});
 
 newSprint.addEventListener('click', () => {
-  sprintGame.classList.remove('hidden');
-  sprintResult.classList.add('hidden');
-  getWordsForGame(currentSprintLevel);
-})
+  closeResults();
+});
 
 function generateResultWord(el: HTMLDivElement, word: TAggregatedWord) {
   const div = document.createElement('div');
@@ -64,18 +63,13 @@ function generateResultWord(el: HTMLDivElement, word: TAggregatedWord) {
     sprintResultCorrect.append(div);
   }
   div.addEventListener('click', () => {
-    console.log(word.audio)
     const audio = new Audio(`${ELinks.link}/${word.audio}`);
     audio.play();
-  })
+  });
 }
 
 function getResults() {
-  console.log('getResults')
-  console.log('wrongAnswers', wrongAnswers)
-  console.log('rigthAnswers', rightAnswers)
-  wrongAnswers.shift();
-  rightAnswers.shift();
+  new Audio('./assets/sounds/roundEnd.mp3').play();
   sprintGame.classList.add('hidden');
   sprintResult.classList.remove('hidden');
   countSprintResultMistakes.innerHTML = wrongAnswers.length.toString();
@@ -84,31 +78,16 @@ function getResults() {
   rightAnswers.forEach(el => generateResultWord(sprintResultCorrect, el));
 }
 
-
-function resultAnswer(btn: string) {
-  sprintWrongBtn.disabled = true;
-  sprintRightBtn.disabled = true;
-  sprintWordResult.classList.remove('visibility');
-  if (sprintWordTranslation.innerHTML === currentRightAnswer && btn === 'right' ||
-  sprintWordTranslation.innerHTML !== currentRightAnswer && btn === 'wrong') {
-    sprintWordResult.classList.add('right-answer');
-    rightAnswers.push(currentWord);
-    setTimeout(() => {
-      sprintWordResult.classList.add('visibility');
-      sprintWordResult.classList.remove('right-answer');
-      nextQuestion();
-    }, 600);
-  } else {
-    sprintWordResult.classList.add('wrong-answer');
-    wrongAnswers.push(currentWord);
-    setTimeout(() => {
-      sprintWordResult.classList.add('visibility');
-      sprintWordResult.classList.remove('wrong-answer');
-      nextQuestion();
-    }, 600);
-  }
-
-
+export function generateQuestion() {
+  sprintWord.innerHTML = wordsForGame[sprintWordNumber].word;
+  currentWord = wordsForGame[sprintWordNumber];
+  const questionWrongAnswers = wordsForGame.slice();
+  wrongAnswers.splice(sprintWordNumber, 1);
+  const wrongAnswerIndex = Math.floor(Math.random() * (wrongAnswers.length));
+  const wrongAnswer = questionWrongAnswers[wrongAnswerIndex].wordTranslate;
+  currentRightAnswer = wordsForGame[sprintWordNumber].wordTranslate;
+  const gameAnswers = [currentRightAnswer, wrongAnswer];
+  sprintWordTranslation.innerHTML = gameAnswers[Math.round(Math.random())];
 }
 
 function nextQuestion() {
@@ -122,25 +101,53 @@ function nextQuestion() {
   sprintRightBtn.disabled = false;
 }
 
-
-export function generateQuestion() {
-  console.log('sprintWordNumber', sprintWordNumber)
-  sprintWord.innerHTML = wordsForGame[sprintWordNumber].word;
-  currentWord = wordsForGame[sprintWordNumber];
-  const wrongAnswers = wordsForGame.slice();
-  wrongAnswers.splice(sprintWordNumber, 1);
-  const wrongAnswerIndex = Math.floor(Math.random() * (wrongAnswers.length));
-  const wrongAnswer = wrongAnswers[wrongAnswerIndex].wordTranslate;
-  currentRightAnswer = wordsForGame[sprintWordNumber].wordTranslate;
-  const gameAnswers = [currentRightAnswer, wrongAnswer];
-  sprintWordTranslation.innerHTML = gameAnswers[Math.round(Math.random())];
+function resultAnswer(btn: string) {
+  sprintWrongBtn.disabled = true;
+  sprintRightBtn.disabled = true;
+  sprintWordResult.classList.remove('visibility');
+  if (sprintWordTranslation.innerHTML === currentRightAnswer && btn === 'right' ||
+  sprintWordTranslation.innerHTML !== currentRightAnswer && btn === 'wrong') {
+    new Audio('./assets/sounds/correct.mp3').play();
+    sprintWordResult.classList.add('right-answer');
+    rightAnswers.push(currentWord);
+    setTimeout(() => {
+      sprintWordResult.classList.add('visibility');
+      sprintWordResult.classList.remove('right-answer');
+      nextQuestion();
+    }, 600);
+  } else {
+    new Audio('./assets/sounds/wrong1.wav').play();
+    sprintWordResult.classList.add('wrong-answer');
+    wrongAnswers.push(currentWord);
+    setTimeout(() => {
+      sprintWordResult.classList.add('visibility');
+      sprintWordResult.classList.remove('wrong-answer');
+      nextQuestion();
+    }, 600);
+  }
 }
 
+sprintWrongBtn.addEventListener('click', () => {
+  resultAnswer('wrong');
+});
+sprintRightBtn.addEventListener('click', () => {
+  resultAnswer('right');
+});
+
+document.addEventListener('keyup', function (e) {
+  if (sprintWrongBtn.disabled === false && !sprintGame.classList.contains('hidden')) {
+    if (e.code === 'ArrowRight') {
+      resultAnswer('right');
+    } else if (e.code === 'ArrowLeft') {
+      resultAnswer('wrong');
+    }
+  }
+});
+
 function startTimer() {
-  let startTime = 10;
+  let startTime = 60;
   sprintTimer.innerHTML = startTime.toString();
-  const setIntervalID = setInterval(() => {
-    console.log(startTime)
+  setIntervalID = setInterval(() => {
     if (!sprintResult.classList.contains('hidden')) {
       clearInterval(setIntervalID);
     }
@@ -153,26 +160,40 @@ function startTimer() {
         getResults();
       }
     }
-  }, 600)
+    if (sprint.classList.contains('hidden')) {
+      clearInterval(setIntervalID);
+    }
+  }, 600);
 }
 
-
-export async function getWordsForGame(level: string) {
+export async function getWordsForGame(level: string, fromFooter: boolean) {
   sprintWordNumber = 0;
-  currentSprintLevel = level;
+  clearInterval(setIntervalID);
+  sprintWord.innerHTML = '';
+  sprintWordTranslation.innerHTML = '';
   sprintResultCorrect.innerHTML = '';
   sprintResultMistakes.innerHTML = '';
+  sprintTimer.innerHTML = '';
+  const page = String(Math.floor(Math.random() * 30));
+  let link: string;
   if (store.isAuthorized) {
-    const linkStr = 'wordsPerPage=20&filter=%7B%22%24or%22%3A%5B%7B%22userWord.difficulty%22%3A%22hard%22%7D%2C%7B%22userWord%22%3Anull%7D%5D%7D';
-    const link = `${ELinks.users}/${localStorage.getItem('userId')}/aggregatedWords?group=${store.currentLevel}&page=${store.currentPage}&${linkStr}`;
+    if (!fromFooter) {
+      const linkStr = `wordsPerPage=20&filter=%7B%22%24and%22%3A%5B%7B%22%24or%22%3A%5B%7B%22userWord.difficulty%22%3A%22hard%22%7D%2C%7B%22userWord%22%3Anull%7D%5D%7D%2C%20%7B%22page%22%3A${page}%7D%5D%7D`;
+      link = `${ELinks.users}/${localStorage.getItem('userId')}/aggregatedWords?group=${level}&${linkStr}`;
+    } else {
+      const linkStr = `wordsPerPage=20&filter=%7B%22%24and%22%3A%5B%7B%22%24or%22%3A%5B%7B%22userWord.difficulty%22%3A%22hard%22%7D%2C%7B%22userWord%22%3Anull%7D%5D%7D%2C%20%7B%22page%22%3A${store.currentPage}%7D%5D%7D`;
+      link = `${ELinks.users}/${localStorage.getItem('userId')}/aggregatedWords?group=${store.currentLevel}&${linkStr}`;
+    }
     wordsForGame = (await getAggregatedWords(localStorage.getItem('token') || '', link))[0].paginatedResults;
   } else {
-    const page = String(Math.floor(Math.random() * 30));
-    wordsForGame = await getWords(level, page);
+    if (!fromFooter) {
+      wordsForGame = await getWords(level, page);
+    } else {
+      wordsForGame = await getWords(store.currentLevel, store.currentPage);
+    }
   }
-  console.log(wordsForGame)
-  wrongAnswers = [wordsForGame[0]];
-  rightAnswers = [wordsForGame[0]];
+  rightAnswers = [];
+  wrongAnswers = [];
   generateQuestion();
   startTimer();
 }

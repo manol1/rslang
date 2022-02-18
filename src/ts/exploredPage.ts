@@ -6,8 +6,8 @@ async function isExploredPage() {
   const dictionaryRow = <HTMLDivElement>document.querySelector('.dictionary__row');
   const hardWordsBtn = <HTMLButtonElement>document.querySelector('.dictionary-lavels button:last-child');
 
-  const linkStr = 'wordsPerPage=20&filter=%7B%22%24or%22%3A%5B%7B%22userWord.difficulty%22%3A%22easy%22%7D%2C%7B%22userWord.difficulty%22%3A%22hard%22%7D%5D%7D';
-  const link = `${ELinks.users}/${localStorage.getItem('userId')}/aggregatedWords?group=${store.currentLevel}&page=${store.currentPage}&${linkStr}`;
+  const linkStr = `wordsPerPage=20&filter=%7B%22%24and%22%3A%5B%7B%22%24or%22%3A%5B%7B%22userWord.difficulty%22%3A%22hard%22%7D%2C%7B%22userWord.difficulty%22%3A%22easy%22%7D%5D%7D%2C%20%7B%22page%22%3A${store.currentPage}%7D%5D%7D`;
+  const link = `${ELinks.users}/${localStorage.getItem('userId')}/aggregatedWords?group=${store.currentLevel}&${linkStr}`;
   const words = (await getAggregatedWords(localStorage.getItem('token') || '', link))[0].paginatedResults;
 
   if (words.length > 19 && !hardWordsBtn.classList.contains('hidden')) {

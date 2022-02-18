@@ -1,10 +1,10 @@
 
 
 .sprint-result-content {
-  min-width: 50%;
+  min-width: 60%;
   margin-bottom: 40px;
   span {
-    padding-top: 3px;
+    padding-top: 4px;
     display: block;
     width: 50px;
     height: 30px;
@@ -12,10 +12,10 @@
     color: white;
     border-radius: 15px;
     &#count-sprint-result-mistakes {
-      background-color: red;
+      background-color: rgb(191, 22, 22);
     }
     &#count-sprint-result-correct {
-      background-color: green;
+      background-color: rgb(24, 185, 24);
     }
   }
   hr {
@@ -41,6 +41,7 @@
       height: 40px;
       background-image: url('assets/svg/volume.svg');
       background-size: contain;
+      background-repeat: no-repeat;
     }
 
   }

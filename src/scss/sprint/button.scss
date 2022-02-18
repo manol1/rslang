@@ -1,18 +1,24 @@
 @import '../variables.scss';
 
+.sprint-start {
+  button {
+    font-weight: bold;
+    background-color: $primary-color;
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+      &:hover {
+        border: 1px solid rgba(255, 255, 255, 1);
+      }
+  }
+}
+
 .sprint-start-btn {
-  background-color: $primary-color;
-  width: 300px;
-  height: 80px;
-  font-weight: bold;
-  font-size: 36px;
+  width: 280px;
+  height: 70px;
+  font-size: 32px;
   line-height: 42px;
   color: #FFFFFF;
   border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  &:hover {
-    border: 1px solid rgba(255, 255, 255, 1);
-  }
 }
 
 .sprint-level {
@@ -54,37 +60,37 @@
   }
 }
 
-.sprint-word-btns button {
-  width: 150px;
-  height: 50px;
-  font-weight: bold;
-  font-size: 24px;
-  line-height: 30px;
-  color: #FFFFFF;
-  border-radius: 15px;
-}
-
-.sprint-word-wrong {
-  background-color: rgb(191, 22, 22);
-  margin-right: 20px;
-}
-
-.sprint-word-right {
-  background-color: rgb(24, 185, 24);
+.sprint-word-btns {
+  button {
+    width: 160px;
+    height: 50px;
+    font-size: 22px;
+    line-height: 30px;
+    border-radius: 15px;
+  }
+  .sprint-word-wrong {
+    border: 2px solid rgba(191, 22, 22, 0.5);
+    &:hover {
+      border: 2px solid rgba(191, 22, 22, 1);
+    }
+    margin-right: 20px;
+  }
+  .sprint-word-right {
+    border: 2px solid rgba(24, 185, 24, 0.5);
+    &:hover {
+      border: 2px solid rgba(24, 185, 24, 1);
+    }
+  }
 }
 
 .result-btns {
   display: flex;
   column-gap: 20px;
   button {
-    width: 150px;
+    width: 160px;
     height: 50px;
-    font-weight: bold;
-    font-size: 24px;
+    font-size: 22px;
     line-height: 30px;
-    color: #FFFFFF;
     border-radius: 15px;
-    background-color: $primary-color;
-    border: 1px solid rgba(255, 255, 255, 1);
   }
 }
