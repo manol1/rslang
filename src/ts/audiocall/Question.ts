@@ -1,7 +1,7 @@
 import { TGetWords, TAggregatedWord } from '../type/types';
 import { getWords } from '../requests';
 import { store } from '../store/store';
-import { shuffle } from './utils';
+import { shuffle, playAudio } from './utils';
 
 class Question {
 
@@ -53,13 +53,13 @@ class Question {
     return shuffle(this.answersArr);
   };
 
-  bindListener = () => {
+  bindListener = async () => {
     const playBtn = this.element.querySelector('.audiocall-question__sound-btn');
     const audioEl = playBtn?.querySelector('audio');
-    audioEl?.play();
-    playBtn?.addEventListener('click', async () => {
-      audioEl?.play();
-    });
+    audioEl?.load();
+    playAudio(audioEl as HTMLAudioElement);
+
+    playBtn?.addEventListener('click', () => playAudio(audioEl as HTMLAudioElement));
   };
 
   answer(choosedAnswer: string) {
@@ -78,7 +78,6 @@ class Question {
     const quastionBlock = document.createElement('div');
     quastionBlock.classList.add('audiocall-question__info');
     quastionBlock.classList.add('hidden');
-    // quastionBlock.setAttribute('data-sound', this.word.id);
     const htmlquastionBlock = `
       <img src="https://bukman-rs-lang.herokuapp.com/${this.word.image}" alt="answer image" class="audiocall-question__img info-item">
       <div class="info-item center">

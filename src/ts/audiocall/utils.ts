@@ -17,10 +17,29 @@ export function playSound(isCorrect: boolean) {
     audio.src = './assets/sounds/wrong1.wav';
   }
   audio.play();
-
-
-  // if (isFinished) {
-  //   audio.src = './assets/sounds/roundEnd.mp3';
-  // }
 }
 
+export function pagination(questionArrlength: number) {
+
+  const container = document.querySelector('.audiocall-question__pagination') as HTMLElement;
+  const containerWidth = container?.getBoundingClientRect().width;
+
+  container.innerHTML = '';
+
+  for ( let i = 0; i < questionArrlength; i += 1) {
+    const div = document.createElement('div');
+    div.classList.add('dot');
+    if (containerWidth) {
+      const dotWidth = Math.round(containerWidth / questionArrlength);
+      div.style.width = `${dotWidth}px`;
+    }
+    container?.appendChild(div);
+  }
+}
+
+export function playAudio(el: HTMLAudioElement) {
+  const playPromise = el?.play();
+  if (playPromise !== null){
+    playPromise?.catch(() => { el?.play(); });
+  }
+}

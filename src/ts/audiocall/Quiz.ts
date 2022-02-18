@@ -1,6 +1,6 @@
 // import Final from './final.js';
 import { TGetWords, TAggregatedWord } from '../type/types';
-import { playSound, shuffle } from './utils';
+import { playSound, pagination } from './utils';
 import Question from './Question';
 import Result from './Result';
 
@@ -44,6 +44,7 @@ class Quiz {
       this.nextQuestion.bind(this));
 
     this.renderQuestion();
+    pagination(this.totalAmount);
   }
 
   getAnswerWord = (e: Event) => {
@@ -61,6 +62,10 @@ class Quiz {
   styleAnswer = () => {
     const allAnswers = document.querySelectorAll('.answer-item');
     const answerInfo = document.querySelector('.audiocall-question__info');
+    const paginationDots = document.querySelectorAll('.dot');
+
+    // (paginationDots[this.answeredAmount] as HTMLElement).style.backgroundColor = '#9F16B2';
+    (paginationDots[this.answeredAmount] as HTMLElement).classList.add('active');
 
     allAnswers.forEach(item => {
       const correctResult = this.questions[this.answeredAmount].correctAnswer === item.textContent;
@@ -105,7 +110,6 @@ class Quiz {
     if (this.answeredAmount < this.totalAmount) {
       this.currentAnswer = ''; //reset currentAnswer
       this.renderQuestion();
-      console.log('curentAnswer in next new question ', this.currentAnswer);
     } else {
       const audio = new Audio();
       audio.src = './assets/sounds/roundEnd.mp3';
