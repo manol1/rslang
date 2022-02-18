@@ -11,7 +11,7 @@ function authentification() {
   const registrationLink = <HTMLParagraphElement>document.getElementById('registration-link');
   const signInForm = <HTMLFormElement>document.querySelector('.form-signIn');
   const registrationForm = <HTMLFormElement>document.querySelector('.form-reg');
-  const hardWordsBtn = <HTMLButtonElement>document.querySelector('.dictionary-lavels button:last-child');
+  const hardWordsBtn = <HTMLButtonElement>document.querySelector('.dictionary-levels button:last-child');
 
   function goLogIn() {
     signInSection.classList.remove('hidden');

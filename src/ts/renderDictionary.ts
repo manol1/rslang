@@ -7,9 +7,10 @@ export const renderDictionary = async (isComplicated = false) => {
   const dict =  new Dictionary(dictEl, isComplicated, store.currentLevel, store.currentPage);
   await dict.getData();
   dict.render();
+  dict.checkoAudio();
 
   const dictionaryFooter = <HTMLDivElement>document.querySelector('.dictionary-footer');
-  const hardWordsBtn = <HTMLButtonElement>document.querySelector('.dictionary-lavels button:last-child');
+  const hardWordsBtn = <HTMLButtonElement>document.querySelector('.dictionary-levels button:last-child');
   const promo = <HTMLButtonElement>document.querySelector('.promo');
 
   if (promo.classList.contains('hidden') && !hardWordsBtn.classList.contains('hidden')) {
