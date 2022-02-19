@@ -1,7 +1,6 @@
 import { TGetWords, ResultGrade } from '../type/types';
 import Question from '../audiocall/Question';
 import { renderDictionary } from '../renderDictionary';
-import startAudioCallGame from './startAudioCallGame';
 
 export default class Result {
 

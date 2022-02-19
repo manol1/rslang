@@ -91,6 +91,11 @@
         line-height: 2.5rem;
         text-align: center;
         border-radius: 40px;
+        &.disable {
+          cursor: not-allowed;
+          background-color: rgba(149, 140, 150, .8);
+          color: #d6c4d8;
+        }
         &.wrong {
           background-color: $wrong;
         }
@@ -173,6 +178,9 @@
         transition: .4s all;
         &:hover {
           filter: opacity(90%);
+        }
+        &.mute {
+          background-image: url('assets/svg/volume_off.svg');
         }
       }
     }

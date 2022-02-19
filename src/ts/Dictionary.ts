@@ -37,15 +37,6 @@ export default class Dictionary {
     }
   }
 
-  checkoAudio() {
-    // this.words.forEach(word => console.log(word.audio));
-    const wordCards = document.querySelectorAll('.word-transcription-sound');
-    // console.log(wordCards);
-    wordCards.forEach(wordCard => wordCard.addEventListener('click', () => {
-      // this.words.forEach(word => console.log(word.audio));
-    } ));
-  }
-
   render() {
     this.container.innerHTML = '';
 

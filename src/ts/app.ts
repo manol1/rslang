@@ -4,7 +4,9 @@ import getComplicatedWords from './complicated-words';
 import { store } from './store/store';
 import { renderDictionary } from './renderDictionary';
 import sprint from './sprint/sprint';
-import startAudioCallGame from '../ts/audiocall/startAudioCallGame';
+import { setCurrentLevel,
+  startAudioCallGameFromDictionary,
+  startAudioCallGame } from '../ts/audiocall/startAudioCallGame';
 
 export default async function App() {
   const levelBtns = document.querySelectorAll('.words-level');
@@ -15,8 +17,6 @@ export default async function App() {
   navigation();
 
   authentification();
-
-  startAudioCallGame();
 
   //render dictionary
   renderDictionary();
@@ -57,4 +57,14 @@ export default async function App() {
 
   getComplicatedWords();
   sprint();
+
+
+  //audiocall
+  const audiocallLevelBtns = document.querySelectorAll('.audiocall-level');
+  const startAudiocallBtn = document.querySelector('.audiocall-btn');
+  const startAudiocallFromDictionary = document.querySelector('.game-audio');
+
+  audiocallLevelBtns.forEach(level => level.addEventListener('click', setCurrentLevel));
+  startAudiocallBtn?.addEventListener('click', startAudioCallGame);
+  startAudiocallFromDictionary?.addEventListener('click', startAudioCallGameFromDictionary);
 }

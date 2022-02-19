@@ -19,6 +19,8 @@ class Quiz {
 
   totalCorrectWords: Question[];
 
+  volume: boolean;
+
   quizElement = document.querySelector('.audiocall-question') as HTMLElement;
 
   quizChangableEl = document.querySelector('.audiocall-question__changable') as HTMLElement;
@@ -27,6 +29,8 @@ class Quiz {
 
   exitGame = document.querySelector('.audiocall-question__settings_exit') as HTMLElement;
 
+  exitOnNavAudioLinks = document.querySelector('.game-menu_audiocall') as HTMLElement;
+
   constructor( questions:TGetWords[] | TAggregatedWord[] ) {
     this.totalAmount = questions.length;
     this.answeredAmount = 0;
@@ -34,6 +38,7 @@ class Quiz {
     this.totalWrongWords = [];
     this.totalCorrectWords = [];
     this.currentAnswer = '';
+    this.volume = true;
     this.audiocallAnswerBtns = document.querySelectorAll('.answer-item');
     this.nextBtn.addEventListener('click',
       this.nextQuestion.bind(this));
@@ -42,14 +47,17 @@ class Quiz {
     pagination(this.totalAmount);
 
     this.exitGame.addEventListener('click', this.closeQuiz.bind(this));
+    this.exitOnNavAudioLinks.addEventListener('click', this.closeQuiz.bind(this));
   }
 
   closeQuiz() {
+    const paginationContainer = document.querySelector('.audiocall-question__pagination') as HTMLElement;
     this.answeredAmount = 0;
     this.currentAnswer = '';
     this.questions = [];
     this.quizChangableEl.innerHTML = '';
     this.quizElement.classList.add('hidden');
+    paginationContainer.innerHTML = '';
     this.navigateBackToDictionary();
   }
 
@@ -70,8 +78,6 @@ class Quiz {
     if (this.currentAnswer) {
       this.showResult();
       this.answeredAmount++;
-    } else {
-      console.log('this.currentAnswer is empty', this.currentAnswer);
     }
   };
 
@@ -87,12 +93,13 @@ class Quiz {
 
       if (item.textContent === this.currentAnswer && correctResult) {
         item.classList.add('correct');
-      }
-
-      if (item.textContent === this.currentAnswer && !correctResult) {
+      } else if (item.textContent === this.currentAnswer && !correctResult) {
         item.classList.add('wrong');
       } else if (item.textContent === this.questions[this.answeredAmount].correctAnswer) {
         item.classList.add('correct');
+      } else {
+        item.classList.add('disable');
+        item.setAttribute('disabled', 'true');
       }
     });
 
@@ -104,6 +111,12 @@ class Quiz {
     this.audiocallAnswerBtns.forEach(answerBtn =>
       answerBtn.addEventListener('click', this.getAnswerWord),
     );
+
+    const volumeBtn = document.querySelector('.audiocall-question__settings_volume') as HTMLElement;
+    volumeBtn.addEventListener('click', () => {
+      this.volume = !this.volume;
+      volumeBtn.classList.toggle('mute');
+    });
   }
 
   setQuestions = (questions: TGetWords[] | TAggregatedWord[]) => {
@@ -126,10 +139,12 @@ class Quiz {
       this.currentAnswer = '';
       this.renderQuestion();
     } else {
-      const audio = new Audio();
-      audio.src = './assets/sounds/roundEnd.mp3';
-      audio.play();
-      this.endQuiz();
+      if (this.volume) {
+        const audio = new Audio();
+        audio.src = './assets/sounds/roundEnd.mp3';
+        audio.play();
+        this.endQuiz();
+      }
     }
   }
 
@@ -139,12 +154,16 @@ class Quiz {
       if (isCorrectAnswer) {
         this.totalCorrectWords.push(this.questions[this.answeredAmount]);
         this.styleAnswer();
-        playSound(true);
+        if (this.volume) {
+          playSound(true);
+        }
 
       } else {
         this.totalWrongWords.push(this.questions[this.answeredAmount]);
         this.styleAnswer();
-        playSound(false);
+        if (this.volume) {
+          playSound(false);
+        }
       }
     }
   };
@@ -156,6 +175,10 @@ class Quiz {
     resultTable.bindListener();
 
     this.answeredAmount = 0;
+    this.currentAnswer = '';
+    this.questions = [];
+    this.quizChangableEl.innerHTML = '';
+    this.volume = false;
     this.quizElement.classList.add('hidden');
     audiocallResult?.classList.remove('hidden');
   }
