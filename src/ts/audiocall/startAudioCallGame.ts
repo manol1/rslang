@@ -22,13 +22,15 @@ function moveToQuastions(){
   audiocallQuestion?.classList.remove('hidden');
 }
 
-async function startQuiz(){
-  const words = await getWords(store.audiocallCurrentLevel, String(Math.floor(Math.random() * 30)));
-  const quiz = new Quiz(words);
-  quiz.bindListener();
-}
+// async function startQuiz(){
+//   let quiz: Quiz | null = null;
+//   const words = await getWords(store.audiocallCurrentLevel, String(Math.floor(Math.random() * 30)));
+//   quiz = new Quiz(words);
+//   quiz.bindListener();
+// }
 
 async function startQuizfromDictionary(){
+  let quiz: Quiz | null = null;
   let words: TGetWords[] | TAggregatedWord[];
   if (!store.isAuthorized) {
     words = await getWords(store.currentLevel, store.currentPage);
@@ -47,16 +49,30 @@ async function startQuizfromDictionary(){
         `${ELinks.users}/${localStorage.getItem('userId')}/${filterStr}`))[0].paginatedResults;
     }
   }
-  const quiz = new Quiz(words);
+  quiz = new Quiz(words);
   quiz.bindListener();
 }
 
 export function startAudioCallGame() {
+  const exitGame = document.querySelector('.audiocall-question__settings_exit') as HTMLElement;
+
+  let quiz: Quiz | null = null;
+
+  async function startQuiz(){
+    const words = await getWords(store.audiocallCurrentLevel, String(Math.floor(Math.random() * 30)));
+    quiz = new Quiz(words);
+    quiz.bindListener();
+  }
+
   moveToQuastions();
   startQuiz();
 
   closeResult?.addEventListener('click', () => {
     audiocallResult?.classList.add('hidden');
+    quiz = null;
+  });
+  exitGame.addEventListener('click', () => {
+    quiz = null;
   });
 }
 

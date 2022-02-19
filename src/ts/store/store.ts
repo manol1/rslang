@@ -4,4 +4,5 @@ export const store = {
   isAuthorized: false,
   audiocallCurrentLevel: '0',
   isComplicatedWordPage: false,
+
 };

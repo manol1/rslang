@@ -46,7 +46,7 @@ class Quiz {
     this.renderQuestion();
     pagination(this.totalAmount);
 
-    this.exitGame.addEventListener('click', this.closeQuiz.bind(this));
+    // this.exitGame.addEventListener('click', this.closeQuiz.bind(this));
     this.exitOnNavAudioLinks.addEventListener('click', this.closeQuiz.bind(this));
   }
 
