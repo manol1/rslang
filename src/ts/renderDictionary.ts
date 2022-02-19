@@ -8,7 +8,6 @@ export const renderDictionary = async (isComplicated = false) => {
   const dict =  new Dictionary(dictEl, isComplicated, store.currentLevel, store.currentPage);
   await dict.getData();
   dict.render();
-  dict.checkoAudio();
 
   const dictionaryFooter = <HTMLDivElement>document.querySelector('.dictionary-footer');
   const hardWordsBtn = <HTMLButtonElement>document.querySelector('.dictionary-levels button:last-child');

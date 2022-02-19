@@ -80,16 +80,9 @@ function navigation() {
 
     audiocallLink?.classList.remove('hidden');
 
-    if (store.isAuthorized) {
-      audiocallWelcome?.classList.add('hidden');
-      if (audiocallQuestion?.classList.contains('hidden')) {
-        audiocallQuestion?.classList.remove('hidden');
-      }
-      audiocallQuestion?.classList.remove('hidden');
-    } else {
-      audiocallQuestion?.classList.add('hidden');
-      audiocallWelcome?.classList.remove('hidden');
-    }
+    audiocallQuestion?.classList.add('hidden');
+    audiocallWelcome?.classList.remove('hidden');
+    // }
   };
 
   const displaySprint = () => {
@@ -155,8 +148,6 @@ function navigation() {
   menuNavLinks.forEach(navLink => navLink.addEventListener('click', handleMenuNavigation));
   dictionaryGameBtns.forEach(gameLink => gameLink.addEventListener('click', handleGameNavInDictionary));
 
-  // удалить потом :
-  // displaySprint();
 }
 
 export default navigation;
