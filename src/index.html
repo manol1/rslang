@@ -209,17 +209,19 @@
               <p>||</p>
               <p class="sprint-word-translation"></p>
             </div>
-            <div class="sprint-word-result visibility"></div>
+
             <div class="sprint-word-btns">
               <button class="sprint-word-wrong">Неверно</button>
               <button class="sprint-word-right">Верно</button>
             </div>
             <div class="sprint-keyboard-imgs">
               <div></div>
+              <div class="sprint-word-result visibility"></div>
               <div></div>
             </div>
           </div>
           <div class="sprint-start sprint-result hidden">
+            <h2 class="sprint-result-verdict"></h2>
             <div class="sprint-result-content">
               <div class="sprint-result-header">
                 <p>Ошибок</p>
@@ -248,7 +250,7 @@
           <h2>About us page</h2>
         </section>
 
-        <section class="word-statistics-in-games">
+        <section class="word-statistics-in-games hidden">
           <div class="word-statistics-container">
             <span>X</span>
             <div class="word-statistics-header">
@@ -266,13 +268,13 @@
               <tbody>
                 <tr>
                   <td>Аудиовызов</td>
-                  <td>0</td>
-                  <td>0</td>
+                  <td id="audiocall-right">0</td>
+                  <td id="audiocall-wrong">0</td>
                 </tr>
                 <tr>
                   <td>Спринт</td>
-                  <td>0</td>
-                  <td>0</td>
+                  <td id="sprint-right">0</td>
+                  <td id="sprint-wrong">0</td>
                 </tr>
               </tbody>
             </table>

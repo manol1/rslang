@@ -1,5 +1,5 @@
 .word-statistics-in-games {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
@@ -12,10 +12,10 @@
 
 .word-statistics-container {
   position: relative;
-  top: calc(50% - 140px);
+  top: calc(50% - 135px);
   left: calc(50% - 250px);
   width: 500px;
-  height: 280px;
+  height: 270px;
   background-color: white;
   border-radius: 20px;
   padding: 30px;
@@ -53,8 +53,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  row-gap: 10px;
-  margin-bottom: 20px;
+  row-gap: 15px;
+  margin-bottom: 10px;
   h2 {
     font-weight: bold;
     font-size: 20px;

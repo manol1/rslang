@@ -7,6 +7,8 @@ import {
 } from './requests';
 import { renderDictionary } from './renderDictionary';
 import isExploredPage from './exploredPage';
+import { getWordStatisticsInGame } from './statistics/word-statistics';
+import { store } from './store/store';
 
 class Word {
   word: TGetWords | TAggregatedWord;
@@ -23,6 +25,10 @@ class Word {
 
   wordStatisticsHeaderWord = <HTMLParagraphElement>document.querySelector('.word-statistics-header p');
 
+  audioCallRight = <HTMLElement>document.getElementById('audiocall-right');
+  audioCallWrong = <HTMLElement>document.getElementById('audiocall-wrong');
+  sprintRight = <HTMLElement>document.getElementById('sprint-right');
+  sprintWrong = <HTMLElement>document.getElementById('sprint-wrong');
 
   audioArr: Array<HTMLAudioElement> = [];
 
@@ -73,6 +79,8 @@ class Word {
     const isAlreadyHard =  this.element.classList.contains('active-hard');
     const isAlreadyEasy =  this.element.classList.contains('active-easy');
 
+    const hasUserWord = (await getAggregatedWordById(localStorage.getItem('userId') || '', this.word.id || this.word._id, localStorage.getItem('token') || ''))[0].userWord;
+
     if ( btnDifficalty === WordDifficulty.hard) {
       this.element.classList.toggle('active-hard');
 
@@ -83,15 +91,20 @@ class Word {
         if (isAlreadyEasy) {
           this.element.classList.remove('active-easy');
         }
+
         if (!isAlreadyHard) {
 
-          if ((await getAggregatedWordById(localStorage.getItem('userId') || '', this.word.id || this.word._id, localStorage.getItem('token') || ''))[0].userWord) {
-            await updateUserWord(localStorage.getItem('userId') || '', this.word.id || this.word._id, { difficulty: 'hard', optional: {} }, localStorage.getItem('token') || '');
+          if (hasUserWord) {
+            await updateUserWord(localStorage.getItem('userId') || '', this.word.id || this.word._id, { difficulty: 'hard', optional: hasUserWord.optional }, localStorage.getItem('token') || '');
           } else {
-            await createUserWord(localStorage.getItem('userId') || '', this.word.id || this.word._id, { difficulty: 'hard', optional: {} }, localStorage.getItem('token') || '');
+            await createUserWord(localStorage.getItem('userId') || '', this.word.id || this.word._id, { difficulty: 'hard', optional: store.optional }, localStorage.getItem('token') || '');
           }
         } else {
-          await deleteUserWord(localStorage.getItem('userId') || '', this.word.id || this.word._id, localStorage.getItem('token') || '');
+          if (hasUserWord) {
+            await updateUserWord(localStorage.getItem('userId') || '', this.word.id || this.word._id, { difficulty: WordDifficulty.empty, optional: hasUserWord.optional }, localStorage.getItem('token') || '');
+          } else {
+            await deleteUserWord(localStorage.getItem('userId') || '', this.word.id || this.word._id, localStorage.getItem('token') || '');
+          }
         }
         await isExploredPage();
       }
@@ -104,21 +117,35 @@ class Word {
       }
 
       if (isAlreadyEasy) {
-        await deleteUserWord(localStorage.getItem('userId') || '', this.word.id || this.word._id, localStorage.getItem('token') || '');
-      } else {
-        if ((await getAggregatedWordById(localStorage.getItem('userId') || '', this.word.id || this.word._id, localStorage.getItem('token') || ''))[0].userWord) {
-          await updateUserWord(localStorage.getItem('userId') || '', this.word.id || this.word._id, { difficulty: 'easy', optional: {} }, localStorage.getItem('token') || '');
+        if (hasUserWord) {
+          await updateUserWord(localStorage.getItem('userId') || '', this.word.id || this.word._id, { difficulty: WordDifficulty.empty, optional: hasUserWord.optional }, localStorage.getItem('token') || '');
         } else {
-          await createUserWord(localStorage.getItem('userId') || '', this.word.id || this.word._id, { difficulty: 'easy', optional: {} }, localStorage.getItem('token') || '');
+          await deleteUserWord(localStorage.getItem('userId') || '', this.word.id || this.word._id, localStorage.getItem('token') || '');
+        }
+      } else {
+        if (hasUserWord) {
+          await updateUserWord(localStorage.getItem('userId') || '', this.word.id || this.word._id, { difficulty: 'easy', optional: hasUserWord.optional }, localStorage.getItem('token') || '');
+        } else {
+          await createUserWord(localStorage.getItem('userId') || '', this.word.id || this.word._id, { difficulty: 'easy', optional: store.optional }, localStorage.getItem('token') || '');
         }
       }
       await isExploredPage();
     }
 
     if (btnDifficalty === WordDifficulty.statistics) {
-      console.log('statistic click')
-      this.wordStatisticsInGames.classList.remove('hidden');
+      const info = await getWordStatisticsInGame(this.word.id || this.word._id);
+      if (info) {
+        this.audioCallRight.innerHTML = info.optional.games.audiocall.right.toString();
+        this.audioCallWrong.innerHTML = info.optional.games.audiocall.wrong.toString();
+        this.sprintRight.innerHTML = info.optional.games.sprint.right.toString();
+        this.sprintWrong.innerHTML = info.optional.games.sprint.wrong.toString();
+      }
       this.wordStatisticsHeaderWord.innerHTML = this.word.word;
+      this.wordStatisticsInGames.classList.remove('hidden');
+
+
+
+
     }
 
   };
@@ -138,7 +165,7 @@ class Word {
     let difficulty: string | undefined;
     const isDifficulty = async () => {
       difficulty = (await getAggregatedWordById(localStorage.getItem('userId') || '', this.word.id || this.word._id, localStorage.getItem('token') || ''))[0].userWord?.difficulty;
-      if (difficulty) {
+      if (difficulty && difficulty !== WordDifficulty.empty && difficulty !== ' ') {
         card.classList.add(`active-${difficulty}`);
       }
     };
@@ -154,7 +181,7 @@ class Word {
       <div class="word-name">
         <p><strong>${this.word.word}</strong></p>
           <div class="word-contrals ${ !this.isAuthorized ? 'hidden' : ''}">
-              <button class="word-contrals-item hard" data-difficalty="hard">
+              <button class="word-contrals-item hard" data-difficalty="hard" title="Сложное слово">
                 <svg  width="24" height="24" viewBox="0 0 24 24" fill="none" data-difficalty="hard"
                  xmlns="http://www.w3.org/2000/svg">
                   <path data-difficalty="hard"
@@ -165,7 +192,7 @@ class Word {
                     4.67 20.67 4 21.5 4C22.33 4 23 4.67 23 5.5Z" fill="white"/>
                 </svg>
               </button>
-              <button class="word-contrals-item easy ${ !this.isAuthorized ? 'hidden' : ''}" data-difficalty="easy">
+              <button class="word-contrals-item easy ${ !this.isAuthorized ? 'hidden' : ''}" data-difficalty="easy" title="Изученное слово">
                 <svg width="30" height="30" viewBox="0 0 30 30" fill="none" data-difficalty="easy"
                  xmlns="http://www.w3.org/2000/svg">
                   <path data-difficalty="easy"
@@ -175,9 +202,9 @@ class Word {
                     25 15 25Z" fill="white"/>
                 </svg>
               </button>
-              <button class="word-contrals-item ${ this.isComplicated ? 'hidden' : ''}" data-difficalty="statistics">
-              <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" data-difficalty="statistics">
-              <path data-difficalty="statistics" d="M6 16H10V0H6V16ZM0 16H4V8H0V16ZM12 5V16H16V5H12Z" fill="white"/>
+              <button class="word-contrals-item ${ this.isComplicated ? 'hidden' : ''}" data-difficalty="statistics" title="Статистика в играх">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" data-difficalty="statistics" xmlns="http://www.w3.org/2000/svg">
+              <path d="M9 24H15V0H9V24ZM0 24H6V12H0V24ZM18 7.5V24H24V7.5H18Z" fill="white" data-difficalty="statistics"/>
               </svg>
             </button>
             </div>
