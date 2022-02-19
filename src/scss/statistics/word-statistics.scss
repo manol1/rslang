@@ -1,0 +1,62 @@
+.word-statistics-in-games {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba($color: #000000, $alpha: 0.4);
+  &.hidden {
+    display: none;
+  }
+}
+
+.word-statistics-container {
+  position: relative;
+  top: calc(50% - 135px);
+  left: calc(50% - 250px);
+  width: 500px;
+  height: 270px;
+  background-color: white;
+  border-radius: 20px;
+  padding: 30px;
+  span {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 1.6rem;
+    cursor: pointer;
+    opacity: 0.5;
+    &:hover {
+      opacity: 1;
+    }
+  }
+  p {
+    color:green;
+    font-size: 20px;
+    font-weight: bold;
+  }
+  table {
+    width: 100%;
+    th, td {
+      padding: 20px;
+    }
+    td {
+      text-align: center;
+    }
+  }
+
+
+}
+
+.word-statistics-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  row-gap: 15px;
+  margin-bottom: 10px;
+  h2 {
+    font-weight: bold;
+    font-size: 20px;
+  }
+}
