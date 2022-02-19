@@ -1,7 +1,7 @@
 @import '../variables.scss';
 
 .sprint-game {
-  font-size: 32px;
+  font-size: 28px;
   letter-spacing: 1px;
   &.hidden {
     display: none;
@@ -9,15 +9,16 @@
 }
 
 .sprint-word {
-  margin-bottom: 40px;
+  margin-bottom: 20px;
 }
 
 .sprint-word-wrapper {
-  margin-bottom: 40px;
+  margin-bottom: 50px;
   p {
     &:nth-child(2) {
-      margin-bottom: 40px;
+      margin-bottom: 20px;
       letter-spacing: 5px;
+      font-size: 22px;
     }
   }
 }
@@ -25,7 +26,6 @@
 .sprint-word-result {
   height: 60px;
   width: 60px;
-  margin-bottom: 40px;
   background-size: contain;
   transition: all 0.5s;
   &.visibility {
@@ -44,7 +44,7 @@
 }
 
 .sprint-timer {
-  margin-bottom: 40px;
+  margin-bottom: 30px;
   height: 60px;
   font-size: 48px;
   color:white;
@@ -52,7 +52,8 @@
 
 .sprint-keyboard-imgs {
   display: flex;
-  column-gap: 130px;
+  justify-content: space-between;
+  column-gap: 95px;
   margin-top: 40px;
   div {
     width: 50px;

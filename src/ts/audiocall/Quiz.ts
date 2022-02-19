@@ -2,6 +2,7 @@ import { TGetWords, TAggregatedWord } from '../type/types';
 import { playSound, pagination } from './utils';
 import Question from './Question';
 import Result from './Result';
+import { updateGameStats } from '../statistics/word-statistics';
 
 class Quiz {
 
@@ -154,16 +155,19 @@ class Quiz {
       if (isCorrectAnswer) {
         this.totalCorrectWords.push(this.questions[this.answeredAmount]);
         this.styleAnswer();
+
         if (this.volume) {
           playSound(true);
         }
-
+        updateGameStats('audiocall', true, this.questions[this.answeredAmount].word.id || this.questions[this.answeredAmount].word._id);
       } else {
         this.totalWrongWords.push(this.questions[this.answeredAmount]);
         this.styleAnswer();
+
         if (this.volume) {
           playSound(false);
         }
+        updateGameStats('audiocall', false, this.questions[this.answeredAmount].word.id || this.questions[this.answeredAmount].word._id);
       }
     }
   };

@@ -60,9 +60,23 @@ export type TUserWorld = {
   wordId: string,
 };
 
+type TAnswerOptions = {
+  right: number,
+  wrong: number,
+}
+
+type TGames = {
+  sprint: TAnswerOptions,
+  audiocall: TAnswerOptions,
+}
+
+export type TOptionalWorld = {
+  games: TGames,
+}
+
 export type TBodyUserWorld = {
   difficulty: string,
-  optional: object,
+  optional: TOptionalWorld,
 };
 
 export type TUserStatistic = {
@@ -116,6 +130,8 @@ export type TAggregatedWords = {
 export enum WordDifficulty {
   hard = 'hard',
   easy = 'easy',
+  statistics = 'statistics',
+  empty = 'empty',
 }
 
 export enum GameNames {
