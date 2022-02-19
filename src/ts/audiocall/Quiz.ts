@@ -156,6 +156,9 @@ class Quiz {
     resultTable.bindListener();
 
     this.answeredAmount = 0;
+    this.currentAnswer = '';
+    this.questions = [];
+    this.quizChangableEl.innerHTML = '';
     this.quizElement.classList.add('hidden');
     audiocallResult?.classList.remove('hidden');
   }
