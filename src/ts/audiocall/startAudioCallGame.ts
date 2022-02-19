@@ -45,8 +45,7 @@ export default function startAudioCallGame() {
     } else {
       if (store.isComplicatedWordPage) {
         const filterStr = 'aggregatedWords?filter=%7B%22userWord.difficulty%22%3A%22hard%22%7D';
-        words = (await getAggregatedWords(localStorage.getItem('userId') || '',
-          localStorage.getItem('token') || '',
+        words = (await getAggregatedWords(localStorage.getItem('token') || '',
           `${ELinks.users}/${localStorage.getItem('userId')}/${filterStr}`))[0].paginatedResults;
         console.log('hard words', words);
       } else {
@@ -55,8 +54,7 @@ export default function startAudioCallGame() {
         difficulty%22%3A%22hard%22%7D%2C%7B%22userWord
         %22%3Anull%7D%5D%7D%2C%20%20%7B%22page%22%3A
         ${store.currentPage}%7D%20%5D%7D`;
-        words = (await getAggregatedWords(localStorage.getItem('userId') || '',
-          localStorage.getItem('token') || '',
+        words = (await getAggregatedWords(localStorage.getItem('token') || '',
           `${ELinks.users}/${localStorage.getItem('userId')}/${filterStr}`))[0].paginatedResults;
       }
     }
