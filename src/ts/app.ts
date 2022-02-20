@@ -5,9 +5,9 @@ import { store } from './store/store';
 import { renderDictionary } from './renderDictionary';
 import sprint from './sprint/sprint';
 import { setCurrentLevel,
-  startAudioCallGameFromDictionary,
   startAudioCallGame } from '../ts/audiocall/startAudioCallGame';
 import { navigateWordStatistics } from './statistics/word-statistics';
+import { CallAudiogameFrom } from './type/types';
 
 
 export default async function App() {
@@ -66,8 +66,8 @@ export default async function App() {
   const startAudiocallFromDictionary = document.querySelector('.game-audio');
 
   audiocallLevelBtns.forEach(level => level.addEventListener('click', setCurrentLevel));
-  startAudiocallBtn?.addEventListener('click', startAudioCallGame);
-  startAudiocallFromDictionary?.addEventListener('click', startAudioCallGameFromDictionary);
-
   navigateWordStatistics();
+
+  startAudiocallBtn?.addEventListener('click', () => {startAudioCallGame(CallAudiogameFrom.menu);});
+  startAudiocallFromDictionary?.addEventListener('click', () => {startAudioCallGame(CallAudiogameFrom.dictionary);});
 }

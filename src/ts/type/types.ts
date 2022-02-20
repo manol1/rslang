@@ -153,3 +153,8 @@ export enum ResultGrade {
   good = 70,
   bad = 30,
 }
+
+export enum CallAudiogameFrom {
+  menu = 'menu',
+  dictionary = 'dictionary',
+}
