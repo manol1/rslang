@@ -36,7 +36,11 @@
                     </li>
                   </ul>
                 </li>
-                <li class="header__nav_list-item" data-link="statistics">
+                <li
+                  class="header__nav_list-item"
+                  data-link="statistics"
+                  id="statistics-btn"
+                >
                   Статистика
                 </li>
                 <li class="header__nav_list-item" data-link="developers">
@@ -203,6 +207,20 @@
             <button class="sprint-start-btn">Приступить</button>
           </div>
           <div class="sprint-start sprint-game hidden">
+            <div class="sprint-game-info">
+              <span>
+                <span>Уровень:</span>
+                <span class="sprint-game-info__level"></span>
+                <span>Страница:</span>
+                <span class="sprint-game-info__page"></span>
+              </span>
+              <span>
+                <span>Номер слова / всего:</span>
+                <span class="sprint-game-info__current-number"></span>
+                <span>/</span>
+                <span class="sprint-game-info__count-words"></span>
+              </span>
+            </div>
             <div class="sprint-timer"></div>
             <div class="sprint-word-wrapper">
               <p class="sprint-word"></p>
@@ -243,7 +261,65 @@
         </section>
 
         <section class="statistics hidden">
-          <h2>Statistics page</h2>
+          <h2>Today</h2>
+          <div class="statistics-info">
+            <div class="statistics-info__left">
+              <div class="statistics-info__left-words">
+                <span id="today-words">0</span>
+                <div>
+                  <p>words</p>
+                  <p>were in games</p>
+                </div>
+              </div>
+              <div class="statistics-info__left-accuracy">
+                <p>Accuracy</p>
+                <div id="today-accuracy">0</div>
+              </div>
+            </div>
+            <div class="statistics-info__right">
+              <div class="statistics-info__right-audiocall">
+                <div>
+                  <div class="game-img"></div>
+                  <h3>Audiocall</h3>
+                </div>
+                <div class="today-game-stats">
+                  <div class="today-game-stats__row">
+                    <p id="today-audiocall-words">0</p>
+                    <p>words</p>
+                  </div>
+                  <div class="today-game-stats__row">
+                    <p id="today-audiocall-accuracy">0</p>
+                    <p>accuracy</p>
+                  </div>
+                  <div class="today-game-stats__row">
+                    <p id="today-audiocall-in-a-row">0</p>
+                    <p>in-a-row</p>
+                  </div>
+                </div>
+              </div>
+              <div class="statistics-info__right-sprint">
+                <div>
+                  <div class="game-img"></div>
+                  <h3>Sprint</h3>
+                </div>
+                <div class="today-game-stats">
+                  <div class="today-game-stats__row">
+                    <p id="today-sprint-words">0</p>
+                    <p>words</p>
+                  </div>
+                  <div class="today-game-stats__row">
+                    <p id="today-sprint-accuracy">0</p>
+                    <p>accuracy</p>
+                  </div>
+                  <div class="today-game-stats__row">
+                    <p id="today-sprint-in-a-row">0</p>
+                    <p>in-a-row</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          </div>
         </section>
 
         <section class="developers hidden">

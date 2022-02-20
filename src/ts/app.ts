@@ -8,6 +8,7 @@ import { setCurrentLevel,
   startAudioCallGameFromDictionary,
   startAudioCallGame } from '../ts/audiocall/startAudioCallGame';
 import { navigateWordStatistics } from './statistics/word-statistics';
+import { navigateStatistics } from './statistics/statistics';
 
 
 export default async function App() {
@@ -70,4 +71,5 @@ export default async function App() {
   startAudiocallFromDictionary?.addEventListener('click', startAudioCallGameFromDictionary);
 
   navigateWordStatistics();
+  navigateStatistics();
 }

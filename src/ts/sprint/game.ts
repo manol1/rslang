@@ -2,6 +2,7 @@ import { getAggregatedWords, getWords } from '../requests';
 import { ELinks, TAggregatedWord, ResultGrade } from '../type/types';
 import { store } from '../store/store';
 import { updateGameStats } from '../statistics/word-statistics';
+import { updateUserStatisticsFn, updateBestSeriesFn } from '../statistics/statistics';
 
 const sprint = <HTMLDivElement>document.querySelector('.sprint');
 const sprintWord = <HTMLParagraphElement>document.querySelector('.sprint-word');
@@ -24,7 +25,10 @@ const footerSection = <HTMLElement>document.querySelector('.footer');
 const dictionaryGameFooter = <HTMLDivElement>document.querySelector('.dictionary-footer');
 const sprintResultVerdict = <HTMLHeadElement>document.querySelector('.sprint-result-verdict');
 
-
+const sprintGameInfoLevel = <HTMLSpanElement>document.querySelector('.sprint-game-info__level');
+const sprintGameInfoPage = <HTMLSpanElement>document.querySelector('.sprint-game-info__page');
+const sprintGameInfoCountWords = <HTMLSpanElement>document.querySelector('.sprint-game-info__count-words');
+const sprintGameInfoCurrentNumber = <HTMLSpanElement>document.querySelector('.sprint-game-info__current-number');
 
 let currentRightAnswer = '';
 let currentWord: TAggregatedWord;
@@ -33,6 +37,8 @@ let wordsForGame: TAggregatedWord[];
 let wrongAnswers: TAggregatedWord[];
 let rightAnswers: TAggregatedWord[];
 let setIntervalID: NodeJS.Timer;
+let bestSeries: number;
+let currentSeries: number;
 
 export function closeResults() {
   sprintStart.classList.remove('hidden');
@@ -97,6 +103,7 @@ function getResults() {
   wrongAnswers.forEach(el => generateResultWord(sprintResultMistakes, el));
   rightAnswers.forEach(el => generateResultWord(sprintResultCorrect, el));
   sprintResultVerdict.innerHTML = getSprintResultHeader();
+  updateBestSeriesFn('sprint', bestSeries);
 }
 
 export function generateQuestion() {
@@ -114,6 +121,7 @@ export function generateQuestion() {
 function nextQuestion() {
   if (sprintWordNumber < wordsForGame.length - 1) {
     sprintWordNumber++;
+    sprintGameInfoCurrentNumber.innerHTML = `${+sprintWordNumber + 1}`;
     generateQuestion();
   } else {
     getResults();
@@ -138,6 +146,8 @@ function resultAnswer(btn: string) {
     }, 600);
     if (store.isAuthorized) {
       updateGameStats('sprint', true, currentWord.id || currentWord._id);
+      updateUserStatisticsFn('sprint', true);
+      currentSeries++;
     }
   } else {
     new Audio('./assets/sounds/wrong1.wav').play();
@@ -150,6 +160,11 @@ function resultAnswer(btn: string) {
     }, 600);
     if (store.isAuthorized) {
       updateGameStats('sprint', false, currentWord.id || currentWord._id);
+      updateUserStatisticsFn('sprint', false);
+      if (currentSeries > bestSeries) {
+        bestSeries = currentSeries;
+      }
+      currentSeries = 0;
     }
   }
 }
@@ -172,7 +187,7 @@ document.addEventListener('keyup', function (e) {
 });
 
 function startTimer() {
-  let startTime = 30;
+  let startTime = 60;
   sprintTimer.innerHTML = startTime.toString();
   setIntervalID = setInterval(() => {
     if (!sprintResult.classList.contains('hidden')) {
@@ -193,6 +208,25 @@ function startTimer() {
   }, 600);
 }
 
+function getLevelName(lev: string) {
+  switch (lev) {
+    case '0':
+      return 'A1.';
+    case '1':
+      return 'A2.';
+    case '2':
+      return 'B1.';
+    case '3':
+      return 'B2.';
+    case '4':
+      return 'C1.';
+    case '5':
+      return 'C2.';
+    default:
+      return '';
+  }
+}
+
 export async function getWordsForGame(level: string, fromFooter: boolean) {
   sprintWordNumber = 0;
   clearInterval(setIntervalID);
@@ -202,27 +236,58 @@ export async function getWordsForGame(level: string, fromFooter: boolean) {
   sprintResultMistakes.innerHTML = '';
   sprintTimer.innerHTML = '';
   sprintResultVerdict.innerHTML = '';
-  // const page = String(Math.floor(Math.random() * 30));
-  const page = '0';
+  sprintGameInfoLevel.innerHTML = '';
+  sprintGameInfoPage.innerHTML = '';
+  sprintGameInfoCountWords.innerHTML = '';
+  sprintGameInfoCurrentNumber.innerHTML = '1';
+  bestSeries = 0;
+  currentSeries = 0;
+  const page = String(Math.floor(Math.random() * 30));
   let link: string;
   if (store.isAuthorized) {
     if (!fromFooter) {
-      const linkStr = `wordsPerPage=20&filter=%7B%22%24and%22%3A%5B%7B%22%24or%22%3A%5B%7B%22userWord.difficulty%22%3A%22empty%22%7D%2C%20%7B%22userWord.difficulty%22%3A%22hard%22%7D%2C%20%7B%22userWord%22%3Anull%7D%5D%7D%2C%20%7B%22page%22%3A${page}%7D%5D%7D`;
-      link = `${ELinks.users}/${localStorage.getItem('userId')}/aggregatedWords?group=${level}&${linkStr}`;
+      wordsForGame = await getWords(level, page);
+      sprintGameInfoLevel.innerHTML = getLevelName(level);
+      sprintGameInfoPage.innerHTML = `${(+page + 1)}.`;
+      sprintGameInfoCountWords.innerHTML = wordsForGame.length.toString() + '.';
     } else {
-      const linkStr = `wordsPerPage=20&filter=%7B%22%24and%22%3A%5B%7B%22%24or%22%3A%5B%7B%22userWord.difficulty%22%3A%22empty%22%7D%2C%20%7B%22userWord.difficulty%22%3A%22hard%22%7D%2C%20%7B%22userWord%22%3Anull%7D%5D%7D%2C%20%7B%22page%22%3A${store.currentPage}%7D%5D%7D`;
-      link = `${ELinks.users}/${localStorage.getItem('userId')}/aggregatedWords?group=${store.currentLevel}&${linkStr}`;
+      if (store.isComplicatedWordPage) {
+        const linkStr = 'aggregatedWords?wordsPerPage=3600&filter=%7B%22userWord.difficulty%22%3A%22hard%22%7D';
+        link = `${ELinks.users}/${localStorage.getItem('userId')}/${linkStr}`;
+        sprintGameInfoLevel.innerHTML = 'Cложные слова.';
+        sprintGameInfoPage.innerHTML = 'Cложные слова.';
+        wordsForGame = (await getAggregatedWords(localStorage.getItem('token') || '', link))[0].paginatedResults;
+        sprintGameInfoCountWords.innerHTML = wordsForGame.length.toString() + '.';
+      } else {
+        const linkStr = `wordsPerPage=20&filter=%7B%22%24and%22%3A%5B%7B%22%24or%22%3A%5B%7B%22userWord.difficulty%22%3A%22empty%22%7D%2C%20%7B%22userWord.difficulty%22%3A%22hard%22%7D%2C%20%7B%22userWord%22%3Anull%7D%5D%7D%2C%20%7B%22page%22%3A${store.currentPage}%7D%5D%7D`;
+        link = `${ELinks.users}/${localStorage.getItem('userId')}/aggregatedWords?group=${store.currentLevel}&${linkStr}`;
+        sprintGameInfoLevel.innerHTML = getLevelName(store.currentLevel);
+        sprintGameInfoPage.innerHTML = `${(+store.currentPage + 1)}.`;
+        wordsForGame = (await getAggregatedWords(localStorage.getItem('token') || '', link))[0].paginatedResults;
+        sprintGameInfoCountWords.innerHTML = wordsForGame.length.toString() + '.';
+      }
     }
-    wordsForGame = (await getAggregatedWords(localStorage.getItem('token') || '', link))[0].paginatedResults;
+
   } else {
     if (!fromFooter) {
+      sprintGameInfoLevel.innerHTML = getLevelName(level);
+      sprintGameInfoPage.innerHTML = `${(+page + 1)}.`;
       wordsForGame = await getWords(level, page);
+      sprintGameInfoCountWords.innerHTML = wordsForGame.length.toString() + '.';
     } else {
+      sprintGameInfoLevel.innerHTML = getLevelName(store.currentLevel);
+      sprintGameInfoPage.innerHTML = `${(+store.currentPage + 1)}.`;
       wordsForGame = await getWords(store.currentLevel, store.currentPage);
+      sprintGameInfoCountWords.innerHTML = wordsForGame.length.toString() + '.';
     }
   }
   rightAnswers = [];
   wrongAnswers = [];
-  generateQuestion();
-  startTimer();
+  if (wordsForGame.length > 1) {
+    generateQuestion();
+    startTimer();
+  } else {
+    alert('Недостаточно слов для игры');
+    closeResults();
+  }
 }

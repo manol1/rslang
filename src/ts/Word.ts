@@ -26,8 +26,11 @@ class Word {
   wordStatisticsHeaderWord = <HTMLParagraphElement>document.querySelector('.word-statistics-header p');
 
   audioCallRight = <HTMLElement>document.getElementById('audiocall-right');
+
   audioCallWrong = <HTMLElement>document.getElementById('audiocall-wrong');
+
   sprintRight = <HTMLElement>document.getElementById('sprint-right');
+
   sprintWrong = <HTMLElement>document.getElementById('sprint-wrong');
 
   audioArr: Array<HTMLAudioElement> = [];
@@ -142,12 +145,7 @@ class Word {
       }
       this.wordStatisticsHeaderWord.innerHTML = this.word.word;
       this.wordStatisticsInGames.classList.remove('hidden');
-
-
-
-
     }
-
   };
 
   bindListener() {
@@ -192,7 +190,7 @@ class Word {
                     4.67 20.67 4 21.5 4C22.33 4 23 4.67 23 5.5Z" fill="white"/>
                 </svg>
               </button>
-              <button class="word-contrals-item easy ${ !this.isAuthorized ? 'hidden' : ''}" data-difficalty="easy" title="Изученное слово">
+              <button class="word-contrals-item easy ${ this.isComplicated ? 'hidden' : ''}" data-difficalty="easy" title="Изученное слово">
                 <svg width="30" height="30" viewBox="0 0 30 30" fill="none" data-difficalty="easy"
                  xmlns="http://www.w3.org/2000/svg">
                   <path data-difficalty="easy"
@@ -202,7 +200,7 @@ class Word {
                     25 15 25Z" fill="white"/>
                 </svg>
               </button>
-              <button class="word-contrals-item ${ this.isComplicated ? 'hidden' : ''}" data-difficalty="statistics" title="Статистика в играх">
+              <button class="word-contrals-item" data-difficalty="statistics" title="Статистика в играх">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" data-difficalty="statistics" xmlns="http://www.w3.org/2000/svg">
               <path d="M9 24H15V0H9V24ZM0 24H6V12H0V24ZM18 7.5V24H24V7.5H18Z" fill="white" data-difficalty="statistics"/>
               </svg>

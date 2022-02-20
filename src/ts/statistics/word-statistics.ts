@@ -1,8 +1,8 @@
 import {
   getAggregatedWordById,
   updateUserWord,
-  createUserWord
-  } from '../requests';
+  createUserWord,
+} from '../requests';
 import { store } from '../store/store';
 import { TOptionalWorld }  from '../type/types';
 // import { updateGameStats } from '../';

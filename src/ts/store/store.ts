@@ -8,12 +8,30 @@ export const store = {
     games: {
       sprint: {
         right: 0,
-        wrong: 0
+        wrong: 0,
       },
       audiocall: {
         right: 0,
-        wrong: 0
+        wrong: 0,
       },
-    }
-  }
+    },
+  },
+  statisticsNew: {
+    learnedWords: 0,
+    optional: {
+      date: ' ',
+      games: {
+        audiocall: {
+          bestSeries: 0,
+          right: 0,
+          newWords: 0,
+        },
+        sprint: {
+          bestSeries: 0,
+          right: 0,
+          newWords: 0,
+        },
+      },
+    },
+  },
 };
