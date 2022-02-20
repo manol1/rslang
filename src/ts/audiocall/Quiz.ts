@@ -31,6 +31,8 @@ class Quiz {
 
   exitOnNavAudioLinks = document.querySelector('.game-menu_audiocall') as HTMLElement;
 
+  volumeBtn = document.querySelector('.audiocall-question__settings_volume') as HTMLElement;
+
   constructor( questions:TGetWords[] | TAggregatedWord[] ) {
     this.totalAmount = questions.length;
     this.answeredAmount = 0;
@@ -41,36 +43,33 @@ class Quiz {
     this.volume = true;
     this.audiocallAnswerBtns = document.querySelectorAll('.answer-item');
     this.nextBtn.addEventListener('click',
-      this.nextQuestion.bind(this));
+      this.nextQuestion);
 
     this.renderQuestion();
     pagination(this.totalAmount);
 
-    // this.exitGame.addEventListener('click', this.closeQuiz.bind(this));
     this.exitOnNavAudioLinks.addEventListener('click', this.closeQuiz.bind(this));
+    this.volumeBtn.addEventListener('click', this.toogleVolume);
   }
+
+  toogleVolume = () => {
+    this.volume = !this.volume;
+    this.volumeBtn.classList.toggle('mute');
+  };
 
   closeQuiz() {
     const paginationContainer = document.querySelector('.audiocall-question__pagination') as HTMLElement;
-    this.answeredAmount = 0;
-    this.currentAnswer = '';
-    this.questions = [];
-    this.quizChangableEl.innerHTML = '';
     this.quizElement.classList.add('hidden');
     paginationContainer.innerHTML = '';
-    this.navigateBackToDictionary();
+    this.volumeBtn.classList.remove('mute');
+    this.removeListener();
   }
 
-  navigateBackToDictionary() {
-    const dictionarySection = document.querySelector('.dictionary');
-    const footerSection = document.querySelector('.footer');
-    const dictionaryGameFooter = document.querySelector('.dictionary-footer');
+  navigateBackToWelcomAudioCall() {
     const audiocallSection = document.querySelector('.audiocall');
-
-    dictionarySection?.classList.remove('hidden');
-    footerSection?.classList.remove('hidden');
-    dictionaryGameFooter?.classList.remove('footer-hidden');
-    audiocallSection?.classList.add('hidden');
+    const audiocallWelcome = document.querySelector('.audiocall-welcome');
+    audiocallSection?.classList.remove('hidden');
+    audiocallWelcome?.classList.remove('hidden');
   }
 
   getAnswerWord = (e: Event) => {
@@ -111,12 +110,6 @@ class Quiz {
     this.audiocallAnswerBtns.forEach(answerBtn =>
       answerBtn.addEventListener('click', this.getAnswerWord),
     );
-
-    const volumeBtn = document.querySelector('.audiocall-question__settings_volume') as HTMLElement;
-    volumeBtn.addEventListener('click', () => {
-      this.volume = !this.volume;
-      volumeBtn.classList.toggle('mute');
-    });
   }
 
   setQuestions = (questions: TGetWords[] | TAggregatedWord[]) => {
@@ -130,7 +123,7 @@ class Quiz {
     this.bindListener();
   };
 
-  nextQuestion() {
+  nextQuestion = () => {
 
     const answerInfo = document.querySelector('.audiocall-question__info');
     answerInfo?.classList.add('hidden');
@@ -139,14 +132,14 @@ class Quiz {
       this.currentAnswer = '';
       this.renderQuestion();
     } else {
+      this.endQuiz();
       if (this.volume) {
         const audio = new Audio();
         audio.src = './assets/sounds/roundEnd.mp3';
         audio.play();
-        this.endQuiz();
       }
     }
-  }
+  };
 
   showResult = () => {
     if (this.currentAnswer) {
@@ -168,19 +161,22 @@ class Quiz {
     }
   };
 
+  removeListener() {
+    this.nextBtn.removeEventListener('click',
+      this.nextQuestion);
+    this.volumeBtn.removeEventListener('click', this.toogleVolume);
+  }
+
   endQuiz() {
     const audiocallResult = document.querySelector('.audiocall-result') as HTMLElement;
     const resultTable = new Result(this.totalWrongWords, this.totalCorrectWords);
     resultTable.mount(audiocallResult);
     resultTable.bindListener();
 
-    this.answeredAmount = 0;
-    this.currentAnswer = '';
-    this.questions = [];
-    this.quizChangableEl.innerHTML = '';
-    this.volume = false;
     this.quizElement.classList.add('hidden');
     audiocallResult?.classList.remove('hidden');
+    this.volumeBtn.classList.remove('mute');
+    this.removeListener();
   }
 
 }

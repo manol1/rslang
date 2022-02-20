@@ -88,11 +88,11 @@
         width: 210px;
         height: 70px;
         font-size: 1.5rem;
-        line-height: 2.5rem;
+        line-height: 2.0rem;
         text-align: center;
         border-radius: 40px;
         &.disable {
-          cursor: not-allowed;
+          pointer-events: none;
           background-color: rgba(149, 140, 150, .8);
           color: #d6c4d8;
         }

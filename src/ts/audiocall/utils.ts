@@ -43,3 +43,24 @@ export function playAudio(el: HTMLAudioElement) {
     playPromise?.catch(() => { el?.play(); });
   }
 }
+
+export function navigateToAudiocallStart() {
+  const audiocallResult = document.querySelector('.audiocall-result') as HTMLElement;
+  const audiocallWelcome = document.querySelector('.audiocall-welcome');
+  audiocallResult.classList.add('hidden');
+  audiocallWelcome?.classList.remove('hidden');
+}
+
+export function navigateBackToDictionary() {
+  const dictionarySection = document.querySelector('.dictionary');
+  const footerSection = document.querySelector('.footer');
+  const dictionaryGameFooter = document.querySelector('.dictionary-footer');
+  const audiocallSection = document.querySelector('.audiocall');
+  const audiocallResult = document.querySelector('.audiocall-result') as HTMLElement;
+
+  dictionarySection?.classList.remove('hidden');
+  footerSection?.classList.remove('hidden');
+  dictionaryGameFooter?.classList.remove('footer-hidden');
+  audiocallSection?.classList.add('hidden');
+  audiocallResult.classList.add('hidden');
+}

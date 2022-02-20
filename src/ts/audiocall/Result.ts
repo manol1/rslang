@@ -1,6 +1,8 @@
 import { TGetWords, ResultGrade } from '../type/types';
 import Question from '../audiocall/Question';
 import { renderDictionary } from '../renderDictionary';
+import { navigateToAudiocallStart,
+  navigateBackToDictionary } from './utils';
 
 export default class Result {
 
@@ -28,27 +30,6 @@ export default class Result {
     return html;
   }
 
-  navigateToAudiocallStart() {
-    const audiocallResult = document.querySelector('.audiocall-result') as HTMLElement;
-    const audiocallWelcome = document.querySelector('.audiocall-welcome');
-    audiocallResult.classList.add('hidden');
-    audiocallWelcome?.classList.remove('hidden');
-  }
-
-  navigateBackToDictionary() {
-    const dictionarySection = document.querySelector('.dictionary');
-    const footerSection = document.querySelector('.footer');
-    const dictionaryGameFooter = document.querySelector('.dictionary-footer');
-    const audiocallSection = document.querySelector('.audiocall');
-    const audiocallResult = document.querySelector('.audiocall-result') as HTMLElement;
-
-    dictionarySection?.classList.remove('hidden');
-    footerSection?.classList.remove('hidden');
-    dictionaryGameFooter?.classList.remove('footer-hidden');
-    audiocallSection?.classList.add('hidden');
-    audiocallResult.classList.add('hidden');
-  }
-
   generateCongratulation(correctAnswersAmount: number) {
     const totalQuestions = this.wrongAnswers.length + this.correctAnswers.length;
     const percentOfComplete = Math.round((correctAnswersAmount / totalQuestions) * 100 );
@@ -63,13 +44,14 @@ export default class Result {
     } else if (isBad) {
       return 'Неплохо, однако возможно лучше :)!';
     } else {
-      return 'Не отчайвайтесь, все обязательно получиться!';
+      return 'Не отчаивайтесь, все обязательно получится!';
     }
   }
 
   closeResult() {
     const audiocallResult = document.querySelector('.audiocall-result') as HTMLElement;
     audiocallResult.classList.add('hidden');
+    navigateToAudiocallStart();
   }
 
   bindListener() {
@@ -85,10 +67,11 @@ export default class Result {
     }));
 
     closeBtn?.addEventListener('click', this.closeResult);
-    closeBtn?.addEventListener('click', this.navigateBackToDictionary);
+    closeBtn?.addEventListener('click', navigateToAudiocallStart);
 
-    playAgainBtn?.addEventListener('click', this.navigateToAudiocallStart);
-    backToDictionaryBtn?.addEventListener('click', this.navigateBackToDictionary);
+    playAgainBtn?.addEventListener('click', navigateToAudiocallStart);
+    backToDictionaryBtn?.addEventListener('click', navigateBackToDictionary);
+    backToDictionaryBtn?.addEventListener('click', () => renderDictionary());
   }
 
   generate() {
