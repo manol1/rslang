@@ -63,16 +63,16 @@ export type TUserWorld = {
 type TAnswerOptions = {
   right: number,
   wrong: number,
-}
+};
 
 type TGames = {
   sprint: TAnswerOptions,
   audiocall: TAnswerOptions,
-}
+};
 
 export type TOptionalWorld = {
   games: TGames,
-}
+};
 
 export type TBodyUserWorld = {
   difficulty: string,

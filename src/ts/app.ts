@@ -25,6 +25,7 @@ export default async function App() {
 
   levelBtns.forEach(level => level.addEventListener('click', (event: Event) => {
     store.currentLevel = (event.target as HTMLButtonElement).dataset.level || '0';
+    console.log('current btn level', (event.target as HTMLButtonElement).dataset.level);
     store.currentPage =  '0';
     currentPageInfo.textContent = String(+store.currentPage + 1);
 

@@ -84,7 +84,7 @@ function getSprintResultHeader() {
   } else if (percentRightAnswer < ResultGrade.good && percentRightAnswer > ResultGrade.bad) {
     return 'Неплохо, однако возможно лучше :)!';
   } else {
-    return 'Не отчайвайтесь, все обязательно получиться!';
+    return 'Не отчаивайтесь, все обязательно получится!';
   }
 }
 
@@ -207,10 +207,14 @@ export async function getWordsForGame(level: string, fromFooter: boolean) {
   let link: string;
   if (store.isAuthorized) {
     if (!fromFooter) {
-      const linkStr = `wordsPerPage=20&filter=%7B%22%24and%22%3A%5B%7B%22%24or%22%3A%5B%7B%22userWord.difficulty%22%3A%22empty%22%7D%2C%20%7B%22userWord.difficulty%22%3A%22hard%22%7D%2C%20%7B%22userWord%22%3Anull%7D%5D%7D%2C%20%7B%22page%22%3A${page}%7D%5D%7D`;
+      const linkStr = `wordsPerPage=20&filter=%7B%22%24and%22%3A%5B%7B%22%24or%22%3A%5B%7B%22
+      userWord.difficulty%22%3A%22empty%22%7D%2C%20%7B%22userWord.difficulty
+      %22%3A%22hard%22%7D%2C%20%7B%22userWord%22%3Anull%7D%5D%7D%2C%20%7B%22page%22%3A${page}%7D%5D%7D`;
       link = `${ELinks.users}/${localStorage.getItem('userId')}/aggregatedWords?group=${level}&${linkStr}`;
     } else {
-      const linkStr = `wordsPerPage=20&filter=%7B%22%24and%22%3A%5B%7B%22%24or%22%3A%5B%7B%22userWord.difficulty%22%3A%22empty%22%7D%2C%20%7B%22userWord.difficulty%22%3A%22hard%22%7D%2C%20%7B%22userWord%22%3Anull%7D%5D%7D%2C%20%7B%22page%22%3A${store.currentPage}%7D%5D%7D`;
+      const linkStr = `wordsPerPage=20&filter=%7B%22%24and%22%3A%5B%7B%22%24or%22%3A%5B%7B%22
+      userWord.difficulty%22%3A%22empty%22%7D%2C%20%7B%22userWord.difficulty
+      %22%3A%22hard%22%7D%2C%20%7B%22userWord%22%3Anull%7D%5D%7D%2C%20%7B%22page%22%3A${store.currentPage}%7D%5D%7D`;
       link = `${ELinks.users}/${localStorage.getItem('userId')}/aggregatedWords?group=${store.currentLevel}&${linkStr}`;
     }
     wordsForGame = (await getAggregatedWords(localStorage.getItem('token') || '', link))[0].paginatedResults;

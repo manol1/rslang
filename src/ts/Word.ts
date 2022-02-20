@@ -26,8 +26,11 @@ class Word {
   wordStatisticsHeaderWord = <HTMLParagraphElement>document.querySelector('.word-statistics-header p');
 
   audioCallRight = <HTMLElement>document.getElementById('audiocall-right');
+
   audioCallWrong = <HTMLElement>document.getElementById('audiocall-wrong');
+
   sprintRight = <HTMLElement>document.getElementById('sprint-right');
+
   sprintWrong = <HTMLElement>document.getElementById('sprint-wrong');
 
   audioArr: Array<HTMLAudioElement> = [];
@@ -80,6 +83,7 @@ class Word {
     const isAlreadyEasy =  this.element.classList.contains('active-easy');
 
     const hasUserWord = (await getAggregatedWordById(localStorage.getItem('userId') || '', this.word.id || this.word._id, localStorage.getItem('token') || ''))[0].userWord;
+
 
     if ( btnDifficalty === WordDifficulty.hard) {
       this.element.classList.toggle('active-hard');
