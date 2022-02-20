@@ -3,6 +3,7 @@ import Dictionary from './Dictionary';
 import isExploredPage from './exploredPage';
 
 export const renderDictionary = async (isComplicated = false) => {
+  store.isComplicatedWordPage = isComplicated;
   const dictEl = document.querySelector('.dictionary__row') as HTMLDivElement;
   dictEl.style.backgroundColor = 'transparent';
   const dict =  new Dictionary(dictEl, isComplicated, store.currentLevel, store.currentPage);
@@ -22,4 +23,8 @@ export const renderDictionary = async (isComplicated = false) => {
   if (!isComplicated && !hardWordsBtn.classList.contains('hidden')) {
     await isExploredPage();
   }
+
+  console.log('store.isComplicatedWordPage', store.isComplicatedWordPage);
+
+
 };

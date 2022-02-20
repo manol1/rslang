@@ -63,16 +63,16 @@ export type TUserWorld = {
 type TAnswerOptions = {
   right: number,
   wrong: number,
-}
+};
 
 type TGames = {
   sprint: TAnswerOptions,
   audiocall: TAnswerOptions,
-}
+};
 
 export type TOptionalWorld = {
   games: TGames,
-}
+};
 
 export type TBodyUserWorld = {
   difficulty: string,
@@ -152,4 +152,9 @@ export enum ResultGrade {
   excellent = 100,
   good = 70,
   bad = 30,
+}
+
+export enum CallAudiogameFrom {
+  menu = 'menu',
+  dictionary = 'dictionary',
 }

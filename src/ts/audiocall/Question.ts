@@ -42,12 +42,14 @@ class Question {
   }
 
   getAnswersArr = () => {
-    this.answersArr = [this.correctAnswer];
 
-    while (this.answersArr.length < 5) {
-      const randomWord = this.words[Math.floor(Math.random() * this.words.length)].wordTranslate;
-      if (!this.answersArr.includes(randomWord)) {
-        this.answersArr.push(randomWord);
+    if (this.words.length >= 5) {
+      this.answersArr = [this.correctAnswer];
+      while (this.answersArr.length < 5) {
+        const randomWord = this.words[Math.floor(Math.random() * this.words.length)].wordTranslate;
+        if (!this.answersArr.includes(randomWord)) {
+          this.answersArr.push(randomWord);
+        }
       }
     }
     return shuffle(this.answersArr);

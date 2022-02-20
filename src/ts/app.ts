@@ -5,9 +5,9 @@ import { store } from './store/store';
 import { renderDictionary } from './renderDictionary';
 import sprint from './sprint/sprint';
 import { setCurrentLevel,
-  startAudioCallGameFromDictionary,
   startAudioCallGame } from '../ts/audiocall/startAudioCallGame';
 import { navigateWordStatistics } from './statistics/word-statistics';
+import { CallAudiogameFrom } from './type/types';
 
 
 export default async function App() {
@@ -15,6 +15,7 @@ export default async function App() {
   const nextPageBtn = document.querySelector('#next-page') as HTMLButtonElement;
   const prevPageBtn = document.querySelector('#prev-page') as HTMLButtonElement;
   const currentPageInfo = document.querySelector('#current-page') as HTMLElement;
+  const dictionaryControl = <HTMLDivElement>document.querySelector('.dictionary-controls');
 
   navigation();
 
@@ -24,7 +25,9 @@ export default async function App() {
   renderDictionary();
 
   levelBtns.forEach(level => level.addEventListener('click', (event: Event) => {
+    store.isComplicatedWordPage = false;
     store.currentLevel = (event.target as HTMLButtonElement).dataset.level || '0';
+    console.log('current btn level', (event.target as HTMLButtonElement).dataset.level);
     store.currentPage =  '0';
     currentPageInfo.textContent = String(+store.currentPage + 1);
 
@@ -32,6 +35,7 @@ export default async function App() {
     (event.target as HTMLButtonElement).classList.add('active');
 
     renderDictionary();
+    dictionaryControl.classList.remove('hidden');
   }));
 
   nextPageBtn.addEventListener('click', ()=> {
@@ -66,8 +70,9 @@ export default async function App() {
   const startAudiocallFromDictionary = document.querySelector('.game-audio');
 
   audiocallLevelBtns.forEach(level => level.addEventListener('click', setCurrentLevel));
-  startAudiocallBtn?.addEventListener('click', startAudioCallGame);
-  startAudiocallFromDictionary?.addEventListener('click', startAudioCallGameFromDictionary);
+
+  startAudiocallBtn?.addEventListener('click', () => {startAudioCallGame(CallAudiogameFrom.menu);});
+  startAudiocallFromDictionary?.addEventListener('click', () => {startAudioCallGame(CallAudiogameFrom.dictionary);});
 
   navigateWordStatistics();
 }

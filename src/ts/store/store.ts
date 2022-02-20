@@ -8,12 +8,12 @@ export const store = {
     games: {
       sprint: {
         right: 0,
-        wrong: 0
+        wrong: 0,
       },
       audiocall: {
         right: 0,
-        wrong: 0
+        wrong: 0,
       },
-    }
-  }
+    },
+  },
 };
