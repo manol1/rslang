@@ -25,6 +25,7 @@ export default async function App() {
   renderDictionary();
 
   levelBtns.forEach(level => level.addEventListener('click', (event: Event) => {
+    store.isComplicatedWordPage = false;
     store.currentLevel = (event.target as HTMLButtonElement).dataset.level || '0';
     console.log('current btn level', (event.target as HTMLButtonElement).dataset.level);
     store.currentPage =  '0';
@@ -69,8 +70,9 @@ export default async function App() {
   const startAudiocallFromDictionary = document.querySelector('.game-audio');
 
   audiocallLevelBtns.forEach(level => level.addEventListener('click', setCurrentLevel));
-  navigateWordStatistics();
 
   startAudiocallBtn?.addEventListener('click', () => {startAudioCallGame(CallAudiogameFrom.menu);});
   startAudiocallFromDictionary?.addEventListener('click', () => {startAudioCallGame(CallAudiogameFrom.dictionary);});
+
+  navigateWordStatistics();
 }

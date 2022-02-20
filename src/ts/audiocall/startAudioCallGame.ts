@@ -12,6 +12,7 @@ const audiocallQuestion = document.querySelector('.audiocall-question');
 const closeResult = document.querySelector('.close-result');
 const audiocallResult = document.querySelector('.audiocall-result') as HTMLElement;
 const exitGame = document.querySelector('.audiocall-question__settings_exit') as HTMLElement;
+const audiocallChangable = document.querySelector('.audiocall-question__changable') as HTMLElement;
 
 const logoName = <HTMLDivElement>document.querySelector('.header__logo_link');
 const menuNavLinks = document.querySelectorAll('.header__nav_list-item');
@@ -33,16 +34,15 @@ export function startAudioCallGame(gameLink: string) {
 
   async function startQuiz(){
     const words = await getWords(store.audiocallCurrentLevel, String(Math.floor(Math.random() * 30)));
+    console.log('words start from nav', words);
     quiz = new Quiz(words);
     quiz.bindListener();
-    console.log('words start from nav', words);
   }
 
   async function startQuizfromDictionary(){
     let words: TGetWords[] | TAggregatedWord[];
     if (!store.isAuthorized) {
       words = await getWords(store.currentLevel, store.currentPage);
-      console.log('simple level', words);
     } else {
       if (store.isComplicatedWordPage) {
 
@@ -50,14 +50,12 @@ export function startAudioCallGame(gameLink: string) {
         const link = `${ELinks.users}/${localStorage.getItem('userId')}/${linkStr}`;
 
         words = (await getAggregatedWords(localStorage.getItem('token') || '', link))[0].paginatedResults;
-        console.log('for complicated words', words);
       } else {
         const linkStr = `wordsPerPage=20&filter=%7B%22%24and%22%3A%5B%7B%22%24or%22%3A%5B%7B%22userWord.difficulty%22%3A%22empty%22%7D%2C%20%7B%22userWord.difficulty%22%3A%22hard%22%7D%2C%20%7B%22userWord%22%3Anull
         %7D%5D%7D%2C%20%7B%22page%22%3A${store.currentPage}%7D%5D%7D`;
 
         const link = `${ELinks.users}/${localStorage.getItem('userId')}/aggregatedWords?group=${store.currentLevel}&${linkStr}`;
         words = (await getAggregatedWords(localStorage.getItem('token') || '', link))[0].paginatedResults;
-        console.log('for current page', words);
       }
     }
     if (words.length >= 5) {
@@ -73,8 +71,7 @@ export function startAudioCallGame(gameLink: string) {
 
   if (gameLink === CallAudiogameFrom.menu) {
     startQuiz();
-  } else if (CallAudiogameFrom.dictionary) {
-    console.log('get words for dictionary');
+  } else if (gameLink === CallAudiogameFrom.dictionary) {
     startQuizfromDictionary();
   }
 
@@ -93,12 +90,13 @@ export function startAudioCallGame(gameLink: string) {
 
   exitGame.addEventListener('click', () => {
     closeQuiz();
-    if (CallAudiogameFrom.menu) {
+    if (gameLink === CallAudiogameFrom.menu) {
       navigateToAudiocallStart();
-    } else if (CallAudiogameFrom.dictionary) {
+    } else if (gameLink === CallAudiogameFrom.dictionary) {
       navigateBackToDictionary();
       renderDictionary();
     }
+    audiocallChangable.innerHTML = '';
   });
 
   //exit game from any link
