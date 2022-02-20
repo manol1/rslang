@@ -6,8 +6,12 @@
     background-color: $primary-color;
     color: white;
     border: 1px solid rgba(255, 255, 255, 0.5);
+    transition: 0.2s;
       &:hover {
         border: 1px solid rgba(255, 255, 255, 1);
+      }
+      &:active {
+        transform: scale(0.95);
       }
   }
 }
@@ -69,16 +73,23 @@
     border-radius: 15px;
   }
   .sprint-word-wrong {
-    border: 2px solid rgba(191, 22, 22, 0.5);
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    background-color: rgb(206, 17, 17);
+    color: white;
     &:hover {
-      border: 2px solid rgba(191, 22, 22, 1);
+      border: 2px solid rgba(255, 255, 255, 0.8);
     }
     margin-right: 20px;
   }
   .sprint-word-right {
-    border: 2px solid rgba(24, 185, 24, 0.5);
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    background-color: rgb(7, 73, 7);
+    color: white;
     &:hover {
-      border: 2px solid rgba(24, 185, 24, 1);
+      border: 2px solid rgba(255, 255, 255, 0.8);
+    }
+    &:active {
+      transform: scale(0.95);
     }
   }
 }

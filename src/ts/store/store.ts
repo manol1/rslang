@@ -16,4 +16,22 @@ export const store = {
       },
     },
   },
+  statisticsNew: {
+    learnedWords: 0,
+    optional: {
+      date: ' ',
+      games: {
+        audiocall: {
+          bestSeries: 0,
+          right: 0,
+          newWords: 0,
+        },
+        sprint: {
+          bestSeries: 0,
+          right: 0,
+          newWords: 0,
+        },
+      },
+    },
+  },
 };

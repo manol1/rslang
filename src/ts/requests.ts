@@ -223,6 +223,12 @@ export async function getAggregatedWords(token: string, link: string): Promise<T
       'Authorization': `Bearer ${token}`,
     },
   });
+  if (response.status === 401 && localStorage.getItem('token')) {
+    const newTokens = await getTokens(localStorage.getItem('userId') || '', localStorage.getItem('refreshToken') || '');
+    localStorage.setItem('token', newTokens.token);
+    localStorage.setItem('refreshToken', newTokens.refreshToken);
+    alert('Пожалуйста, сделайте повторный вход либо обновите страницу');
+  }
   return response.json();
 }
 
