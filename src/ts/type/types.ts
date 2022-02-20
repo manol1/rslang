@@ -82,11 +82,28 @@ export type TBodyUserWorld = {
 export type TUserStatistic = {
   id: string,
   learnedWords: number,
+  optional?: TStatOptional,
+};
+
+type TGameProp = {
+  right: number,
+  newWords: number,
+  bestSeries: number,
+};
+
+type TGamesStat = {
+  sprint: TGameProp,
+  audiocall: TGameProp,
+};
+
+type TStatOptional = {
+  date: string,
+  games: TGamesStat,
 };
 
 export type TBodyUserStatistic = {
   learnedWords: number,
-  optional: object,
+  optional: TStatOptional,
 };
 
 export type TUserSetting = {

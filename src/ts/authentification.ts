@@ -1,6 +1,7 @@
-import { createUser, signIn } from './requests';
+import { createUser, signIn, putUserStatistics } from './requests';
 import { store } from './store/store';
 import { renderDictionary } from './renderDictionary';
+import { getUserStatisticsFn } from './statistics/statistics';
 
 function authentification() {
   const logIn = <HTMLLIElement>document.getElementById('log-in');
@@ -70,6 +71,7 @@ function authentification() {
       localStorage.setItem('token', newSignIn.token);
       localStorage.setItem('refreshToken', newSignIn.refreshToken);
       goCloseRegForm();
+      putUserStatistics(localStorage.getItem('userId') || '', store.statisticsNew, localStorage.getItem('token') || '');
     } catch (err) {
       console.log(err);
     }
@@ -81,7 +83,6 @@ function authentification() {
   const signInPasswordInput = <HTMLInputElement>document.getElementById('signIn-password');
 
   async function signInFn() {
-    console.log('вход');
     try {
       const newSignIn = await signIn({ email: signInEmailInput.value, password: signInPasswordInput.value });
       afterSubmitForm();
@@ -90,6 +91,7 @@ function authentification() {
       localStorage.setItem('token', newSignIn.token);
       localStorage.setItem('refreshToken', newSignIn.refreshToken);
       goCloseSignInForm();
+      getUserStatisticsFn();
     } catch (err) {
       console.log(err);
     }

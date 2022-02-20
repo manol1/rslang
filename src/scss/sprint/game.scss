@@ -69,3 +69,14 @@
     }
   }
 }
+
+.sprint-game-info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  column-gap: 7px;
+  font-size: 12px;
+  font-weight: normal;
+  margin-bottom: 40px;
+}
