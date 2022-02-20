@@ -15,6 +15,7 @@ export default async function App() {
   const nextPageBtn = document.querySelector('#next-page') as HTMLButtonElement;
   const prevPageBtn = document.querySelector('#prev-page') as HTMLButtonElement;
   const currentPageInfo = document.querySelector('#current-page') as HTMLElement;
+  const dictionaryControl = <HTMLDivElement>document.querySelector('.dictionary-controls');
 
   navigation();
 
@@ -33,6 +34,7 @@ export default async function App() {
     (event.target as HTMLButtonElement).classList.add('active');
 
     renderDictionary();
+    dictionaryControl.classList.remove('hidden');
   }));
 
   nextPageBtn.addEventListener('click', ()=> {
