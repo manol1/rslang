@@ -1,15 +1,13 @@
 @import '../variables.scss';
 
 .statistics {
-  // width: 620px;
-  width: 80%;
-  min-width: 620px;
+  max-width: 780px;
+  min-width: 660px;
+  padding: 20px;
   margin: 0 auto;
-  // padding: 40px;
   min-height: calc(100vh - 101px);
   display: flex;
   flex-direction: column;
-  // background-color: white;
   background-color: transparent;
   color: black;
   font-size: 3rem;
@@ -28,7 +26,6 @@
 
 .statistics-info {
   width: 100%;
-  // margin-top: 40px;
   padding: 140px 40px 80px;
   display: flex;
   justify-content: center;

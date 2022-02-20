@@ -18,7 +18,6 @@ const todaySprintInARow = <HTMLParagraphElement>document.getElementById('today-s
 export async function getUserStatisticsFn() {
   if (store.isAuthorized) {
     const stat = await getUserStatistics(localStorage.getItem('userId') || '', localStorage.getItem('token') || '');
-
     if (stat.optional) {
       todayAudiocallWords.innerHTML = `${stat.optional.games.audiocall.newWords}`;
 
