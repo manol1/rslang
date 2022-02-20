@@ -15,10 +15,14 @@
   &__row {
     margin: 0 auto;
     margin-top: 20px;
-    width: 70%;
+    width: 80%;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: center;
     align-items: start;
+    gap: 10%;
+    @media (max-width: 1200px){
+      justify-content: space-around;
+    }
   }
   &-item {
     display: flex;
@@ -31,6 +35,9 @@
     background-color: #fdecfc;
     border-radius: 30px;
     color: #424242;
+    @media (max-width: 1200px){
+      padding: 20px;
+    }
     &__img {
       position: relative;
       width: 235px;

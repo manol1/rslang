@@ -73,6 +73,9 @@
     flex-wrap: wrap;
     row-gap: 20px;
     border-radius: 30px;
+    @media (max-width: 1400px){
+      justify-content: space-evenly;
+    }
   }
 
   &-card {
