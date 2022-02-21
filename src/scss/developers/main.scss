@@ -6,6 +6,7 @@
     display: none;
   }
   .subtitle {
+    margin: 20px;
     font-size: 2.5rem;
     line-height: 2.875rem;
     font-weight: 700;
@@ -35,6 +36,7 @@
     background-color: #fdecfc;
     border-radius: 30px;
     color: #424242;
+    box-shadow: 0 0 10px rgb(0 0 0 / 50%);
     @media (max-width: 1200px){
       padding: 20px;
     }
@@ -83,5 +85,71 @@
     align-items: center;
     gap: 20px;
   }
-}
+  &__project {
+    margin: 0 auto;
+    max-width: 900px;
+    padding: 20px 30px;
+    background-color: #fdecfc;
+    border-radius: 30px;
+    color: #424242;
+    box-shadow: 0 0 10px rgb(0 0 0 / 50%);
+    font-size: 1.5rem;
+    line-height: 2rem;
+    text-align: center;
+    span {
+      font-weight: bold;
+      color: $auxiliary-color;
+    }
+    &_games {
+      margin-top: 20px;
+      display: flex;
+      justify-content: space-evenly;
+    }
+    &_game-item {
+      width: 40%;
+      padding: 20px 30px;
+      background-color: #fdecfc;
+      border-radius: 30px;
+      color: #424242;
+      box-shadow: 0 0 10px rgb(0 0 0 / 50%);
+    }
+    .underline {
+      text-decoration: underline;
+    }
+    .game-title {
+      position: relative;
+      display: block;
+      color: #000000;
+      font-weight: bold;
+      &:before {
+        position: absolute;
+        top: 0;
+        left: 0;
+        content: '';
+        width: 30px;
+        height: 30px;
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: center;
+      }
+      &_audiocall {
+        &:before {
+          background-image: url('./assets/images/headphones.png')
+        }
+      }
+      &_sprint {
+        &:before {
+          background-image: url('./assets/images/sprint.png')
+        }
+      }
+    }
+    .game-descr {
+      margin-top: 20px;
+      text-align: justify;
+    }
 
+    &_advantages {
+      margin-top: 20px;
+    }
+  }
+}
