@@ -3,6 +3,9 @@ import { playSound, pagination } from './utils';
 import Question from './Question';
 import Result from './Result';
 import { updateGameStats } from '../statistics/word-statistics';
+import { updateUserStatisticsFn,
+  updateBestSeriesFn, getUserStatisticsFn } from '../statistics/statistics';
+import {  getUserStatistics } from '../requests';
 import { store } from '../store/store';
 
 class Quiz {
@@ -22,6 +25,10 @@ class Quiz {
   totalCorrectWords: Question[];
 
   volume: boolean;
+
+  bestSeries: number;
+
+  currentSeries: number;
 
   quizElement = document.querySelector('.audiocall-question') as HTMLElement;
 
@@ -43,6 +50,8 @@ class Quiz {
     this.totalCorrectWords = [];
     this.currentAnswer = '';
     this.volume = true;
+    this.bestSeries = 0;
+    this.currentSeries = 0;
     this.audiocallAnswerBtns = document.querySelectorAll('.answer-item');
     this.nextBtn.addEventListener('click',
       this.nextQuestion);
@@ -65,13 +74,6 @@ class Quiz {
     paginationContainer.innerHTML = '';
     this.volumeBtn.classList.remove('mute');
     this.removeListener();
-  }
-
-  navigateBackToWelcomAudioCall() {
-    const audiocallSection = document.querySelector('.audiocall');
-    const audiocallWelcome = document.querySelector('.audiocall-welcome');
-    audiocallSection?.classList.remove('hidden');
-    audiocallWelcome?.classList.remove('hidden');
   }
 
   getAnswerWord = (e: Event) => {
@@ -143,7 +145,17 @@ class Quiz {
     }
   };
 
-  showResult = () => {
+  updateSeries = async () => {
+    console.log(' updateUserStatisticsFn for false');
+    const stat = await getUserStatistics(localStorage.getItem('userId') || '', localStorage.getItem('token') || '');
+    this.bestSeries = stat.optional.games.audiocall.bestSeries;
+    if (this.currentSeries > this.bestSeries) {
+      this.bestSeries = this.currentSeries;
+      updateBestSeriesFn('audiocall', this.bestSeries);
+    }
+  };
+
+  showResult = async () => {
     if (this.currentAnswer) {
       const isCorrectAnswer =  this.questions[this.answeredAmount].answer(this.currentAnswer);
 
@@ -153,6 +165,10 @@ class Quiz {
 
         if (store.isAuthorized) {
           updateGameStats('audiocall', true, this.questions[this.answeredAmount].word.id || this.questions[this.answeredAmount].word._id);
+          updateUserStatisticsFn('audiocall', true);
+          this.currentSeries++;
+          this.updateSeries();
+          getUserStatisticsFn();
         }
 
         if (this.volume) {
@@ -165,6 +181,10 @@ class Quiz {
 
         if (store.isAuthorized) {
           updateGameStats('audiocall', false, this.questions[this.answeredAmount].word.id || this.questions[this.answeredAmount].word._id);
+          updateUserStatisticsFn('audiocall', true);
+          this.updateSeries();
+          // getUserStatisticsFn();
+          this.currentSeries = 0;
         }
 
         if (this.volume) {
