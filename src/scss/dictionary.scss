@@ -211,6 +211,9 @@
       border: 1px solid transparent;
       border-radius: 10px;
       transition: .4s all;
+      &.hidden {
+        visibility: hidden;
+      }
       &:hover {
         border-color: #ffffff;
       }
