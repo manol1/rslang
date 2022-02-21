@@ -6,6 +6,7 @@ import { updateGameStats } from '../statistics/word-statistics';
 import { updateUserStatisticsFn,
   updateBestSeriesFn } from '../statistics/statistics';
 import { store } from '../store/store';
+import { isEasyWordInGameFn } from '../delete-easy-if-mistake';
 
 class Quiz {
 
@@ -168,6 +169,7 @@ class Quiz {
         if (store.isAuthorized) {
           updateGameStats('audiocall', false, this.questions[this.answeredAmount].word.id || this.questions[this.answeredAmount].word._id);
           updateUserStatisticsFn('audiocall', false);
+          isEasyWordInGameFn(this.questions[this.answeredAmount].word.id || this.questions[this.answeredAmount].word._id);
           if (this.currentSeries > this.bestSeries) {
             this.bestSeries = this.currentSeries;
           }
