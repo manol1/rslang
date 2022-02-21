@@ -48,15 +48,8 @@ export default class Result {
     }
   }
 
-  closeResult() {
-    const audiocallResult = document.querySelector('.audiocall-result') as HTMLElement;
-    audiocallResult.classList.add('hidden');
-    navigateToAudiocallStart();
-  }
-
   bindListener() {
     const playSoundBtn = this.element.querySelectorAll('.audiocall-result__sound-btn');
-    const closeBtn = this.element.querySelector('.close-result');
     const playAgainBtn = this.element.querySelector('.audiocall-result_play-again');
     const backToDictionaryBtn = this.element.querySelector('.audiocall-result_back-dictionary');
 
@@ -66,17 +59,14 @@ export default class Result {
       audio?.play();
     }));
 
-    closeBtn?.addEventListener('click', this.closeResult);
-    closeBtn?.addEventListener('click', navigateToAudiocallStart);
-
     playAgainBtn?.addEventListener('click', navigateToAudiocallStart);
     backToDictionaryBtn?.addEventListener('click', navigateBackToDictionary);
-    backToDictionaryBtn?.addEventListener('click', () => renderDictionary());
+    // backToDictionaryBtn?.addEventListener('click', () => renderDictionary());
   }
 
   generate() {
     return `
-    <div class="close-result">X</div>
+
       <h2 class="audiocall-result__title">${this.generateCongratulation(this.correctAnswers.length)}</h2>
       <div class="audiocall-result__wrong">
         <div class="audiocall-result__subheader">
@@ -104,3 +94,4 @@ export default class Result {
     this.element = perent;
   }
 }
+

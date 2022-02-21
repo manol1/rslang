@@ -25,8 +25,4 @@ export const renderDictionary = async (isComplicated = false) => {
   if (!isComplicated && !hardWordsBtn.classList.contains('hidden')) {
     await isExploredPage();
   }
-
-  console.log('store.isComplicatedWordPage', store.isComplicatedWordPage);
-
-
 };
