@@ -1,4 +1,5 @@
-import { TGetWords } from '../type/types';
+import { renderDictionary } from '../renderDictionary';
+import { store } from '../store/store';
 
 export function shuffle(array: string[]) {
   for (let i = array.length - 1; i > 0; i--) {
@@ -63,4 +64,9 @@ export function navigateBackToDictionary() {
   dictionaryGameFooter?.classList.remove('footer-hidden');
   audiocallSection?.classList.add('hidden');
   audiocallResult.classList.add('hidden');
+  if (store.isComplicatedWordPage) {
+    renderDictionary(true);
+  } else {
+    renderDictionary();
+  }
 }

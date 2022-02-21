@@ -82,7 +82,7 @@ export type TBodyUserWorld = {
 export type TUserStatistic = {
   id: string,
   learnedWords: number,
-  optional?: TStatOptional,
+  optional: TStatOptional,
 };
 
 type TGameProp = {

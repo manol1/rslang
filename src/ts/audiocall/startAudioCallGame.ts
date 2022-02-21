@@ -34,7 +34,6 @@ export function startAudioCallGame(gameLink: string) {
 
   async function startQuiz(){
     const words = await getWords(store.audiocallCurrentLevel, String(Math.floor(Math.random() * 30)));
-    console.log('words start from nav', words);
     quiz = new Quiz(words);
     quiz.bindListener();
   }
@@ -91,10 +90,11 @@ export function startAudioCallGame(gameLink: string) {
   exitGame.addEventListener('click', () => {
     closeQuiz();
     if (gameLink === CallAudiogameFrom.menu) {
+      // console.log('it is exiting from simple page', gameLink);
       navigateToAudiocallStart();
     } else if (gameLink === CallAudiogameFrom.dictionary) {
+      // console.log('it is exiting from dictionary words', gameLink);
       navigateBackToDictionary();
-      renderDictionary();
     }
     audiocallChangable.innerHTML = '';
   });
