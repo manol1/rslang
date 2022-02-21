@@ -51,8 +51,13 @@
     background-repeat: no-repeat;
     background-position: center;
     transition: .4s all;
-      &:hover {
-        transform: scale(1.1);
-      }
+    transform-origin: right bottom;
+    &:hover {
+      transform: scale(1.1);
     }
+  }
+  &__year {
+    color: #ffffff;
+    font-size: 0.8rem;
+  }
 }
