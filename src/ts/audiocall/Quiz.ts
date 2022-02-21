@@ -4,8 +4,7 @@ import Question from './Question';
 import Result from './Result';
 import { updateGameStats } from '../statistics/word-statistics';
 import { updateUserStatisticsFn,
-  updateBestSeriesFn, getUserStatisticsFn } from '../statistics/statistics';
-import {  getUserStatistics } from '../requests';
+  updateBestSeriesFn } from '../statistics/statistics';
 import { store } from '../store/store';
 
 class Quiz {
@@ -145,16 +144,6 @@ class Quiz {
     }
   };
 
-  updateSeries = async () => {
-    console.log(' updateUserStatisticsFn for false');
-    const stat = await getUserStatistics(localStorage.getItem('userId') || '', localStorage.getItem('token') || '');
-    this.bestSeries = stat.optional.games.audiocall.bestSeries;
-    if (this.currentSeries > this.bestSeries) {
-      this.bestSeries = this.currentSeries;
-      updateBestSeriesFn('audiocall', this.bestSeries);
-    }
-  };
-
   showResult = async () => {
     if (this.currentAnswer) {
       const isCorrectAnswer =  this.questions[this.answeredAmount].answer(this.currentAnswer);
@@ -167,10 +156,7 @@ class Quiz {
           updateGameStats('audiocall', true, this.questions[this.answeredAmount].word.id || this.questions[this.answeredAmount].word._id);
           updateUserStatisticsFn('audiocall', true);
           this.currentSeries++;
-          this.updateSeries();
-          getUserStatisticsFn();
         }
-
         if (this.volume) {
           playSound(true);
         }
@@ -181,9 +167,10 @@ class Quiz {
 
         if (store.isAuthorized) {
           updateGameStats('audiocall', false, this.questions[this.answeredAmount].word.id || this.questions[this.answeredAmount].word._id);
-          updateUserStatisticsFn('audiocall', true);
-          this.updateSeries();
-          // getUserStatisticsFn();
+          updateUserStatisticsFn('audiocall', false);
+          if (this.currentSeries > this.bestSeries) {
+            this.bestSeries = this.currentSeries;
+          }
           this.currentSeries = 0;
         }
 
@@ -201,6 +188,8 @@ class Quiz {
   }
 
   endQuiz() {
+
+    updateBestSeriesFn('audiocall', this.bestSeries);
     const audiocallResult = document.querySelector('.audiocall-result') as HTMLElement;
     const resultTable = new Result(this.totalWrongWords, this.totalCorrectWords);
     resultTable.mount(audiocallResult);
