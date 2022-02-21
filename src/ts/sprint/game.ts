@@ -3,6 +3,7 @@ import { ELinks, TAggregatedWord, ResultGrade } from '../type/types';
 import { store } from '../store/store';
 import { updateGameStats } from '../statistics/word-statistics';
 import { updateUserStatisticsFn, updateBestSeriesFn } from '../statistics/statistics';
+import { isEasyWordInGameFn } from '../delete-easy-if-mistake';
 
 const sprint = <HTMLDivElement>document.querySelector('.sprint');
 const sprintWord = <HTMLParagraphElement>document.querySelector('.sprint-word');
@@ -161,6 +162,7 @@ function resultAnswer(btn: string) {
     if (store.isAuthorized) {
       updateGameStats('sprint', false, currentWord.id || currentWord._id);
       updateUserStatisticsFn('sprint', false);
+      isEasyWordInGameFn(currentWord.id || currentWord._id);
       if (currentSeries > bestSeries) {
         bestSeries = currentSeries;
       }
@@ -244,6 +246,7 @@ export async function getWordsForGame(level: string, fromFooter: boolean) {
   currentSeries = 0;
   const page = String(Math.floor(Math.random() * 30));
   let link: string;
+
   if (store.isAuthorized) {
     if (!fromFooter) {
       wordsForGame = await getWords(level, page);

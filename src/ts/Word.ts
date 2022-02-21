@@ -84,7 +84,6 @@ class Word {
 
     const hasUserWord = (await getAggregatedWordById(localStorage.getItem('userId') || '', this.word.id || this.word._id, localStorage.getItem('token') || ''))[0].userWord;
 
-
     if ( btnDifficalty === WordDifficulty.hard) {
       this.element.classList.toggle('active-hard');
 
