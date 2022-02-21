@@ -1,6 +1,4 @@
 import { TGetWords, TAggregatedWord } from '../type/types';
-import { getWords } from '../requests';
-import { store } from '../store/store';
 import { shuffle, playAudio } from './utils';
 
 class Question {

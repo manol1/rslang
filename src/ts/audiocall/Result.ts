@@ -1,6 +1,5 @@
-import { TGetWords, ResultGrade } from '../type/types';
+import { ResultGrade } from '../type/types';
 import Question from '../audiocall/Question';
-import { renderDictionary } from '../renderDictionary';
 import { navigateToAudiocallStart,
   navigateBackToDictionary } from './utils';
 

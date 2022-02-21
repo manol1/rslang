@@ -23,7 +23,9 @@ function authentification() {
     hardWordsBtn.classList.add('hidden');
     store.isAuthorized = false;
     renderDictionary();
-    localStorage.clear();
+    localStorage.removeItem('userId');
+    localStorage.removeItem('token');
+    localStorage.removeItem('refreshToken');
     logIn.removeEventListener('click', goLogOut);
     logIn.addEventListener('click', goLogIn);
   }
@@ -55,6 +57,12 @@ function authentification() {
     hardWordsBtn.classList.remove('hidden');
     store.isAuthorized = true;
   }
+
+  window.addEventListener('load', () => {
+    if (localStorage.getItem('token')) {
+      afterSubmitForm();
+    }
+  });
 
   const regNameInput = <HTMLInputElement>document.getElementById('reg-name');
   const regEmailInput = <HTMLInputElement>document.getElementById('reg-email');
@@ -98,13 +106,6 @@ function authentification() {
   }
 
   signInForm.addEventListener('submit', signInFn);
-
-  window.addEventListener('load', () => {
-    if (localStorage.getItem('token')) {
-      afterSubmitForm();
-      renderDictionary();
-    }
-  });
 }
 
 export default authentification;

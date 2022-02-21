@@ -3,8 +3,6 @@ import { getWords, getAggregatedWords } from '../requests';
 import { TGetWords, TAggregatedWord, ELinks, CallAudiogameFrom } from '../type/types';
 import Quiz from '../audiocall/Quiz';
 import { navigateToAudiocallStart, navigateBackToDictionary } from './utils';
-import { renderDictionary } from '../renderDictionary';
-
 
 const audiocallLevelBtns = document.querySelectorAll('.audiocall-level');
 const audiocallWelcome = document.querySelector('.audiocall-welcome');

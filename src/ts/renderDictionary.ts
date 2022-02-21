@@ -2,12 +2,15 @@ import { store } from './store/store';
 import Dictionary from './Dictionary';
 import isExploredPage from './exploredPage';
 
+const dictionaryGameBtns = document.querySelectorAll('.game');
+
 export const renderDictionary = async (isComplicated = false) => {
   store.isComplicatedWordPage = isComplicated;
   const dictEl = document.querySelector('.dictionary__row') as HTMLDivElement;
   const currentPage = <HTMLSpanElement>document.getElementById('current-page');
   dictEl.style.backgroundColor = 'transparent';
   currentPage.style.color = '#ffffff';
+  dictionaryGameBtns.forEach(btn => btn.classList.remove('hidden'));
   const dict =  new Dictionary(dictEl, isComplicated, store.currentLevel, store.currentPage);
   await dict.getData();
   dict.render();

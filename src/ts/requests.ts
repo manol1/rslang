@@ -61,16 +61,6 @@ export async function signIn(body: TEmailPass): Promise<TSignIn> {
   return response.json();
 }
 
-export async function getUserById(id: string, token: string): Promise<IUser> {
-  const response = await fetch(`${ELinks.users}/${id}`, {
-    headers: {
-      'Accept': 'application/json',
-      'Authorization': `Bearer ${token}`,
-    },
-  });
-  return response.json();
-}
-
 export async function updateUser(id: string, body: TEmailPass, token: string): Promise<IUser> {
   const response = await fetch(`${ELinks.users}/${id}`, {
     method: 'PUT',
@@ -101,6 +91,21 @@ export async function getTokens(id: string, refreshToken: string): Promise<TToke
       'Authorization': `Bearer ${refreshToken}`,
     },
   });
+  return response.json();
+}
+
+export async function getUserById(id: string, token: string): Promise<IUser> {
+  const response = await fetch(`${ELinks.users}/${id}`, {
+    headers: {
+      'Accept': 'application/json',
+      'Authorization': `Bearer ${token}`,
+    },
+  });
+  if (response.status === 401 && localStorage.getItem('token')) {
+    const newTokens = await getTokens(localStorage.getItem('userId') || '', localStorage.getItem('refreshToken') || '');
+    localStorage.setItem('token', newTokens.token);
+    localStorage.setItem('refreshToken', newTokens.refreshToken);
+  }
   return response.json();
 }
 
@@ -223,12 +228,5 @@ export async function getAggregatedWords(token: string, link: string): Promise<T
       'Authorization': `Bearer ${token}`,
     },
   });
-  if (response.status === 401 && localStorage.getItem('token')) {
-    const newTokens = await getTokens(localStorage.getItem('userId') || '', localStorage.getItem('refreshToken') || '');
-    localStorage.setItem('token', newTokens.token);
-    localStorage.setItem('refreshToken', newTokens.refreshToken);
-    alert('Пожалуйста, сделайте повторный вход либо обновите страницу');
-  }
   return response.json();
 }
-
