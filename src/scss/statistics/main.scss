@@ -132,13 +132,13 @@
 
 .statistics-info__right-audiocall {
   .game-img {
-    background-image: url('./assets/images/headphones.png');
+    background-image: url('assets/images/headphones.png');
   }
 }
 
 .statistics-info__right-sprint {
   .game-img {
-    background-image: url('./assets/images/sprint.png');
+    background-image: url('assets/images/sprint.png');
   }
 }
 
@@ -161,4 +161,10 @@
   overflow-y: scroll;
   margin-top: 40px;
   height: 650px;
+}
+
+.old-statistics {
+  &.hidden {
+    display: none;
+  }
 }

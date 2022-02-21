@@ -53,6 +53,9 @@
   justify-content: center;
   row-gap: 15px;
   margin-bottom: 25px;
+  &.hidden {
+    display: none;
+  }
   h2 {
     font-weight: bold;
     font-size: 20px;
