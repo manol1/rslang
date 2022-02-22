@@ -14,7 +14,6 @@ function navigation() {
   const statisticSection = document.querySelector('.statistics');
   const developerSection = document.querySelector('.developers');
   const dictionaryGameBtns = document.querySelectorAll('.game');
-  const oldStatisticsEl = document.querySelector('#old-statistics') as HTMLElement;
   const statisticsInfoEl = document.querySelector('.statistics-info') as HTMLElement;
 
   const audiocallLink = document.querySelector('.audiocall');
@@ -102,12 +101,6 @@ function navigation() {
     footerSection?.classList.remove('hidden');
     statisticSection?.classList.remove('hidden');
     statisticsInfoEl?.classList.remove('hidden');
-
-    if (store.isAuthorized) {
-      oldStatisticsEl?.classList.remove('hidden');
-    } else {
-      oldStatisticsEl?.classList.add('hidden');
-    }
   };
 
   const displayDevelopers = () => {

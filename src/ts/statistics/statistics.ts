@@ -3,17 +3,15 @@ import { putUserStatistics, getUserStatistics } from '../requests';
 import { TBodyUserStatistic, TUserStatistic } from '../type/types';
 
 const statisticsBtn = <HTMLLIElement>document.getElementById('statistics-btn');
-
 const todayWords = <HTMLSpanElement>document.getElementById('today-words');
 const todayAccuracy = <HTMLDivElement>document.getElementById('today-accuracy');
-
 const todayAudiocallWords = <HTMLParagraphElement>document.getElementById('today-audiocall-words');
 const todayAudiocallAccuracy = <HTMLParagraphElement>document.getElementById('today-audiocall-accuracy');
 const todayAudiocallInARow = <HTMLParagraphElement>document.getElementById('today-audiocall-in-a-row');
-
 const todaySprintWords = <HTMLParagraphElement>document.getElementById('today-sprint-words');
 const todaySprintAccuracy = <HTMLParagraphElement>document.getElementById('today-sprint-accuracy');
 const todaySprintInARow = <HTMLParagraphElement>document.getElementById('today-sprint-in-a-row');
+const oldStatisticsEl = document.querySelector('#old-statistics') as HTMLElement;
 
 let allStatistics: TUserStatistic[];
 
@@ -49,7 +47,7 @@ function showDate(str: string) {
   const month = newDate.getMonth();
   const year = newDate.getFullYear();
   const months = ['Января', 'Февраля', 'Марта', 'Апреля', 'Мая', 'Июня', 'Июля', 'Августа', 'Сентября', 'Октября', 'Ноября', 'Декабря'];
-  const twoNumbers = (num) => (num >= 10) ? num : '0' + num;
+  const twoNumbers = (num: number) => (num >= 10) ? num : '0' + num;
   return `${twoNumbers(todayDate)} ${months[month]} ${year}`;
 }
 
@@ -165,6 +163,7 @@ export async function getUserStatisticsFn() {
       getUserStatisticsFn();
     }
     if (allStatistics.length > 0) {
+      oldStatisticsEl?.classList.remove('hidden');
       showOldDayStatistics();
     }
   }

@@ -13,9 +13,30 @@ function authentification() {
   const signInForm = <HTMLFormElement>document.querySelector('.form-signIn');
   const registrationForm = <HTMLFormElement>document.querySelector('.form-reg');
   const hardWordsBtn = <HTMLButtonElement>document.querySelector('.dictionary-levels button:last-child');
+  const oldStatisticsEl = document.querySelector('#old-statistics') as HTMLElement;
+  const todayWords = <HTMLSpanElement>document.getElementById('today-words');
+  const todayAccuracy = <HTMLDivElement>document.getElementById('today-accuracy');
+  const todayAudiocallWords = <HTMLParagraphElement>document.getElementById('today-audiocall-words');
+  const todayAudiocallAccuracy = <HTMLParagraphElement>document.getElementById('today-audiocall-accuracy');
+  const todayAudiocallInARow = <HTMLParagraphElement>document.getElementById('today-audiocall-in-a-row');
+  const todaySprintWords = <HTMLParagraphElement>document.getElementById('today-sprint-words');
+  const todaySprintAccuracy = <HTMLParagraphElement>document.getElementById('today-sprint-accuracy');
+  const todaySprintInARow = <HTMLParagraphElement>document.getElementById('today-sprint-in-a-row');
 
   function goLogIn() {
     signInSection.classList.remove('hidden');
+  }
+
+  function setDefaultValue() {
+    todayWords.innerHTML = '0';
+    todayAccuracy.innerHTML = '0';
+    todayAudiocallWords.innerHTML = '0';
+    todayAudiocallAccuracy.innerHTML = '0';
+    todayAudiocallInARow.innerHTML = '0';
+    todaySprintWords.innerHTML = '0';
+    todaySprintAccuracy.innerHTML = '0';
+    todaySprintInARow.innerHTML = '0';
+
   }
 
   function goLogOut() {
@@ -23,6 +44,9 @@ function authentification() {
     hardWordsBtn.classList.add('hidden');
     store.isAuthorized = false;
     renderDictionary();
+    oldStatisticsEl.classList.add('hidden');
+    oldStatisticsEl.innerHTML = '';
+    setDefaultValue();
     localStorage.removeItem('userId');
     localStorage.removeItem('token');
     localStorage.removeItem('refreshToken');
