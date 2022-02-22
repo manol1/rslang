@@ -6,6 +6,13 @@
   background-position: 85% 50%;
   background-size: 45rem 25rem;
   background-repeat: no-repeat;
+  @media (max-width: 768px) {
+    background-position: 50% 10%;
+    background-size: 30rem 20rem;
+    // background-color: $primary-color;
+    background-color: #db5be9;
+  }
+
   .divider {
     position: absolute;
     bottom: 0;
@@ -13,6 +20,12 @@
     width: 70%;
     height: 100%;
     z-index: -1;
+    @media (max-width: 1200px) {
+      width: 85vw;
+    }
+    @media (max-width: 768px) {
+      display: none;
+    }
   }
 
   &.dictionary-page{

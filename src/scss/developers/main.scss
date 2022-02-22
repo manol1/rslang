@@ -14,6 +14,7 @@
     color: #ffffff;
   }
   &__row {
+    max-width: 900px;
     margin: 0 auto;
     margin-top: 20px;
     width: 80%;
@@ -23,6 +24,11 @@
     gap: 10%;
     @media (max-width: 1200px){
       justify-content: space-around;
+    }
+    @media (max-width: 768px){
+      margin-bottom: 20px;
+      flex-direction: column;
+      gap: 20px;
     }
   }
   &-item {
@@ -40,19 +46,44 @@
     @media (max-width: 1200px){
       padding: 20px;
     }
+    @media (max-width: 768px){
+      width: 100%;
+      height: auto;
+      flex-direction: row;
+      align-items: flex-start;
+    }
+    &__info {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+      @media (max-width: 768px){
+        width: 60%;
+        align-items: start;
+      }
+    }
     &__img {
       position: relative;
+      display: block;
       width: 235px;
       height: 235px;
+      @media (max-width: 768px){
+        width: 150px;
+        height: 150px;
+      }
       img {
         position: absolute;
+        display: block;
         top: 0;
         left: 0;
         width: 100%;
         height:100%;
         object-fit: cover;
         object-position: top;
-        overflow: hidden;
+        @media (max-width: 768px){
+          border-radius: 100%;
+        }
+        // overflow: hidden;
       }
     }
     &__name {
@@ -73,9 +104,13 @@
       }
     }
     &__descr {
+      margin-top: 10px;
       font-size: 1.125rem;
       line-height: 1.2rem;
       text-align: center;
+      @media (max-width: 768px){
+        text-align: left;
+      }
     }
   }
   &-video {
@@ -112,6 +147,9 @@
       border-radius: 30px;
       color: #424242;
       box-shadow: 0 0 10px rgb(0 0 0 / 50%);
+      @media (max-width: 768px){
+        width: 47%;
+      }
     }
     .underline {
       text-decoration: underline;
