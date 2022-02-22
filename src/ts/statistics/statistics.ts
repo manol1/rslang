@@ -53,9 +53,9 @@ function showDate(str: string) {
 
 function generateOneDayStatistics(stat: TUserStatistic) {
   return `
-  <h2>${showDate(stat.optional.date)}</h2>
   <div class="statistics-info">
     <div class="statistics-info__left">
+    <h2 class="statistics-title">${showDate(stat.optional.date)}</h2>
       <div class="statistics-info__left-words">
         <span id="today-words">${stat.optional.games.audiocall.newWords + stat.optional.games.sprint.newWords}</span>
         <div>

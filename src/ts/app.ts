@@ -10,6 +10,7 @@ import { navigateWordStatistics } from './statistics/word-statistics';
 import { CallAudiogameFrom } from './type/types';
 import { navigateStatistics } from './statistics/statistics';
 import { getUserById } from './requests';
+import handleBurger from './burger';
 
 export default async function App() {
   const levelBtns = document.querySelectorAll('.words-level');
@@ -81,4 +82,7 @@ export default async function App() {
 
   navigateWordStatistics();
   navigateStatistics();
+
+  handleBurger();
 }
+

@@ -14,13 +14,23 @@
     }
     span {
       color: $primary-color;
+      @media (max-width: 768px) {
+        color: #424242;
+        font-size: 2rem;
+        text-decoration: underline;
+      }
     }
   }
   &-btn {
     margin-top: 60px;
-    width: 300px;
+    width: 18.75rem;
   }
   &.hidden {
     display: none;
+  }
+  @media (max-width: 768px) {
+    padding: 160px 0 0 0;
+    min-height: calc(100vh - 162px);
+    text-align: center;
   }
 }
