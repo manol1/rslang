@@ -9,6 +9,7 @@ import { setCurrentLevel,
 import { navigateWordStatistics } from './statistics/word-statistics';
 import { CallAudiogameFrom } from './type/types';
 import { navigateStatistics } from './statistics/statistics';
+import { getUserById } from './requests';
 
 export default async function App() {
   const levelBtns = document.querySelectorAll('.words-level');
@@ -17,12 +18,21 @@ export default async function App() {
   const currentPageInfo = document.querySelector('#current-page') as HTMLElement;
   const dictionaryControl = <HTMLDivElement>document.querySelector('.dictionary-controls');
 
+  window.addEventListener('load', () => {
+    if (localStorage.getItem('token')) {
+      getUserById(localStorage.getItem('userId') || '', localStorage.getItem('token') || '');
+      console.log('автовход')
+      // renderDictionary();
+    }
+  });
+
   navigation();
 
   authentification();
 
   //render dictionary
-  renderDictionary();
+  // renderDictionary();
+  console.log('renderDictionary из app')
 
   levelBtns.forEach(level => level.addEventListener('click', (event: Event) => {
     store.isComplicatedWordPage = false;

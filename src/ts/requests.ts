@@ -68,6 +68,13 @@ export async function getUserById(id: string, token: string): Promise<IUser> {
       'Authorization': `Bearer ${token}`,
     },
   });
+  if (response.status === 401 && localStorage.getItem('token')) {
+    const newTokens = await getTokens(localStorage.getItem('userId') || '', localStorage.getItem('refreshToken') || '');
+    localStorage.setItem('token', newTokens.token);
+    localStorage.setItem('refreshToken', newTokens.refreshToken);
+    console.log('new tokens')
+  }
+  console.log('автовход из requests')
   return response.json();
 }
 
@@ -213,6 +220,12 @@ export async function getAggregatedWordById(id: string, wordId: string, token: s
       'Authorization': `Bearer ${token}`,
     },
   });
+  // if (response.status === 401 && localStorage.getItem('token')) {
+  //   const newTokens = await getTokens(localStorage.getItem('userId') || '', localStorage.getItem('refreshToken') || '');
+  //   localStorage.setItem('token', newTokens.token);
+  //   localStorage.setItem('refreshToken', newTokens.refreshToken);
+  //   alert('Пожалуйста, сделайте повторный вход либо обновите страницу');
+  // }
   return response.json();
 }
 
@@ -223,12 +236,12 @@ export async function getAggregatedWords(token: string, link: string): Promise<T
       'Authorization': `Bearer ${token}`,
     },
   });
-  if (response.status === 401 && localStorage.getItem('token')) {
-    const newTokens = await getTokens(localStorage.getItem('userId') || '', localStorage.getItem('refreshToken') || '');
-    localStorage.setItem('token', newTokens.token);
-    localStorage.setItem('refreshToken', newTokens.refreshToken);
-    alert('Пожалуйста, сделайте повторный вход либо обновите страницу');
-  }
+  // if (response.status === 401 && localStorage.getItem('token')) {
+  //   const newTokens = await getTokens(localStorage.getItem('userId') || '', localStorage.getItem('refreshToken') || '');
+  //   localStorage.setItem('token', newTokens.token);
+  //   localStorage.setItem('refreshToken', newTokens.refreshToken);
+  //   alert('Пожалуйста, сделайте повторный вход либо обновите страницу');
+  // }
   return response.json();
 }
 

@@ -3,6 +3,7 @@ import Dictionary from './Dictionary';
 import isExploredPage from './exploredPage';
 
 export const renderDictionary = async (isComplicated = false) => {
+  console.log('renderDictionary')
   store.isComplicatedWordPage = isComplicated;
   const dictEl = document.querySelector('.dictionary__row') as HTMLDivElement;
   const currentPage = <HTMLSpanElement>document.getElementById('current-page');

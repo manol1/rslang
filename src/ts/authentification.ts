@@ -1,4 +1,4 @@
-import { createUser, signIn, putUserStatistics } from './requests';
+import { createUser, signIn, putUserStatistics, getUserById } from './requests';
 import { store } from './store/store';
 import { renderDictionary } from './renderDictionary';
 import { getUserStatisticsFn } from './statistics/statistics';
@@ -13,6 +13,15 @@ function authentification() {
   const signInForm = <HTMLFormElement>document.querySelector('.form-signIn');
   const registrationForm = <HTMLFormElement>document.querySelector('.form-reg');
   const hardWordsBtn = <HTMLButtonElement>document.querySelector('.dictionary-levels button:last-child');
+
+  window.addEventListener('load', () => {
+    if (localStorage.getItem('token')) {
+      // getUserById(localStorage.getItem('userId') || '', localStorage.getItem('token') || '');
+      afterSubmitForm();
+      console.log('afterSubmitForm')
+      // renderDictionary();
+    }
+  });
 
   function goLogIn() {
     signInSection.classList.remove('hidden');
@@ -98,13 +107,6 @@ function authentification() {
   }
 
   signInForm.addEventListener('submit', signInFn);
-
-  window.addEventListener('load', () => {
-    if (localStorage.getItem('token')) {
-      afterSubmitForm();
-      renderDictionary();
-    }
-  });
 }
 
 export default authentification;
