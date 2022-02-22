@@ -15,15 +15,15 @@ const oldStatisticsEl = document.querySelector('#old-statistics') as HTMLElement
 
 let allStatistics: TUserStatistic[];
 
-window.addEventListener('beforeunload', () => {
-  localStorage.setItem('allStatistics', JSON.stringify(allStatistics));
-});
-
 if (typeof localStorage.getItem('allStatistics') === 'string') {
   allStatistics = JSON.parse(localStorage.getItem('allStatistics') || '');
 } else {
   allStatistics = [];
 }
+
+window.addEventListener('beforeunload', () => {
+  localStorage.setItem('allStatistics', JSON.stringify(allStatistics));
+});
 
 function getTodayDate() {
   const today = new Date();
@@ -155,7 +155,9 @@ export async function getUserStatisticsFn() {
         }
       }
     } else {
-      allStatistics.push(stat);
+      if (stat.optional.date.length > 3) {
+        allStatistics.push(stat);
+      }
       const newDayStat: TBodyUserStatistic = JSON.parse(JSON.stringify(store.statisticsNew));
       const newDate = getTodayDate();
       newDayStat.optional.date = newDate;
