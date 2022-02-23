@@ -92,7 +92,8 @@ function authentification() {
   const regEmailInput = <HTMLInputElement>document.getElementById('reg-email');
   const regPasswordInput = <HTMLInputElement>document.getElementById('reg-password');
 
-  async function registrationFn() {
+  async function registrationFn(event: Event) {
+    event.preventDefault();
     try {
       const password = regPasswordInput.value;
       const newUser = await createUser({ name: regNameInput.value, email: regEmailInput.value, password: password });
@@ -116,7 +117,8 @@ function authentification() {
   const signInEmailInput = <HTMLInputElement>document.getElementById('signIn-email');
   const signInPasswordInput = <HTMLInputElement>document.getElementById('signIn-password');
 
-  async function signInFn() {
+  async function signInFn(event: Event) {
+    event.preventDefault();
     try {
       const newSignIn = await signIn({ email: signInEmailInput.value, password: signInPasswordInput.value });
       afterSubmitForm();
