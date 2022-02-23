@@ -1,0 +1,68 @@
+.footer {
+  display: flex;
+  justify-content: space-between;
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+  }
+  &.hidden {
+    display: none;
+  }
+  &-item {
+    cursor: pointer;
+  }
+  &__row {
+    margin: 0 right;
+    width: 350px;
+    display: flex;
+    justify-content: space-between;
+    align-items: top;
+  }
+  &__github {
+    &-project {
+      display: block;
+      width: 40px;
+      height: 40px;
+      background-image: url('assets/svg/github.svg');
+      background-repeat: no-repeat;
+      background-position: center;
+      transition: .4s all;
+      &:hover {
+        transform: scale(1.1);
+      }
+    }
+    &-developers {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      a{
+        color: #ffffff;
+        font-size: 1rem;
+        transition: .4s all;
+        &:hover {
+        transform: scale(1.1);
+        }
+      }
+    }
+  }
+  &__school {
+    display: block;
+    width: 120px;
+    height: 40px;
+    background-image: url('assets/svg/rss-logo.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    transition: .4s all;
+    transform-origin: right bottom;
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+  &__year {
+    color: #ffffff;
+    font-size: 0.8rem;
+  }
+}

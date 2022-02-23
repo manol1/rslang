@@ -1,0 +1,76 @@
+@import './variables.scss';
+
+.registration {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba($color: #000000, $alpha: 0.4);
+  font-size: 1.6rem;
+  z-index: 20;
+  &.hidden {
+    display: none;
+  }
+}
+
+.form-container {
+  position: relative;
+  top: calc(50% - 200px);
+  left: calc(50% - 200px);
+  width: 400px;
+  height: 400px;
+  padding: 20px;
+  color: white;
+  background-color: $auxiliary-color;
+  border-radius: 20px;
+  text-align: center;
+  span {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    cursor: pointer;
+    opacity: 0.5;
+    &:hover {
+      opacity: 1;
+    }
+  }
+  h2 {
+    margin-bottom: 50px;
+  }
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 20px;
+  input {
+    width: 100%;
+    height: 3rem;
+    outline: none;
+    border-radius: 5px;
+    padding-left: 20px;
+    font-size: 1.2rem;
+    &:last-child {
+      width: 50%;
+      cursor: pointer;
+      padding-left: 0;
+    }
+  }
+}
+
+#registration-link {
+  font-size: 1.2rem;
+  margin-top: 40px;
+  color:darkblue;
+  opacity: 0.4;
+  cursor: pointer;
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.signIn-logo#log-in {
+  background-image: url('assets/svg/log-out.svg');
+}
