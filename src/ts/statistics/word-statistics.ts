@@ -4,7 +4,6 @@ import {
   createUserWord } from '../requests';
 import { store } from '../store/store';
 import { TOptionalWorld }  from '../type/types';
-// import { updateGameStats } from '../';
 
 const audioCallRight = <HTMLElement>document.getElementById('audiocall-right');
 const audioCallWrong = <HTMLElement>document.getElementById('audiocall-wrong');
