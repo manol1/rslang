@@ -15,7 +15,20 @@ const todaySprintWords = <HTMLParagraphElement>document.getElementById('today-sp
 const todaySprintAccuracy = <HTMLParagraphElement>document.getElementById('today-sprint-accuracy');
 const todaySprintInARow = <HTMLParagraphElement>document.getElementById('today-sprint-in-a-row');
 
-let oldStatistics: TUserStatistic[];
+let allStatistics: TUserStatistic[];
+
+window.addEventListener('beforeunload', () => {
+  localStorage.setItem('allStatistics', JSON.stringify(allStatistics));
+});
+
+if (typeof localStorage.getItem('allStatistics') === 'string') {
+  allStatistics = JSON.parse(localStorage.getItem('allStatistics') || '');
+} else {
+  allStatistics = [];
+}
+
+
+
 
 function getTodayDate() {
   const today = new Date();
@@ -31,8 +44,20 @@ function isToday(date: string) {
   }
 }
 
-export async function getUserStatisticsFn() {
+function generateOneDayStatistics(number: number) {
 
+}
+
+function showOldDayStatistics() {
+  const div = document.createElement('div');
+  for (let i = 0; i < showOldDayStatistics.length; i++) {
+    generateOneDayStatistics(i);
+  }
+
+}
+
+export async function getUserStatisticsFn() {
+console.log('allStatistics', allStatistics)
   if (store.isAuthorized) {
     const stat = await getUserStatistics(localStorage.getItem('userId') || '', localStorage.getItem('token') || '');
     if (isToday(stat.optional?.date || '')) {
@@ -68,12 +93,15 @@ export async function getUserStatisticsFn() {
         }
       }
     } else {
-      oldStatistics.push(stat);
+      allStatistics.push(stat);
       const newDayStat: TBodyUserStatistic = JSON.parse(JSON.stringify(store.statisticsNew));
       const newDate = getTodayDate();
       newDayStat.optional.date = newDate;
       await putUserStatistics(localStorage.getItem('userId') || '', newDayStat, localStorage.getItem('token') || '');
       getUserStatisticsFn();
+    }
+    if(allStatistics.length > 0) {
+      console.log('рисуем статистику')
     }
   }
 }
@@ -110,6 +138,7 @@ export async function updateUserStatisticsFn(game: string, answer: boolean) {
         putUserStatistics(localStorage.getItem('userId') || '', newBody, localStorage.getItem('token') || '');
       }
     } else {
+      allStatistics.push(oldStatistics);
       const newDayStat: TBodyUserStatistic = JSON.parse(JSON.stringify(store.statisticsNew));
       const newDate = getTodayDate();
       newDayStat.learnedWords = oldStatistics.learnedWords + 1;

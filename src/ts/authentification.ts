@@ -32,7 +32,9 @@ function authentification() {
     hardWordsBtn.classList.add('hidden');
     store.isAuthorized = false;
     renderDictionary();
-    localStorage.clear();
+    localStorage.removeItem('userId');
+    localStorage.removeItem('token');
+    localStorage.removeItem('refreshToken');
     logIn.removeEventListener('click', goLogOut);
     logIn.addEventListener('click', goLogIn);
   }
