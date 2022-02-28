@@ -83,7 +83,6 @@ function navigation() {
 
     audiocallQuestion?.classList.add('hidden');
     audiocallWelcome?.classList.remove('hidden');
-    // }
   };
 
   const displaySprint = () => {

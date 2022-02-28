@@ -15,15 +15,21 @@ const oldStatisticsEl = document.querySelector('#old-statistics') as HTMLElement
 
 let allStatistics: TUserStatistic[];
 
+window.addEventListener('beforeunload', () => {
+  if (allStatistics.length > 0) {
+    localStorage.setItem('allStatistics', JSON.stringify(allStatistics));
+  }
+});
+
 if (typeof localStorage.getItem('allStatistics') === 'string') {
   allStatistics = JSON.parse(localStorage.getItem('allStatistics') || '');
 } else {
   allStatistics = [];
 }
 
-window.addEventListener('beforeunload', () => {
-  localStorage.setItem('allStatistics', JSON.stringify(allStatistics));
-});
+export function clearAllStatistics() {
+  allStatistics = [];
+}
 
 function getTodayDate() {
   const today = new Date();
@@ -201,7 +207,9 @@ export async function updateUserStatisticsFn(game: string, answer: boolean) {
         putUserStatistics(localStorage.getItem('userId') || '', newBody, localStorage.getItem('token') || '');
       }
     } else {
-      allStatistics.push(oldStatistics);
+      if (oldStatistics.optional.date.length > 3) {
+        allStatistics.push(oldStatistics);
+      }
       const newDayStat: TBodyUserStatistic = JSON.parse(JSON.stringify(store.statisticsNew));
       const newDate = getTodayDate();
       newDayStat.learnedWords = oldStatistics.learnedWords + 1;

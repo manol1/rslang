@@ -1,6 +1,7 @@
 import { createUser, signIn, putUserStatistics } from './requests';
 import { store } from './store/store';
 import { renderDictionary } from './renderDictionary';
+import { clearAllStatistics } from './statistics/statistics';
 
 function authentification() {
   const logIn = <HTMLLIElement>document.getElementById('log-in');
@@ -104,6 +105,7 @@ function authentification() {
       goCloseRegForm();
       putUserStatistics(localStorage.getItem('userId') || '', store.statisticsNew, localStorage.getItem('token') || '');
       localStorage.removeItem('allStatistics');
+      clearAllStatistics();
     } catch (err) {
       console.log(err);
     }

@@ -14,6 +14,7 @@ import { ELinks,
   TAggregatedWord,
   TAggregatedWords,
 } from './type/types';
+import { store } from './store/store';
 
 export async function getWords(group = '0', page = '0'): Promise<TGetWords[]> {
   const response = await fetch(`${ELinks.words}?group=${group}&page=${page}`, {
@@ -185,6 +186,9 @@ export async function getUserStatistics(id: string, token: string): Promise<TUse
       'Authorization': `Bearer ${token}`,
     },
   });
+  if (response.status === 404 && localStorage.getItem('token')) {
+    putUserStatistics(localStorage.getItem('userId') || '', store.statisticsNew, localStorage.getItem('token') || '');
+  }
   return response.json();
 }
 
@@ -198,6 +202,9 @@ export async function putUserSettings(id: string, body: TBodyUserSetting, token:
     },
     body: JSON.stringify(body),
   });
+  if (response.status === 404 && localStorage.getItem('token')) {
+    putUserStatistics(localStorage.getItem('userId') || '', store.statisticsNew, localStorage.getItem('token') || '');
+  }
   return response.json();
 }
 
